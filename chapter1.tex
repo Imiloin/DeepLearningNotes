@@ -20,7 +20,9 @@
 
 	\section{Neural Networks Basics}
 	
-	列向量$x$表示单个样本, $y$表示单个样本的预期，$\hat{y}$表示
+	\subsection{Binary Classification}
+
+	表 \ref{tab:notations} 是本章用到的符号说明。
 
 	\begin{table}[h]
 		\centering
@@ -46,13 +48,34 @@
 			Other                    & $J(x,W,b,y)$ or $J(\hat{y},y)$      & function             & 代价函数       \\ \hline
 		\end{tabular}
 		%
-		\label{Standard notations} %%%
+		\label{tab:notations} %%%
     	\begin{tablenotes}
       		\item[*] 通常情况下$(i)$表示第$i$个样本，而$[l]$表示第$l$层。
     	\end{tablenotes}
 		%%%%%
 		\end{threeparttable}
 	\end{table}
+
+	\subsection{Logistic Regression}
+
+	相关公式如下：
+	\begin{equation}
+		\hat{y}^{(i)} = \sigma(w^T x^{(i)} + b) \label{eq:logistic}
+	\end{equation}
+	其中sigmoid函数$\sigma(z)$定义为：
+	\begin{equation}
+		\sigma(z) = \frac{1}{1 + e^{-z}} \label{eq:sigmoid}
+	\end{equation}
+
+	Loss function（误差函数）:
+	\begin{equation}
+		L(\hat{y}^{(i)}, y^{(i)}) = -(y^{(i)} \log \hat{y}^{(i)} + (1 - y^{(i)}) \log (1 - \hat{y}^{(i)})) \label{eq:loss}
+	\end{equation}
+
+	Cost function（代价函数）:
+	\begin{equation}
+		J(w, b) = \frac{1}{m} \sum_{i=1}^{m} L(\hat{y}^{(i)}, y^{(i)}) = -\frac{1}{m} \sum_{i=1}^{m} (y^{(i)} \log \hat{y}^{(i)} + (1 - y^{(i)}) \log (1 - \hat{y}^{(i)})) \label{eq:cost}
+	\end{equation}
 
 	\section{文字测试}\label{sec:words}
 
