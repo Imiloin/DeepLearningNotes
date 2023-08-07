@@ -1,0 +1,66 @@
+\appendix
+	\chapter{杂项 \texorpdfstring{$a+b$}{a+b}}
+	按惯例, 附录以字母编号.
+	
+	\section{文字测试}
+	龚自珍, \emph{乙亥杂诗}:
+	\begin{enumerate}
+		\item 其一
+		\begin{center}
+			掌故罗胸是国恩，小胥脱腕万言存。\\
+			他年金匮如收采，来叩空山夜雨门。
+		\end{center}
+		\item 其二
+		\begin{center}
+			九州生气恃风雷，万马齐喑究可哀。\\
+			我劝天公重抖擞，不拘一格降人才。
+		\end{center}
+		\item 其三
+		\begin{center}
+			吟罢江山气不灵，万千种话一灯青。\\
+			忽然搁笔无言说，重礼天台七卷经。
+		\end{center}
+	\end{enumerate}	\index{gongzizhen@龚自珍}
+
+	\begin{definition-theorem}[龚自珍]
+		 《己卯京师作杂诗二首》：
+		 \begin{center}
+		 	文格渐卑庸福近,不知庸福究何如? \\
+		 	常州庄四能怜我,劝我狂删乙丙书。
+		 \end{center}
+	\end{definition-theorem}
+
+	交叉参照: 引理 \ref{prop:chen}.
+
+	\section{测试: \texorpdfstring{$B_n(X)$}{BnX}}\label{sec:B}
+	首先介绍 Bernoulli 多项式. 多项式变元记为 $X$.
+	\begin{definition-proposition}\index{Bernoulli 多项式 (Bernoulli polynomials)}
+		\emph{Bernoulli 多项式} $B_n(X) \in \mathbb{Q}[X]$ 由生成函数
+		\begin{equation}
+			\frac{t e^{tX}}{e^t - 1} = \sum_{n \geq 0} B_n(X) \cdot \frac{t^n}{n!} \; \in \mathbb{Q}[X][\![t]\!]
+		\end{equation}
+		确定. 称 $B_n := B_n(0)$ 为第 $n$ 个 \emph{Bernoulli 数}.
+	\end{definition-proposition}
+
+	\subsection{一张表格}
+	以下来测试表格.
+
+	\begin{table}[h!]
+		\begin{equation*}\begin{array}{c|cccccccc}
+			n & 0 & 1 & 2 & 4 & 6 & 8 & 10 & 12 \\ \hline
+			B_n & 1 & -\frac{1}{2} & \frac{1}{6} & -\frac{1}{30} & \frac{1}{42} & -\frac{1}{30} & \frac{5}{66} & \frac{-691}{2730}
+		\end{array}\end{equation*}
+		\caption{前几个 Bernoulli 常数.}
+		\label{table:B}
+	\end{table}
+	交叉参照: 练习 \ref{exo:Euler}.
+
+	\begin{conjecture}[周恩来, 1917]\index{zhouenlai@周恩来}
+		大江歌罢掉头东，邃密群科济世穷。面壁十年图破壁，难酬蹈海亦英雄。
+	\end{conjecture}
+
+	\begin{hypothesis}
+		Riemann $\zeta$ 函数的非平凡零点全在 $\Re(s) = \frac{1}{2}$ 上.
+	\end{hypothesis}
+
+	引用测试: \cite{Oxl11, ZG}
