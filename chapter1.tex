@@ -5,30 +5,22 @@
 	\end{wenxintishi}
 
 	\section{Introduction to Deep Learning}
-	关于数学词汇的汉译, 比较全面的参考书是 \cite{ZG}.
-	\begin{theorem}[L.\ Euler]
-		以下结果是熟知的.
-		\begin{equation}\label{eqn:zeta-2}
-			\sum_{n=1}^\infty \frac{1}{n^2} = \frac{\pi^2}{6}.
-		\end{equation}
-		当然, 公式的编号方式可以自订.
-	\end{theorem}
+	机器学习本质上就是训练模型来完成\textbf{从输入到输出($X\to Y$)的映射}。例如, 给定一张猫的照片, 机器学习模型可以输出``这是一只猫''的结论。
 
-	文中可以穿插练习及其提示.
-	\begin{exercise}\label{exo:Euler}
-		试补全公式 \eqref{eqn:zeta-2} 的证明. \begin{hint} 参看表 \ref{table:B}.\end{hint}
-	\end{exercise}
+	\vspace{0.5\baselineskip} % 半行距
 
-	\begin{itemize}
-		\item 已知的其它 $\zeta$ 值包括 $\zeta(4) = \pi^4/90$, $\zeta(6) = \pi^6/945$ 等等.
-		\item 一般而言, 对所有正整数 $n$ 都有
-		\begin{equation}
-			\zeta(2n) = (-1)^{n+1} \underbracket{B_{2n}}_{\text{Bernoulli 数}} \frac{(2\pi)^{2n}}{2(2n)!}.
-		\end{equation}
-		关于 Bernoulli 数\footnote{脚注再测试}, 请见 \S\ref{sec:B}.
+	深度学习有3大要点：
+	\begin{itemize}	
+		\item Data
+		\item Computation
+		\item Algorithms
 	\end{itemize}
 
-	超链接测试: 请常用 \href{http://mathoverflow.net}{MathOverflow}
+	Data可以分为Structured Data和Unstructured Data。Structured Data是指有固定格式的数据, 例如表格、数据库等。Unstructured Data是指没有固定格式的数据, 例如图片、音频、视频等。
+
+	\section{Neural Networks Basics}
+	
+	
 
 	\section{文字测试}\label{sec:words}
 
