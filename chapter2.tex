@@ -1,0 +1,65 @@
+\chapter[短章名]{这是一个充分长的章名, 强势占用三行没商量.}
+	如果章名过长, 可以在目录和天眉以另外设置的短章名显示, 方式和 \LaTeX 的标准文档类 \textsf{book} 相同.
+
+	\section{长度正常的节名}
+	复数 $\tau$ 的虚部记为 $\Im(\tau)$. 自然对数记为 $\log$.
+	
+	\begin{convention}\index{Dedeking $\eta$ 函数}
+		本节记 Poincaré 上半平面为
+		\[ \mathcal{H} := \left\{ \tau \in \mathbb{C}: \Im(\tau) > 0 \right\}. \]
+		按例记 $q := e^{2\pi i \tau}$.	\emph{Dedekind $\eta$ 函数}定义为无穷乘积
+		\[ \eta(\tau) := e^{2\pi i \tau/24} \prod_{n=1}^\infty (1 - q^n), \quad \tau \in \mathcal{H}. \]
+	\end{convention}
+	由分析学常识易见此无穷乘积绝对收敛. 进一步， $\eta$ 在 $\mathcal{H}$ 上全纯无零点; 此外 $\eta$ 的对数导数为
+	\[ \frac{\mathrm{d}}{\mathrm{d}\tau} \log \eta (\tau) := \frac{\eta'(\tau)}{\eta(\tau)} = \frac{\pi i}{12} - 2\pi i \sum_{n=1}^\infty \frac{n q^n}{1 - q^n}. \]
+	
+	\begin{example}
+		在右半复平面上定义 $\sqrt{z} := \exp(\log|z| + i\arg(z))$, 其中幅角取 $\arg(z) \in \left[-\frac{\pi}{2}, \frac{\pi}{2}\right]$. 则
+		\[ \eta\left( \frac{-1}{\tau} \right) = \sqrt{-i\tau} \cdot \eta(\tau), \quad \tau \in \mathcal{H}. \]
+	\end{example}
+	\begin{proof}
+		应用 Eisenstein 级数 $E_2$ 的性质, 将对数导数 $\frac{\mathrm{d}}{\mathrm{d} \tau} \log\eta(\tau)$ 整理为
+		\begin{multline*}
+			\frac{\pi i}{12} - 2\pi i \sum_{d \geq 1} \frac{dq^d}{1- q^d} = \frac{\pi i}{12} - 2\pi i \sum_{d \geq 1} \sum_{k \geq 1} d q^{dk} \\
+			\stackrel{n := dk}{=} \frac{\pi i}{12} - 2\pi i \sum_{n \geq 1} \sigma_1(n) q^n = \dfrac{\pi i}{12} \cdot E_2(\tau),
+		\end{multline*}
+		若改为对 $\tau \mapsto \eta(\frac{-1}{\tau})$ 求对数导数, 再应用 $E_2$ 的函数方程, 产物则是
+		\[ \tau^{-2} \cdot \frac{\pi i}{12} \cdot E_2\left(\frac{-1}{\tau}\right) = \frac{\pi i}{12} \left(E_2(\tau) + \frac{12}{2\pi i \tau} \right). \]
+		对 $\sqrt{-i\tau}$ 求对数导数给出 $\frac{1}{2} \frac{\mathrm{d}}{\mathrm{d}\tau} \log(-i\tau) = \dfrac{1}{2\tau} = \dfrac{\pi i}{12} \cdot \dfrac{12}{2 \pi i \tau}$. 与上式对比即见
+		\begin{align*}
+			\frac{\mathrm{d}}{\mathrm{d} \tau} \log \eta\left( \frac{-1}{\tau} \right) & = \frac{\mathrm{d}}{\mathrm{d} \tau} \log \sqrt{-i\tau} + \frac{\mathrm{d}}{\mathrm{d} \tau} \log \eta(\tau)  \\
+			& = \frac{\mathrm{d}}{\mathrm{d} \tau} \log \left( \sqrt{-i\tau} \cdot \eta(\tau) \right).
+		\end{align*}
+		故存在 $c \in \mathbb{C}^\times$ 使得 $\eta\left(\frac{-1}{\tau}\right) = c \sqrt{-i\tau} \cdot \eta(\tau)$; 因为 $\eta(i) \neq 0$, 代入 $\tau = i$ 可知 $c = 1$.
+	\end{proof}
+
+	著名的 Euler 五边形数定理写作 \index{wubianxingshudingli@五边形数定理 (pentagonal number theorem)}
+	\begin{equation}\label{eqn:pentagonal-number}
+		\sum_{n \in \mathbb{Z}} (-1)^n q^{(3n^2 + n)/2} = \prod_{n \geq 1} (1 - q^n);
+	\end{equation}
+	留意到 $3n^2 + n \equiv 0 \pmod 2$ 恒成立. 将 $\frac{3n^2 + n}{2} = \frac{(6n+1)^2 - 1}{24}$ 代入 \eqref{eqn:pentagonal-number}, 即可导出 $\eta$ 的 Fourier 展开
+	\begin{equation*}
+		\eta(\tau) = \sum_{n \in \mathbb{Z}} (-1)^n q^{ \frac{1}{24} \cdot (6n + 1)^2}, \quad q^{1/24} := e^{2\pi i \tau /24}.
+	\end{equation*}
+
+	\section[短节名]{
+		四十男儿学干谒，朝游江淮暮吴越。漫将衣食累朱门，讵有文章动金阙。
+		倦游屡岁赋归欤，故人相值还唏嘘。劝我莫作千里客，留我共读三冬书。
+		忆别吴阊一年久，为我糟床压春酒。入座争迎作赋才，当筵更觅弹筝手。
+		酒酣慷慨唤奈何，风光一往如流波。女坟湖北莺犹少，短簿祠南雨正多。
+		君家奇书一千轴，锦袱牙签光历碌。愿随潘左伴青缃，羞与金张斗华毂。
+		嗟余短鬓日苍浪，太息忧来未可忘。鼓挝马槊差亦得，若问读书非我长。}
+	原诗作者: [清] 陈维崧.
+
+	不鼓励使用过长的节名. 同样地, 可以在目录和天眉以另外设置的短节名显示, 方式和 \LaTeX 的标准文档类 \textsf{book} 相同.
+
+	图片取自 \href{https://commons.wikimedia.org}{Wikimedia Commons}, 经过适当加工.
+	\begin{figure}[h!]\begin{center}
+			\includegraphics[width=0.5\textwidth]{Lanzhou.png}
+			\caption{兰州市地图}
+	\end{center}\end{figure}
+
+	\begin{Exercises}
+		\item 造访兰州. \begin{hint} 低碳出行, 请乘坐火车. \end{hint}
+		\item 造访祁连山.
+	\end{Exercises}

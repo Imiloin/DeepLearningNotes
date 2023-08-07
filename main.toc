@@ -1,0 +1,25 @@
+\thispagestyle {empty}
+\contentsline {chapter}{Introduction}{1}{chapter*.2}%
+\contentsline {part}{\numberline {I}Course Notes}{3}{part.1}%
+\contentsline {chapter}{\numberline {1}Neural Networks and Deep Learning}{5}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Introduction to Deep Learning}{5}{section.1.1}%
+\contentsline {section}{\numberline {1.2}文字测试}{6}{section.1.2}%
+\contentsline {subsection}{\numberline {1.2.1}子节 (subsection)}{6}{subsection.1.2.1}%
+\contentsline {subsubsection}{次子节 (subsubsection)}{6}{subsubsection*.3}%
+\contentsline {paragraph}{段落 (paragraph)}{7}{paragraph*.4}%
+\contentsline {section}{\numberline {1.3}字体和大小}{7}{section.1.3}%
+\contentsline {section}{\numberline {1.4}图片}{7}{section.1.4}%
+\contentsline {section}{\numberline {1.5}混排公式 $e^{i\theta } = \cos \theta + i\sin \theta $}{8}{section.1.5}%
+\contentsline {section}{习题}{8}{section.1.5}%
+\contentsline {part}{\numberline {II}Projects}{9}{part.2}%
+\contentsline {chapter}{\numberline {2}短章名}{11}{chapter.2}%
+\contentsline {section}{\numberline {2.1}长度正常的节名}{11}{section.2.1}%
+\contentsline {section}{\numberline {2.2}短节名}{12}{section.2.2}%
+\contentsline {section}{习题}{12}{figure.2.1}%
+\contentsline {chapter}{\numberline {A}杂项 $a+b$}{15}{appendix.A}%
+\contentsline {section}{\numberline {A.1}文字测试}{15}{section.A.1}%
+\contentsline {section}{\numberline {A.2}测试: $B_n(X)$}{16}{section.A.2}%
+\contentsline {subsection}{\numberline {A.2.1}一张表格}{16}{subsection.A.2.1}%
+\contentsline {chapter}{Bibliography}{17}{appendix*.5}%
+\contentsline {chapter}{List of Figures}{19}{section*.6}%
+\contentsfinish 
