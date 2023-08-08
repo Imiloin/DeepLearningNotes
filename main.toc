@@ -27,5 +27,5 @@
 \contentsline {chapter}{Bibliography}{21}{appendix*.5}%
 \contentsline {chapter}{List of Figures}{23}{section*.6}%
 \contentsline {chapter}{List of Tables}{25}{section*.8}%
-\contentsline {chapter}{名词索引}{27}{section*.10}%
+\contentsline {chapter}{Keyword Index}{27}{section*.10}%
 \contentsfinish 

@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.8.4)  8 AUG 2023 22:04
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.8.4)  8 AUG 2023 22:20
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1903,8 +1903,14 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 LaTeX Warning: There were undefined references.
 
-Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: FC6A2D07EDEDDC574ADFE25E0F67628A;3758.
+
+Package rerunfilecheck Warning: File `main.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `main.out':
+(rerunfilecheck)             Before: C857ED41762FC1537125C1112C3599FE;3741
+(rerunfilecheck)             After:  46D9777993C2AB7E6B7FAC664BD5FB33;3794.
 Package logreq Info: Writing requests to 'main.run.xml'.
 \openout1 = `main.run.xml'.
 
@@ -1912,7 +1918,7 @@ Package logreq Info: Writing requests to 'main.run.xml'.
 Here is how much of TeX's memory you used:
  54615 strings out of 475890
  1326196 string characters out of 5782032
- 2319375 words of memory out of 5000000
+ 2318393 words of memory out of 5000000
  74649 multiletter control sequences out of 15000+600000
  577765 words of font info for 198 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
