@@ -1,5 +1,5 @@
 @echo off
-xelatex main.tex
+xelatex -shell-escape main.tex
 biber main.bcf
-xelatex main.tex
-xelatex main.tex
+xelatex -shell-escape main.tex
+xelatex -shell-escape main.tex

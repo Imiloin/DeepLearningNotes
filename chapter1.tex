@@ -68,15 +68,21 @@
 	\begin{equation}
 		\sigma(z) = \frac{1}{1 + \mathrm{e}^{-z}} \label{eq:sigmoid}
 	\end{equation}
-	而$z = w^T x + b$为线性函数，$w$为权重（weight），$b$为偏置（bias）。
+	该函数可以把实数域$\mathbb{R}$映射到区间$(0, 1)$，如图 \ref{fig:sigmoid} 所示。而$z = w^T x + b$为线性函数，$w$为权重（weight），$b$为偏置（bias）。
+	\begin{figure}[h]
+		\centering
+		\includesvg[width=8cm]{sigmoid}
+		\caption{Sigmoid 函数，关于点(0, 0.5)对称}
+		\label{fig:sigmoid}
+	\end{figure}
 
 	\vspace{0.5\baselineskip}
-	Loss function（误差函数），对某一个样本而言:
+	对某一个样本而言，Loss function（误差函数）定义为:
 	\begin{equation}
 		L(\hat{y}^{(i)}, y^{(i)}) = -(y^{(i)} \log \hat{y}^{(i)} + (1 - y^{(i)}) \log (1 - \hat{y}^{(i)})) \label{eq:loss}
 	\end{equation}
 
-	Cost function（代价函数），对整个模型而言:
+	对整个模型而言，Cost function（代价函数）定义为:
 	\begin{equation}
 		J(w, b) = \frac{1}{m} \sum_{i=1}^{m} L(\hat{y}^{(i)}, y^{(i)}) = -\frac{1}{m} \sum_{i=1}^{m} (y^{(i)} \log \hat{y}^{(i)} + (1 - y^{(i)}) \log (1 - \hat{y}^{(i)})) \label{eq:cost}
 	\end{equation}
