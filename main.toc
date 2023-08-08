@@ -9,22 +9,23 @@
 \contentsline {subsection}{\numberline {1.2.3}Gradient Descent}{7}{subsection.1.2.3}%
 \contentsline {section}{\numberline {1.3}文字测试}{8}{section.1.3}%
 \contentsline {subsection}{\numberline {1.3.1}子节 (subsection)}{8}{subsection.1.3.1}%
-\contentsline {subsubsection}{次子节 (subsubsection)}{8}{subsubsection*.3}%
+\contentsline {subsubsection}{次子节 (subsubsection)}{9}{subsubsection*.3}%
 \contentsline {paragraph}{段落 (paragraph)}{9}{paragraph*.4}%
-\contentsline {section}{\numberline {1.4}字体和大小}{9}{section.1.4}%
-\contentsline {section}{\numberline {1.5}图片}{9}{section.1.5}%
-\contentsline {section}{\numberline {1.6}混排公式 $e^{i\theta } = \cos \theta + i\sin \theta $}{10}{section.1.6}%
-\contentsline {section}{习题}{10}{section.1.6}%
-\contentsline {part}{\numberline {II}Projects}{11}{part.2}%
-\contentsline {chapter}{\numberline {2}短章名}{13}{chapter.2}%
-\contentsline {section}{\numberline {2.1}长度正常的节名}{13}{section.2.1}%
-\contentsline {section}{\numberline {2.2}短节名}{14}{section.2.2}%
-\contentsline {section}{习题}{14}{figure.2.1}%
-\contentsline {chapter}{\numberline {A}杂项 $a+b$}{17}{appendix.A}%
-\contentsline {section}{\numberline {A.1}文字测试}{17}{section.A.1}%
-\contentsline {section}{\numberline {A.2}测试: $B_n(X)$}{18}{section.A.2}%
-\contentsline {subsection}{\numberline {A.2.1}一张表格}{18}{subsection.A.2.1}%
-\contentsline {chapter}{Bibliography}{19}{appendix*.5}%
-\contentsline {chapter}{List of Figures}{21}{section*.6}%
-\contentsline {chapter}{List of Tables}{23}{section*.8}%
+\contentsline {section}{\numberline {1.4}字体和大小}{10}{section.1.4}%
+\contentsline {section}{\numberline {1.5}图片}{10}{section.1.5}%
+\contentsline {section}{\numberline {1.6}混排公式 $e^{i\theta } = \cos \theta + i\sin \theta $}{11}{section.1.6}%
+\contentsline {section}{习题}{11}{section.1.6}%
+\contentsline {part}{\numberline {II}Projects}{13}{part.2}%
+\contentsline {chapter}{\numberline {2}短章名}{15}{chapter.2}%
+\contentsline {section}{\numberline {2.1}长度正常的节名}{15}{section.2.1}%
+\contentsline {section}{\numberline {2.2}短节名}{16}{section.2.2}%
+\contentsline {section}{习题}{16}{figure.2.1}%
+\contentsline {chapter}{\numberline {A}杂项 $a+b$}{19}{appendix.A}%
+\contentsline {section}{\numberline {A.1}文字测试}{19}{section.A.1}%
+\contentsline {section}{\numberline {A.2}测试: $B_n(X)$}{20}{section.A.2}%
+\contentsline {subsection}{\numberline {A.2.1}一张表格}{20}{subsection.A.2.1}%
+\contentsline {chapter}{Bibliography}{21}{appendix*.5}%
+\contentsline {chapter}{List of Figures}{23}{section*.6}%
+\contentsline {chapter}{List of Tables}{25}{section*.8}%
+\contentsline {chapter}{名词索引}{27}{section*.10}%
 \contentsfinish 
