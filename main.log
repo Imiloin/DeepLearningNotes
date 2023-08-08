@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.8.4)  7 AUG 2023 22:27
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.8.4)  8 AUG 2023 21:30
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1586,19 +1586,19 @@ Package fontspec Info: Font family 'FandolHei-Regular.otf(1)' created for font
 (fontspec)             <->"[FandolHei-Regular.otf]/OT:language=dflt;mapping=tex-text;"
 (fontspec)             - 'italic small caps'  (m/scit) with NFSS spec.: 
 
-LaTeX Font Info:    Trying to load font information for U+msa on input line 15.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 16.
 (d:/texlive/2023/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 15.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 16.
  (d:/texlive/2023/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Trying to load font information for U+rsfs on input line 15.
+LaTeX Font Info:    Trying to load font information for U+rsfs on input line 16.
  (d:/texlive/2023/texmf-dist/tex/latex/jknapltx/ursfs.fd
 File: ursfs.fd 1998/03/24 rsfs font definition file (jk)
 )
-LaTeX Font Info:    Trying to load font information for U+stmry on input line 15.
+LaTeX Font Info:    Trying to load font information for U+stmry on input line 16.
  (d:/texlive/2023/texmf-dist/tex/latex/stmaryrd/Ustmry.fd) [1
 
 ])
@@ -1661,10 +1661,16 @@ Package fontspec Info: Font family 'NotoSansCJKSC(1)' created for font 'Noto
 (fontspec)             SC/BI/OT:script=hani;language=dflt;mapping=tex-text;"
 (fontspec)             - 'bold italic small caps'  (b/scit) with NFSS spec.: 
 
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
 [5
 
 
 ] [6]
+Underfull \vbox (badness 2772) has occurred while \output is active []
+
+ [7]
 
 Package fontspec Warning: Font "FandolFang-Regular" does not contain requested
 (fontspec)                Script "CJK".
@@ -1687,7 +1693,7 @@ Package fontspec Info: Font family 'FandolFang-Regular.otf(0)' created for
 (fontspec)             <->"[FandolKai-Regular.otf]/OT:language=dflt;mapping=tex-text;"
 (fontspec)             - 'italic small caps'  (m/scit) with NFSS spec.: 
 
-Package hyperref Info: bookmark level for unknown definition defaults to 0 on input line 92.
+Package hyperref Info: bookmark level for unknown definition defaults to 0 on input line 160.
 
 Package fontspec Warning: Font "FandolHei-Regular" does not contain requested
 (fontspec)                Script "CJK".
@@ -1707,8 +1713,8 @@ Package fontspec Info: Font family 'FandolHei-Regular.otf(2)' created for font
 (fontspec)             <->"[FandolHei-Regular.otf]/OT:language=dflt;mapping=tex-text;"
 (fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
 
-Package hyperref Info: bookmark level for unknown proposition defaults to 0 on input line 97.
-Package hyperref Info: bookmark level for unknown lemma defaults to 0 on input line 104.
+Package hyperref Info: bookmark level for unknown proposition defaults to 0 on input line 165.
+Package hyperref Info: bookmark level for unknown lemma defaults to 0 on input line 172.
 
 Package fontspec Info: Could not resolve font "Noto Sans CJK SC Medium/I" (it
 (fontspec)             probably doesn't exist).
@@ -1736,10 +1742,10 @@ Package fontspec Info: Font family 'NotoSansCJKSC(2)' created for font 'Noto
 (fontspec)             SC/BI/OT:script=hani;language=dflt;mapping=tex-text;"
 (fontspec)             - 'bold italic small caps'  (b/scit) with NFSS spec.: 
 
-Package hyperref Info: bookmark level for unknown proof defaults to 0 on input line 108.
-[7]
-Package hyperref Info: bookmark level for unknown corollary defaults to 0 on input line 112.
-Package hyperref Info: bookmark level for unknown remark defaults to 0 on input line 120.
+Package hyperref Info: bookmark level for unknown proof defaults to 0 on input line 176.
+[8]
+Package hyperref Info: bookmark level for unknown corollary defaults to 0 on input line 180.
+Package hyperref Info: bookmark level for unknown remark defaults to 0 on input line 188.
 
 
 Package fontspec Warning: Font "FandolKai-Regular" does not contain requested
@@ -1768,11 +1774,11 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 File: ccby.png Graphic file (type bmp)
 <ccby.png>
-[8]) [9] [10
+[9]) [10] [11
 
 
 
-] [11] [12]
+] [12]
 \openout2 = `chapter2.aux'.
 
  (./chapter2.tex
@@ -1863,16 +1869,16 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 LaTeX Warning: There were undefined references.
 
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 481C5E9D45314AE84AC2056E967CE40C;3496.
+(rerunfilecheck)             Checksum: ED36FAC1D8BC2E6A906BD044C0C283B1;3674.
 Package logreq Info: Writing requests to 'main.run.xml'.
 \openout1 = `main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 53695 strings out of 475890
- 1304236 string characters out of 5782032
- 2271396 words of memory out of 5000000
- 73770 multiletter control sequences out of 15000+600000
+ 53699 strings out of 475890
+ 1305362 string characters out of 5782032
+ 2272544 words of memory out of 5000000
+ 73774 multiletter control sequences out of 15000+600000
  577741 words of font info for 195 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  102i,17n,108p,861b,4693s stack positions out of 10000i,1000n,20000p,200000b,200000s

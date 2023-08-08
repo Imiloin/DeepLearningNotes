@@ -1,8 +1,4 @@
 \chapter{Neural Networks and Deep Learning}
-	各章开头可有说明文字.\footnote{脚注测试} 视情况加入阅读提示.
-	\begin{wenxintishi}
-		本章 \S\ref{sec:words} 的文字撷取自《明儒学案》, [清] 黄宗羲, 仅作测试之用. 来源于网络, 恐怕多有错漏, 请见谅. \index{huangzongxi@黄宗羲}
-	\end{wenxintishi}
 
 	\section{Introduction to Deep Learning}
 	机器学习本质上就是训练模型来完成\textbf{从输入到输出($X\to Y$)的映射}。例如, 给定一张猫的照片, 机器学习模型可以输出``这是一只猫''的结论。
@@ -18,6 +14,10 @@
 
 	Data可以分为Structured Data和Unstructured Data。Structured Data是指有固定格式的数据, 例如表格、数据库等。Unstructured Data是指没有固定格式的数据, 例如图片、音频、视频等。
 
+	Computation是指计算机的计算能力, 例如CPU、GPU、TPU等。
+
+	Algorithms是指算法, 例如Logistic Regression、SVM、Neural Networks等。
+
 	\section{Neural Networks Basics}
 	
 	\subsection{Binary Classification}
@@ -32,20 +32,22 @@
 		%
 		\begin{tabular}{clcc}
 			\hline
-									 & \textbf{Notation}                   & \textbf{Description} & Meaning    \\ \hline
-			\multirow{5}{*}{Sizes}   & $m$                                 & value                & 样本容量       \\
-									 & $n_x$                               & value                & 样本的特征数量    \\
-									 & $n_y$                               & value                & 输出节点数      \\
-									 & $n_h^{[l]}$                         &                      &            \\
-									 & $L$                                 &                      &            \\ \hline
-			\multirow{7}{*}{Objects} & $x^{(i)} \in \mathbb{R}^{n_x}$      & vector               & 第$i$个样本数据  \\
-									 & $X \in {\mathbb{R}^{n_x \times m}}$ & matrix               & 输入矩阵       \\
-									 & $y^{(i)} \in \mathbb{R}^{n_y}$      & vector               & 第$i$个样本的标签 \\
-									 & $Y \in {\mathbb{R}^{n_y \times m}}$ & matrix               & 标签矩阵       \\
-									 & $\hat{y} \in \mathbb{R}^{n_y}$      & vector               & 单个样本的预测值   \\
-									 & $W^{[l]}$                           &                      &            \\
-									 & $b^{[l]}$                           &                      &            \\ \hline
-			Other                    & $J(x,W,b,y)$ or $J(\hat{y},y)$      & function             & 代价函数       \\ \hline
+									 & \textbf{Notation}                   & \textbf{Description} & \textbf{Meaning}                                                   \\ \hline
+			\multirow{5}{*}{Sizes}   & $m$                                 & value                & 样本容量                                                               \\
+									 & $n_x$                               & value                & 样本的特征数量                                                            \\
+									 & $n_y$                               & value                & 输出节点数                                                              \\
+									 & $n_h^{[l]}$                         &                      &                                                                    \\
+									 & $L$                                 &                      &                                                                    \\ \hline
+			\multirow{7}{*}{Objects} & $x^{(i)} \in \mathbb{R}^{n_x}$      & vector               & 第$i$个样本数据                                                          \\
+									 & $X \in {\mathbb{R}^{n_x \times m}}$ & matrix               & 输入矩阵                                                               \\
+									 & $y^{(i)} \in \mathbb{R}^{n_y}$      & vector               & 第$i$个样本的标签                                                         \\
+									 & $Y \in {\mathbb{R}^{n_y \times m}}$ & matrix               & 标签矩阵                                                               \\
+									 & $\hat{y} \in \mathbb{R}^{n_y}$      & vector               & 单个样本的预测值                                                           \\
+									 & $w \in \mathbb{R}^{n_x}$            & vector               & 权重向量                                                               \\
+									 & $W^{[l]}$                           &                      &                                                                    \\
+									 & $b^{[l]}$                           &                      &                                                                    \\ \hline
+			\multirow{2}{*}{Other}   & $J(x,W,b,y)$ or $J(\hat{y},y)$      & function             & 代价函数                                                               \\
+									 & $\mathrm{d}\mathrm{var}$            & differential         & 代价函数对变量$\mathrm{var}$的微分，即${\mathrm{d}J}/{\mathrm{d}\mathrm{var}}$ \\ \hline
 		\end{tabular}
 		%
 		\label{tab:notations} %%%
@@ -58,24 +60,90 @@
 
 	\subsection{Logistic Regression}
 
-	相关公式如下：
+	对于二元分类模型，相关公式如下：
 	\begin{equation}
 		\hat{y}^{(i)} = \sigma(w^T x^{(i)} + b) \label{eq:logistic}
 	\end{equation}
 	其中sigmoid函数$\sigma(z)$定义为：
 	\begin{equation}
-		\sigma(z) = \frac{1}{1 + e^{-z}} \label{eq:sigmoid}
+		\sigma(z) = \frac{1}{1 + \mathrm{e}^{-z}} \label{eq:sigmoid}
 	\end{equation}
+	而$z = w^T x + b$为线性函数，$w$为权重（weight），$b$为偏置（bias）。
 
-	Loss function（误差函数）:
+	\vspace{0.5\baselineskip}
+	Loss function（误差函数），对某一个样本而言:
 	\begin{equation}
 		L(\hat{y}^{(i)}, y^{(i)}) = -(y^{(i)} \log \hat{y}^{(i)} + (1 - y^{(i)}) \log (1 - \hat{y}^{(i)})) \label{eq:loss}
 	\end{equation}
 
-	Cost function（代价函数）:
+	Cost function（代价函数），对整个模型而言:
 	\begin{equation}
 		J(w, b) = \frac{1}{m} \sum_{i=1}^{m} L(\hat{y}^{(i)}, y^{(i)}) = -\frac{1}{m} \sum_{i=1}^{m} (y^{(i)} \log \hat{y}^{(i)} + (1 - y^{(i)}) \log (1 - \hat{y}^{(i)})) \label{eq:cost}
 	\end{equation}
+	相当于误差函数的平均值。
+
+	\subsection{Gradient Descent}
+
+	训练过程使用梯度下降（Gradient Descent）算法，即：
+	\begin{equation}
+		\mathrm{var} = \mathrm{var} - \alpha \frac{\mathrm{d}J}{\mathrm{d}\mathrm{var}} \label{eq:gradient}
+	\end{equation}
+
+	其中$\mathrm{var}$为一个需要调整的参数，$\alpha$为学习率（Learning Rate）。对于Logistic Regression，梯度下降算法的表达式为：
+	\begin{equation}
+		\begin{aligned}
+		w &:= w - \alpha \frac{\mathrm{d}J}{\mathrm{d}w} \\
+		b &:= b - \alpha \frac{\mathrm{d}J}{\mathrm{d}b}
+		\end{aligned} 
+		\label{eq:gradient_logistic}
+	\end{equation}
+	其中$:=$表示赋值，通过不断更新$w$, $b$的值使$J$尽可能小。下面介绍具体实现
+
+	\vspace{0.5\baselineskip}
+	对于一个样本，有
+	\begin{equation}
+		\begin{aligned}
+		z &= w^T x^{(i)} + b \\
+		\hat{y}^{(i)} &= \sigma(z) \\
+		L(\hat{y}^{(i)}, y^{(i)}) &= -(y^{(i)} \log \hat{y}^{(i)} + (1 - y^{(i)}) \log (1 - \hat{y}^{(i)}))
+		\end{aligned} 
+		\label{eq:gradient_logistic_sample}
+	\end{equation}
+	进行求导（$x$, $y$均为常量），有
+	\begin{equation}
+		\begin{aligned}
+		&\frac{\mathrm{d}L}{\mathrm{d}\hat{y}^{(i)}} = -\frac{y^{(i)}}{\hat{y}^{(i)}} + \frac{1 - y^{(i)}}{1 - \hat{y}^{(i)}} \\
+		&\frac{\mathrm{d}\hat{y}^{(i)}}{\mathrm{d}z} = \frac{\mathrm{e}^{-z}}{(1 + \mathrm{e}^{-z})^2} = \frac{1}{1 + \mathrm{e}^{-z}}(1 - \frac{1}{1 + \mathrm{e}^{-z}}) = \hat{y}^{(i)}(1 - \hat{y}^{(i)})\\
+		\end{aligned}
+	\end{equation}
+	用链式法则，有
+	\begin{equation}
+		\frac{\mathrm{d}L}{\mathrm{d}z} = \frac{\mathrm{d}L}{\mathrm{d}\hat{y}^{(i)}} \frac{\mathrm{d}\hat{y}^{(i)}}{\mathrm{d}z} = (-\frac{y^{(i)}}{\hat{y}^{(i)}} + \frac{1 - y^{(i)}}{1 - \hat{y}^{(i)}})\hat{y}^{(i)}(1 - \hat{y}^{(i)}) = \hat{y}^{(i)} - y^{(i)}
+	\end{equation}
+	进而有
+	\begin{equation}
+		\begin{aligned}
+		&\frac{\mathrm{d}L}{\mathrm{d}w_j} = \frac{\mathrm{d}L}{\mathrm{d}z} \frac{\mathrm{d}z}{\mathrm{d}w_j} = x_j^{(i)} (\hat{y}^{(i)} - y^{(i)}) \quad (1 \leqslant j \leqslant n_x) \\
+		&\frac{\mathrm{d}L}{\mathrm{d}b} = \frac{\mathrm{d}L}{\mathrm{d}z} \frac{\mathrm{d}z}{\mathrm{d}b} = \hat{y}^{(i)} - y^{(i)}
+		\end{aligned}
+	\end{equation}
+
+	\vspace{0.5\baselineskip}
+	对于整个训练集，在一个循环中我们对每一个样本都进行一次梯度下降，并对所有样本的梯度进行平均，有
+	\begin{equation}
+		\begin{aligned}
+			\frac{\mathrm{d}J}{\mathrm{d}w_j} &= \frac{1}{m} \sum_{i=1}^{m} \frac{\mathrm{d}L}{\mathrm{d}w_j} = \frac{1}{m} \sum_{i=1}^{m} x_j^{(i)} (\hat{y}^{(i)} - y^{(i)}) \quad (1 \leqslant j \leqslant n_x)\\
+			\frac{\mathrm{d}J}{\mathrm{d}b} &= \frac{1}{m} \sum_{i=1}^{m} \frac{\mathrm{d}L}{\mathrm{d}b} = \frac{1}{m} \sum_{i=1}^{m} (\hat{y}^{(i)} - y^{(i)})
+		\end{aligned}
+	\end{equation}
+	得到梯度的平均值后，再进行参数更新，即
+	\begin{equation}
+		\begin{aligned}
+		w_j &:= w_j - \alpha \frac{\mathrm{d}J}{\mathrm{d}w} \quad (1 \leqslant j \leqslant n_x) \\
+		b &:= b - \alpha \frac{\mathrm{d}J}{\mathrm{d}b}
+		\end{aligned} 
+	\end{equation}
+	这样就完成了一轮梯度下降的循环。重复多次梯度下降，直到$J$收敛或达到最大迭代次数，就得到了最终的$w$, $b$。
 
 	\section{文字测试}\label{sec:words}
 

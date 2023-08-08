@@ -3,17 +3,18 @@
 \contentsline {part}{\numberline {I}Course Notes}{3}{part.1}%
 \contentsline {chapter}{\numberline {1}Neural Networks and Deep Learning}{5}{chapter.1}%
 \contentsline {section}{\numberline {1.1}Introduction to Deep Learning}{5}{section.1.1}%
-\contentsline {section}{\numberline {1.2}Neural Networks Basics}{6}{section.1.2}%
-\contentsline {subsection}{\numberline {1.2.1}Binary Classification}{6}{subsection.1.2.1}%
+\contentsline {section}{\numberline {1.2}Neural Networks Basics}{5}{section.1.2}%
+\contentsline {subsection}{\numberline {1.2.1}Binary Classification}{5}{subsection.1.2.1}%
 \contentsline {subsection}{\numberline {1.2.2}Logistic Regression}{6}{subsection.1.2.2}%
-\contentsline {section}{\numberline {1.3}文字测试}{7}{section.1.3}%
-\contentsline {subsection}{\numberline {1.3.1}子节 (subsection)}{7}{subsection.1.3.1}%
-\contentsline {subsubsection}{次子节 (subsubsection)}{7}{subsubsection*.3}%
-\contentsline {paragraph}{段落 (paragraph)}{8}{paragraph*.4}%
-\contentsline {section}{\numberline {1.4}字体和大小}{8}{section.1.4}%
-\contentsline {section}{\numberline {1.5}图片}{8}{section.1.5}%
-\contentsline {section}{\numberline {1.6}混排公式 $e^{i\theta } = \cos \theta + i\sin \theta $}{9}{section.1.6}%
-\contentsline {section}{习题}{9}{section.1.6}%
+\contentsline {subsection}{\numberline {1.2.3}Gradient Descent}{7}{subsection.1.2.3}%
+\contentsline {section}{\numberline {1.3}文字测试}{8}{section.1.3}%
+\contentsline {subsection}{\numberline {1.3.1}子节 (subsection)}{8}{subsection.1.3.1}%
+\contentsline {subsubsection}{次子节 (subsubsection)}{8}{subsubsection*.3}%
+\contentsline {paragraph}{段落 (paragraph)}{9}{paragraph*.4}%
+\contentsline {section}{\numberline {1.4}字体和大小}{9}{section.1.4}%
+\contentsline {section}{\numberline {1.5}图片}{9}{section.1.5}%
+\contentsline {section}{\numberline {1.6}混排公式 $e^{i\theta } = \cos \theta + i\sin \theta $}{10}{section.1.6}%
+\contentsline {section}{习题}{10}{section.1.6}%
 \contentsline {part}{\numberline {II}Projects}{11}{part.2}%
 \contentsline {chapter}{\numberline {2}短章名}{13}{chapter.2}%
 \contentsline {section}{\numberline {2.1}长度正常的节名}{13}{section.2.1}%
