@@ -1,7 +1,7 @@
 \chapter{Neural Networks and Deep Learning}
 
 \section{Introduction to Deep Learning}
-机器学习本质上就是训练模型来完成\textbf{从输入到输出($X\to Y$)的映射}。例如, 给定一张猫的照片, 机器学习模型可以输出``这是一只猫''的结论。
+机器学习本质上就是训练模型来完成\textbf{从输入到输出($\bm{X\to Y}$)的映射}。例如, 给定一张猫的照片, 机器学习模型可以输出``这是一只猫''的结论。
 
 \vspace{0.5\baselineskip} % 半行距
 
@@ -33,20 +33,22 @@ Algorithms是指算法, 例如Logistic Regression、SVM、Neural Networks等。
 	\begin{tabular}{clcc}
 		\hline
 									& \textbf{Notation}                         & \textbf{Description} & \textbf{Meaning}                                                   \\ \hline
-		\multirow{5}{*}{Sizes}   & $m$                                       & value                & 样本容量                                                               \\
-									& $n_x$                                     & value                & 样本的特征数量                                                            \\
-									& $n_y$                                     & value                & 输出节点数                                                              \\
+		\multirow{5}{*}{Sizes}      & $m$                                       & value                & 样本容量                                                               \\
+									& $n_x$                                     & value                & 单个样本的特征数（输入）                                                \\
+									& $n_y$                                     & value                & 单个样本的标签数（输出）                                                \\
 									& $n_h^{[l]}$                               &                      &                                                                    \\
 									& $L$                                       &                      &                                                                    \\ \hline
-		\multirow{7}{*}{Objects} & $x^{(i)} \in \mathbb{R}^{n_x}$            & vector               & 第$i$个样本数据                                                          \\
+		\multirow{9}{*}{Objects}    & $x^{(i)} \in \mathbb{R}^{n_x}$            & vector               & 第$i$个样本数据                                                          \\
 									& $X \in {\mathbb{R}^{n_x \times m}}$       & matrix               & 输入矩阵                                                               \\
 									& $a^{(i)} / y^{(i)} \in \mathbb{R}^{n_y}$  & vector               & 第$i$个样本的标签                                                         \\
-									& $Y \in {\mathbb{R}^{n_y \times m}}$       & matrix               & 标签矩阵                                                               \\
-									& $\hat{y} \in \mathbb{R}^{n_y}$            & vector               & 单个样本的预测值                                                           \\
-									& $w \in \mathbb{R}^{n_x}$                  & vector               & 权重向量                                                               \\
+									& $Y \in {\mathbb{R}^{n_y \times m}}$       & matrix               & 标签矩阵（$n_y=1$时退化为行向量$y$）                                    \\									
+									& $\hat{y}^{(i)} \in \mathbb{R}^{n_y}$      & vector               & 第$i$个样本的标签预测值向量                                                \\
+									& $\hat{Y} \in {\mathbb{R}^{n_y \times m}}$ & matrix               & 标签预测值矩阵（$n_y=1$时退化为行向量$\hat{y}$）   						\\
+									& $W \in \mathbb{R}^{n_x \times n_y}$       & matrix               & 权重矩阵（$n_y=1$时退化为列向量$w$）                                    \\
+									& $b \in \mathbb{R}^{n_y}$                  & vector               & 标签偏置值向量                                                        \\
 									& $W^{[l]}$                                 &                      &                                                                    \\
 									& $b^{[l]}$                                 &                      &                                                                    \\ \hline
-		\multirow{2}{*}{Other}   & $J(x,W,b,y)$ or $J(\hat{y},y)$            & function             & 代价函数                                                               \\
+		\multirow{2}{*}{Other}      & $J(x,W,b,y)$ or $J(\hat{y},y)$            & function             & 代价函数                                                               \\
 									& $\mathrm{d}\mathrm{var}$                  & differential         & 代价函数对变量$\mathrm{var}$的微分，即${\mathrm{d}J}/{\mathrm{d}\mathrm{var}}$ \\ \hline
 	\end{tabular}
 	%
@@ -60,7 +62,7 @@ Algorithms是指算法, 例如Logistic Regression、SVM、Neural Networks等。
 
 \subsection{Logistic Regression}
 
-对于二元分类模型，相关公式如下：
+对于\textbf{二元分类模型，$\bm{n_y=1}$}，相关公式如下：
 \begin{equation}
 	\hat{y}^{(i)} = \sigma(w^\mathrm{T} x^{(i)} + b) \label{eq:logistic}
 \end{equation}
@@ -91,7 +93,7 @@ Algorithms是指算法, 例如Logistic Regression、SVM、Neural Networks等。
 
 对整个模型而言，Cost function（代价函数）定义为:
 \begin{equation}
-	J(w, b) = \frac{1}{m} \sum_{i=1}^{m} L(\hat{y}^{(i)}, y^{(i)}) = -\frac{1}{m} \sum_{i=1}^{m} (y^{(i)} \log \hat{y}^{(i)} + (1 - y^{(i)}) \log (1 - \hat{y}^{(i)})) \label{eq:cost}
+	J(w, b) = \frac{1}{m} \sum_{i=1}^{m} L(\hat{y}^{(i)}, y^{(i)}) = -\frac{1}{m} \sum_{i=1}^{m} [y^{(i)} \log \hat{y}^{(i)} + (1 - y^{(i)}) \log (1 - \hat{y}^{(i)})] \label{eq:cost}
 \end{equation}
 相当于误差函数的平均值。
 
@@ -136,8 +138,8 @@ Algorithms是指算法, 例如Logistic Regression、SVM、Neural Networks等。
 进而有
 \begin{equation}
 	\begin{aligned}
-	&\frac{\mathrm{d}L}{\mathrm{d}w_j} = \frac{\mathrm{d}L}{\mathrm{d}z} \frac{\mathrm{d}z}{\mathrm{d}w_j} = x_j^{(i)} (\hat{y}^{(i)} - y^{(i)}) \quad (1 \leqslant j \leqslant n_x) \\
-	&\frac{\mathrm{d}L}{\mathrm{d}b} = \frac{\mathrm{d}L}{\mathrm{d}z} \frac{\mathrm{d}z}{\mathrm{d}b} = \hat{y}^{(i)} - y^{(i)}
+	\frac{\mathrm{d}L}{\mathrm{d}w_j} &= \frac{\mathrm{d}L}{\mathrm{d}z} \frac{\mathrm{d}z}{\mathrm{d}w_j} = x_j^{(i)} (\hat{y}^{(i)} - y^{(i)}) \quad (1 \leqslant j \leqslant n_x) \\
+	\frac{\mathrm{d}L}{\mathrm{d}b} &= \frac{\mathrm{d}L}{\mathrm{d}z} \frac{\mathrm{d}z}{\mathrm{d}b} = \hat{y}^{(i)} - y^{(i)}
 	\end{aligned}
 \end{equation}
 
@@ -175,5 +177,47 @@ Algorithms是指算法, 例如Logistic Regression、SVM、Neural Networks等。
 可以使用下面的代码
 \begin{python}
 import numpy as np
+# define X, Y, w, b
 Z = np.dot(w.T, X) + b
 \end{python}
+同理，要实现
+\begin{equation}
+	\begin{aligned}
+		\frac{\mathrm{d}J}{\mathrm{d}w_j} &= \frac{1}{m} \sum_{i=1}^{m} \frac{\mathrm{d}L}{\mathrm{d}w_j} = \frac{1}{m} \sum_{i=1}^{m} x_j^{(i)} (\hat{y}^{(i)} - y^{(i)}) \quad (1 \leqslant j \leqslant n_x)\\
+		\frac{\mathrm{d}J}{\mathrm{d}b} &= \frac{1}{m} \sum_{i=1}^{m} \frac{\mathrm{d}L}{\mathrm{d}b} = \frac{1}{m} \sum_{i=1}^{m} (\hat{y}^{(i)} - y^{(i)})
+	\end{aligned}
+\end{equation}
+可以继续使用下面的代码
+\begin{python}
+def sigmoid(x):
+    s = 1 / (1 + np.exp(-x))
+    return s
+
+
+A = sigmoid(Z)
+dZ = A - Y
+dw = np.dot(X, dZ.T) / m
+# sum along the column
+db = np.sum(dZ, axis=1) / m
+# sum will get a row vector regardless of the axis parameter, so we need to reshape it
+db = db.reshape(ny, 1)
+\end{python}
+\verb|np.sum()| 函数的 \verb|axis| 参数表示沿着哪个维度进行求和，\verb|axis=0| 表示沿着列求和，\verb|axis=1| 表示沿着行求和。
+
+\vspace{0.5\baselineskip}
+在 \verb|numpy| 中，矩阵的维度扩充与 \verb|matlab| 类似，可以自动扩充，也可以使用 \verb|reshape| 函数进行扩充。
+
+矩阵在保存时，使用了两重方括号，例如 \verb|[[1, 2], [3, 4]]|，而向量仅有一重方括号，例如 \verb|[1, 2, 3, 4]|。
+要把向量转换为矩阵，可以使用 \verb|reshape()| 函数，例如
+\begin{python}
+A = np.array([1, 2, 3, 4])
+print(A)
+A = A.reshape(1, 4)
+print(A)
+\end{python}
+输出结果为
+\begin{python}
+[1 2 3 4]
+[[1 2 3 4]]
+\end{python}
+\verb|reshape()| 是一个O(1)的操作，因此不会影响程序的运行效率。

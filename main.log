@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.8.4)  10 AUG 2023 16:43
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.8.4)  11 AUG 2023 00:02
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -887,12 +887,21 @@ Package: titletoc 2021/07/05 v2.14 TOC entries
 \BoxTtlwidth=\skip93
 \c@ttlp@side=\count473
 \ttlp@side=\count474
-)) (d:/texlive/2023/texmf-dist/tex/latex/jknapltx/mathrsfs.sty
+)) (d:/texlive/2023/texmf-dist/tex/latex/tools/bm.sty
+Package: bm 2022/01/05 v1.2f Bold Symbol Support (DPC/FMi)
+\symboldoperators=\mathgroup6
+\symboldletters=\mathgroup7
+\symboldsymbols=\mathgroup8
+Package bm Info: No bold for \OMX/cmex/m/n, using \pmb.
+Package bm Info: No bold for \U/msa/m/n, using \pmb.
+Package bm Info: No bold for \U/msb/m/n, using \pmb.
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 149.
+) (d:/texlive/2023/texmf-dist/tex/latex/jknapltx/mathrsfs.sty
 Package: mathrsfs 1996/01/01 Math RSFS package v1.0 (jk)
-\symrsfs=\mathgroup6
+\symrsfs=\mathgroup9
 ) (d:/texlive/2023/texmf-dist/tex/latex/stmaryrd/stmaryrd.sty
 Package: stmaryrd 1994/03/03 St Mary's Road symbol package
-\symstmry=\mathgroup7
+\symstmry=\mathgroup10
 LaTeX Font Info:    Overwriting symbol font `stmry' in version `bold'
 (Font)                  U/stmry/m/n --> U/stmry/b/n on input line 89.
 )
@@ -1372,7 +1381,7 @@ LaTeX Font Info:    ... okay on input line 91.
 Package fontspec Info: Adjusting the maths setup (use [no-math] to avoid
 (fontspec)             this).
 
-\symlegacymaths=\mathgroup8
+\symlegacymaths=\mathgroup11
 LaTeX Font Info:    Overwriting symbol font `legacymaths' in version `bold'
 (Font)                  OT1/cmr/m/n --> OT1/cmr/bx/n on input line 91.
 LaTeX Font Info:    Redeclaring math accent \acute on input line 91.
@@ -1725,28 +1734,35 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 
 ]
-Package svg Info: Last page of `./svg-inkscape/sigmoid_svg-tex.pdf' is 1 on input line 74.
+Package svg Info: Last page of `./svg-inkscape/sigmoid_svg-tex.pdf' is 1 on input line 76.
  (./svg-inkscape/sigmoid_svg-tex.pdf_tex
 File: ./svg-inkscape/sigmoid_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/sigmoid_svg-tex.pdf, page 1>
 )
-Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [6]
-Package svg Info: Last page of `./svg-inkscape/LossFunction_svg-tex.pdf' is 1 on input line 87.
- (./svg-inkscape/LossFunction_svg-tex.pdf_tex
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+Package svg Info: Last page of `./svg-inkscape/LossFunction_svg-tex.pdf' is 1 on input line 89.
+(./svg-inkscape/LossFunction_svg-tex.pdf_tex
 File: ./svg-inkscape/LossFunction_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/LossFunction_svg-tex.pdf, page 1>
-) [7] (d:/texlive/2023/texmf-dist/tex/latex/listings/lstlang1.sty
+)
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[6]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [7] (d:/texlive/2023/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2023/02/27 1.9 listings language file
 )
 LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <8> not available
-(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 177.
-) [8] [9
+(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 179.
+ [8]) [9] [10
 
 
 
-] [10]
+] [11] [12]
 \openout2 = `chapter2.aux'.
 
  (./chapter2.tex
@@ -1803,7 +1819,7 @@ Package hyperref Info: bookmark level for unknown proof defaults to 0 on input l
 
 Underfull \vbox (badness 6284) has occurred while \output is active []
 
- [11
+ [13
 
 
 ]
@@ -1813,7 +1829,7 @@ File: imgs/Lanzhou.png Graphic file (type bmp)
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[12]) [13] [14
+[14]) [15] [16
 
 
 ]
@@ -1845,47 +1861,47 @@ Package fontspec Info: Font family 'FandolFang-Regular.otf(0)' created for
 
 Package hyperref Info: bookmark level for unknown definition-theorem defaults to 0 on input line 25.
 
-LaTeX Warning: Reference `prop:chen' on page 15 undefined on input line 33.
+LaTeX Warning: Reference `prop:chen' on page 17 undefined on input line 33.
 
-[15
+[17
 
 
 ]
 Package hyperref Info: bookmark level for unknown definition-proposition defaults to 0 on input line 37.
 
 
-LaTeX Warning: Reference `exo:Euler' on page 16 undefined on input line 56.
+LaTeX Warning: Reference `exo:Euler' on page 18 undefined on input line 56.
 
 Package hyperref Info: bookmark level for unknown conjecture defaults to 0 on input line 58.
 Package hyperref Info: bookmark level for unknown hypothesis defaults to 0 on input line 63.
 
-LaTeX Warning: Citation 'Oxl11' on page 16 undefined on input line 66.
+LaTeX Warning: Citation 'Oxl11' on page 18 undefined on input line 66.
 
 
-LaTeX Warning: Citation 'ZG' on page 16 undefined on input line 66.
+LaTeX Warning: Citation 'ZG' on page 18 undefined on input line 66.
 
-) [16] [17
-
-
+) [18] [19
 
 
-] [18
+
+
+] [20
 
 ] (./main.lof)
 \tf@lof=\write8
 \openout8 = `main.lof'.
 
- [19
+ [21
 
-] [20
+] [22
 
 ] (./main.lot)
 \tf@lot=\write9
 \openout9 = `main.lot'.
 
- [21
+ [23
 
-] [22
+] [24
 
 ] (./main-main.ind)
 \tf@thm=\write10
@@ -1896,7 +1912,7 @@ LaTeX Warning: Citation 'ZG' on page 16 undefined on input line 66.
 Package imakeidx Warning: Remember to run xelatex again after calling
 (imakeidx)                `splitindex' and processing the indices.
 
-[23
+[25
 
 ] (./main.aux (./prelude.aux) (./chapter1.aux) (./chapter2.aux) (./appendix.aux))
  ***********
@@ -1910,26 +1926,19 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 LaTeX Warning: There were undefined references.
 
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
 Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: F3EF2F14389CACD1DB9D544A0E2FF9CD;3061.
-
-Package biblatex Warning: Please rerun LaTeX.
-(biblatex)                Page breaks have changed.
-
 Package logreq Info: Writing requests to 'main.run.xml'.
 \openout1 = `main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 55912 strings out of 475890
- 1325732 string characters out of 5782032
- 2332395 words of memory out of 5000000
- 75936 multiletter control sequences out of 15000+600000
- 575787 words of font info for 182 fonts, out of 8000000 for 9000
+ 56101 strings out of 475890
+ 1328805 string characters out of 5782032
+ 2435285 words of memory out of 5000000
+ 76100 multiletter control sequences out of 15000+600000
+ 585025 words of font info for 216 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  102i,17n,108p,861b,4693s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on main.pdf (26 pages).
+Output written on main.pdf (28 pages).

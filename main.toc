@@ -8,17 +8,17 @@
 \contentsline {subsection}{\numberline {1.2.2}Logistic Regression}{6}{subsection.1.2.2}%
 \contentsline {subsection}{\numberline {1.2.3}Gradient Descent}{7}{subsection.1.2.3}%
 \contentsline {subsection}{\numberline {1.2.4}Vectorization}{8}{subsection.1.2.4}%
-\contentsline {part}{\numberline {II}Projects}{9}{part.2}%
-\contentsline {chapter}{\numberline {2}短章名}{11}{chapter.2}%
-\contentsline {section}{\numberline {2.1}长度正常的节名}{11}{section.2.1}%
-\contentsline {section}{\numberline {2.2}短节名}{12}{section.2.2}%
-\contentsline {section}{习题}{12}{figure.2.1}%
-\contentsline {chapter}{\numberline {A}杂项 $a+b$}{15}{appendix.A}%
-\contentsline {section}{\numberline {A.1}文字测试}{15}{section.A.1}%
-\contentsline {section}{\numberline {A.2}测试: $B_n(X)$}{16}{section.A.2}%
-\contentsline {subsection}{\numberline {A.2.1}一张表格}{16}{subsection.A.2.1}%
-\contentsline {chapter}{Bibliography}{17}{appendix*.3}%
-\contentsline {chapter}{List of Figures}{19}{section*.4}%
-\contentsline {chapter}{List of Tables}{21}{section*.6}%
-\contentsline {chapter}{Keyword Index}{23}{section*.8}%
+\contentsline {part}{\numberline {II}Projects}{11}{part.2}%
+\contentsline {chapter}{\numberline {2}短章名}{13}{chapter.2}%
+\contentsline {section}{\numberline {2.1}长度正常的节名}{13}{section.2.1}%
+\contentsline {section}{\numberline {2.2}短节名}{14}{section.2.2}%
+\contentsline {section}{习题}{14}{figure.2.1}%
+\contentsline {chapter}{\numberline {A}杂项 $a+b$}{17}{appendix.A}%
+\contentsline {section}{\numberline {A.1}文字测试}{17}{section.A.1}%
+\contentsline {section}{\numberline {A.2}测试: $B_n(X)$}{18}{section.A.2}%
+\contentsline {subsection}{\numberline {A.2.1}一张表格}{18}{subsection.A.2.1}%
+\contentsline {chapter}{Bibliography}{19}{appendix*.3}%
+\contentsline {chapter}{List of Figures}{21}{section*.4}%
+\contentsline {chapter}{List of Tables}{23}{section*.6}%
+\contentsline {chapter}{Keyword Index}{25}{section*.8}%
 \contentsfinish 
