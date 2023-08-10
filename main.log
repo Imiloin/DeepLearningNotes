@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.8.4)  8 AUG 2023 22:20
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.8.4)  10 AUG 2023 15:44
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1627,13 +1627,13 @@ LaTeX Font Info:    Trying to load font information for U+rsfs on input line 16.
 File: ursfs.fd 1998/03/24 rsfs font definition file (jk)
 )
 LaTeX Font Info:    Trying to load font information for U+stmry on input line 16.
- (d:/texlive/2023/texmf-dist/tex/latex/stmaryrd/Ustmry.fd) [1
-
-])
+ (d:/texlive/2023/texmf-dist/tex/latex/stmaryrd/Ustmry.fd))
 \tf@toc=\write7
 \openout7 = `main.toc'.
 
- [2]
+ [1
+
+] [2]
 \openout2 = `prelude.aux'.
 
  (./prelude.tex
@@ -1704,32 +1704,20 @@ File: ./svg-inkscape/sigmoid_svg-tex.pdf Graphic file (type pdf)
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [6]
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Package svg Info: Last page of `./svg-inkscape/LossFunction_svg-tex.pdf' is 1 on input line 87.
+ (./svg-inkscape/LossFunction_svg-tex.pdf_tex
+File: ./svg-inkscape/LossFunction_svg-tex.pdf Graphic file (type pdf)
+<use ./svg-inkscape/LossFunction_svg-tex.pdf, page 1>
+) [7]) [8] [9
 
- [7]
-
-Package fontspec Warning: Font "FandolFang-Regular" does not contain requested
-(fontspec)                Script "CJK".
 
 
-Package fontspec Info: Font family 'FandolFang-Regular.otf(0)' created for
-(fontspec)             font 'FandolFang-Regular.otf' with options
-(fontspec)             [Ligatures=TeX,Script={CJK},BoldFont={FandolSong-Bold.otf},ItalicFont={FandolKai-Regular.otf}].
-(fontspec)              
-(fontspec)              This font family consists of the following NFSS
-(fontspec)             series/shapes:
-(fontspec)              
-(fontspec)             - 'normal' (m/n) with NFSS spec.:
-(fontspec)             <->"[FandolFang-Regular.otf]/OT:language=dflt;mapping=tex-text;"
-(fontspec)             - 'small caps'  (m/sc) with NFSS spec.: 
-(fontspec)             - 'bold' (b/n) with NFSS spec.:
-(fontspec)             <->"[FandolSong-Bold.otf]/OT:language=dflt;mapping=tex-text;"
-(fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
-(fontspec)             - 'italic' (m/it) with NFSS spec.:
-(fontspec)             <->"[FandolKai-Regular.otf]/OT:language=dflt;mapping=tex-text;"
-(fontspec)             - 'italic small caps'  (m/scit) with NFSS spec.: 
+] [10]
+\openout2 = `chapter2.aux'.
 
-Package hyperref Info: bookmark level for unknown definition defaults to 0 on input line 166.
+ (./chapter2.tex
+Chapter 2.
+Package hyperref Info: bookmark level for unknown convention defaults to 0 on input line 7.
 
 Package fontspec Warning: Font "FandolHei-Regular" does not contain requested
 (fontspec)                Script "CJK".
@@ -1749,9 +1737,7 @@ Package fontspec Info: Font family 'FandolHei-Regular.otf(2)' created for font
 (fontspec)             <->"[FandolHei-Regular.otf]/OT:language=dflt;mapping=tex-text;"
 (fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
 
-Package hyperref Info: bookmark level for unknown proposition defaults to 0 on input line 171.
-[8]
-Package hyperref Info: bookmark level for unknown lemma defaults to 0 on input line 178.
+Package hyperref Info: bookmark level for unknown example defaults to 0 on input line 17.
 
 Package fontspec Info: Could not resolve font "Noto Sans CJK SC Medium/I" (it
 (fontspec)             probably doesn't exist).
@@ -1779,49 +1765,11 @@ Package fontspec Info: Font family 'NotoSansCJKSC(2)' created for font 'Noto
 (fontspec)             SC/BI/OT:script=hani;language=dflt;mapping=tex-text;"
 (fontspec)             - 'bold italic small caps'  (b/scit) with NFSS spec.: 
 
-Package hyperref Info: bookmark level for unknown proof defaults to 0 on input line 182.
-Package hyperref Info: bookmark level for unknown corollary defaults to 0 on input line 186.
-Package hyperref Info: bookmark level for unknown remark defaults to 0 on input line 194.
- [9]
-
-Package fontspec Warning: Font "FandolKai-Regular" does not contain requested
-(fontspec)                Script "CJK".
-
-
-Package fontspec Info: Font family 'FandolKai-Regular.otf(0)' created for font
-(fontspec)             'FandolKai-Regular.otf' with options
-(fontspec)             [Ligatures=TeX,Script={CJK},BoldFont={FandolKai-Regular.otf},ItalicFont={FandolKai-Regular.otf}].
-(fontspec)              
-(fontspec)              This font family consists of the following NFSS
-(fontspec)             series/shapes:
-(fontspec)              
-(fontspec)             - 'normal' (m/n) with NFSS spec.:
-(fontspec)             <->"[FandolKai-Regular.otf]/OT:language=dflt;mapping=tex-text;"
-(fontspec)             - 'small caps'  (m/sc) with NFSS spec.: 
-(fontspec)             - 'bold' (b/n) with NFSS spec.:
-(fontspec)             <->"[FandolKai-Regular.otf]/OT:language=dflt;mapping=tex-text;"
-(fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
-(fontspec)             - 'italic' (m/it) with NFSS spec.:
-(fontspec)             <->"[FandolKai-Regular.otf]/OT:language=dflt;mapping=tex-text;"
-(fontspec)             - 'italic small caps'  (m/scit) with NFSS spec.: 
-
-File: imgs/ccby.png Graphic file (type bmp)
-<imgs/ccby.png>
-[10]) [11] [12
-
-
-
-] [13] [14]
-\openout2 = `chapter2.aux'.
-
- (./chapter2.tex
-Chapter 2.
-Package hyperref Info: bookmark level for unknown convention defaults to 0 on input line 7.
-Package hyperref Info: bookmark level for unknown example defaults to 0 on input line 17.
+Package hyperref Info: bookmark level for unknown proof defaults to 0 on input line 21.
 
 Underfull \vbox (badness 6284) has occurred while \output is active []
 
- [15
+ [11
 
 
 ]
@@ -1831,7 +1779,7 @@ File: imgs/Lanzhou.png Graphic file (type bmp)
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[16]) [17] [18
+[12]) [13] [14
 
 
 ]
@@ -1839,46 +1787,71 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 
  (./appendix.tex
 附录 A.
+
+Package fontspec Warning: Font "FandolFang-Regular" does not contain requested
+(fontspec)                Script "CJK".
+
+
+Package fontspec Info: Font family 'FandolFang-Regular.otf(0)' created for
+(fontspec)             font 'FandolFang-Regular.otf' with options
+(fontspec)             [Ligatures=TeX,Script={CJK},BoldFont={FandolSong-Bold.otf},ItalicFont={FandolKai-Regular.otf}].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.:
+(fontspec)             <->"[FandolFang-Regular.otf]/OT:language=dflt;mapping=tex-text;"
+(fontspec)             - 'small caps'  (m/sc) with NFSS spec.: 
+(fontspec)             - 'bold' (b/n) with NFSS spec.:
+(fontspec)             <->"[FandolSong-Bold.otf]/OT:language=dflt;mapping=tex-text;"
+(fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
+(fontspec)             - 'italic' (m/it) with NFSS spec.:
+(fontspec)             <->"[FandolKai-Regular.otf]/OT:language=dflt;mapping=tex-text;"
+(fontspec)             - 'italic small caps'  (m/scit) with NFSS spec.: 
+
 Package hyperref Info: bookmark level for unknown definition-theorem defaults to 0 on input line 25.
-[19
+
+LaTeX Warning: Reference `prop:chen' on page 15 undefined on input line 33.
+
+[15
 
 
 ]
 Package hyperref Info: bookmark level for unknown definition-proposition defaults to 0 on input line 37.
 
 
-LaTeX Warning: Reference `exo:Euler' on page 20 undefined on input line 56.
+LaTeX Warning: Reference `exo:Euler' on page 16 undefined on input line 56.
 
 Package hyperref Info: bookmark level for unknown conjecture defaults to 0 on input line 58.
 Package hyperref Info: bookmark level for unknown hypothesis defaults to 0 on input line 63.
 
-LaTeX Warning: Citation 'Oxl11' on page 20 undefined on input line 66.
+LaTeX Warning: Citation 'Oxl11' on page 16 undefined on input line 66.
 
 
-LaTeX Warning: Citation 'ZG' on page 20 undefined on input line 66.
+LaTeX Warning: Citation 'ZG' on page 16 undefined on input line 66.
 
-) [20] [21
-
-
+) [16] [17
 
 
-] [22
+
+
+] [18
 
 ] (./main.lof)
 \tf@lof=\write8
 \openout8 = `main.lof'.
 
- [23
+ [19
 
-] [24
+] [20
 
 ] (./main.lot)
 \tf@lot=\write9
 \openout9 = `main.lot'.
 
- [25
+ [21
 
-] [26
+] [22
 
 ] (./main-main.ind)
 \tf@thm=\write10
@@ -1889,7 +1862,7 @@ LaTeX Warning: Citation 'ZG' on page 20 undefined on input line 66.
 Package imakeidx Warning: Remember to run xelatex again after calling
 (imakeidx)                `splitindex' and processing the indices.
 
-[27
+[23
 
 ] (./main.aux (./prelude.aux) (./chapter1.aux) (./chapter2.aux) (./appendix.aux))
  ***********
@@ -1903,25 +1876,19 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 LaTeX Warning: There were undefined references.
 
-
-Package rerunfilecheck Warning: File `main.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `main.out':
-(rerunfilecheck)             Before: C857ED41762FC1537125C1112C3599FE;3741
-(rerunfilecheck)             After:  46D9777993C2AB7E6B7FAC664BD5FB33;3794.
+Package rerunfilecheck Info: File `main.out' has not changed.
+(rerunfilecheck)             Checksum: F3EF2F14389CACD1DB9D544A0E2FF9CD;3061.
 Package logreq Info: Writing requests to 'main.run.xml'.
 \openout1 = `main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 54615 strings out of 475890
- 1326196 string characters out of 5782032
- 2318393 words of memory out of 5000000
- 74649 multiletter control sequences out of 15000+600000
- 577765 words of font info for 198 fonts, out of 8000000 for 9000
+ 54227 strings out of 475890
+ 1300698 string characters out of 5782032
+ 2299315 words of memory out of 5000000
+ 74274 multiletter control sequences out of 15000+600000
+ 575771 words of font info for 180 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  102i,17n,108p,861b,4693s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on main.pdf (30 pages).
+Output written on main.pdf (26 pages).
