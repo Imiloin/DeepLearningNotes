@@ -81,7 +81,7 @@ Algorithms是指算法, 例如Logistic Regression、SVM、Neural Networks等。
 \vspace{0.5\baselineskip}
 对某一个样本而言，Loss function（误差函数）定义为:
 \begin{equation}
-	L(\hat{y}^{(i)}, y^{(i)}) = -[y^{(i)} \log \hat{y}^{(i)} + (1 - y^{(i)}) \log (1 - \hat{y}^{(i)})] \label{eq:loss}
+	L(\hat{y}^{(i)}, y^{(i)}) = -\left[y^{(i)} \log \hat{y}^{(i)} + (1 - y^{(i)}) \log (1 - \hat{y}^{(i)})\right] \label{eq:loss}
 \end{equation}
 该函数与方差类似，当样本的误差越大，Loss function的值越大，如图 \ref{fig:loss} 所示。
 \begin{figure}[h]
@@ -93,7 +93,7 @@ Algorithms是指算法, 例如Logistic Regression、SVM、Neural Networks等。
 
 对整个模型而言，Cost function（代价函数）定义为:
 \begin{equation}
-	J(w, b) = \frac{1}{m} \sum_{i=1}^{m} L(\hat{y}^{(i)}, y^{(i)}) = -\frac{1}{m} \sum_{i=1}^{m} [y^{(i)} \log \hat{y}^{(i)} + (1 - y^{(i)}) \log (1 - \hat{y}^{(i)})] \label{eq:cost}
+	J(w, b) = \frac{1}{m} \sum_{i=1}^{m} L(\hat{y}^{(i)}, y^{(i)}) = -\frac{1}{m} \sum_{i=1}^{m} \left[y^{(i)} \log \hat{y}^{(i)} + (1 - y^{(i)}) \log (1 - \hat{y}^{(i)})\right] \label{eq:cost}
 \end{equation}
 相当于误差函数的平均值。
 
@@ -120,7 +120,7 @@ Algorithms是指算法, 例如Logistic Regression、SVM、Neural Networks等。
 	\begin{aligned}
 	z &= w^\mathrm{T} x^{(i)} + b \\
 	\hat{y}^{(i)} &= \sigma(z) \\
-	L(\hat{y}^{(i)}, y^{(i)}) &= -[y^{(i)} \log \hat{y}^{(i)} + (1 - y^{(i)}) \log (1 - \hat{y}^{(i)})]
+	L(\hat{y}^{(i)}, y^{(i)}) &= -\left[y^{(i)} \log \hat{y}^{(i)} + (1 - y^{(i)}) \log (1 - \hat{y}^{(i)})\right]
 	\end{aligned} 
 	\label{eq:gradient_logistic_sample}
 \end{equation}
@@ -162,7 +162,7 @@ Algorithms是指算法, 例如Logistic Regression、SVM、Neural Networks等。
 
 \subsection{Vectorization}
 
-一个重要的原则是，在训练过程中要避免使用循环，而是使用向量化的方法。\\
+一个重要的原则是，在训练过程中要避免使用循环，而是使用向量化的方法。向量化可以调用并行计算，相对于循环的串行计算效率更高。\\
 要完成下面的矩阵操作，
 \begin{equation}
 	Z =
@@ -207,17 +207,69 @@ db = db.reshape(ny, 1)
 \vspace{0.5\baselineskip}
 在 \verb|numpy| 中，矩阵的维度扩充与 \verb|matlab| 类似，可以自动扩充，也可以使用 \verb|reshape| 函数进行扩充。
 
-矩阵在保存时，使用了两重方括号，例如 \verb|[[1, 2], [3, 4]]|，而向量仅有一重方括号，例如 \verb|[1, 2, 3, 4]|。
-要把向量转换为矩阵，可以使用 \verb|reshape()| 函数，例如
+矩阵（或向量）在保存时，使用了两重方括号，例如 \verb|[[1, 2], [3, 4]] / [[3, 6, 9]]|，而数组仅有一重方括号，例如 \verb|[1, 2, 3, 4]|。
+要把数组转换为向量，可以使用 \verb|reshape()| 函数，例如
 \begin{python}
 A = np.array([1, 2, 3, 4])
 print(A)
+print(A.shape)
+print(A.T)
 A = A.reshape(1, 4)
 print(A)
+print(A.shape)
+print(A.T)
 \end{python}
 输出结果为
 \begin{python}
+# array, rank=1
 [1 2 3 4]
+(4,) 
+[1 2 3 4]
+# vector
 [[1 2 3 4]]
+(1, 4) 
+[[1]
+ [2]
+ [3]
+ [4]]
 \end{python}
-\verb|reshape()| 是一个O(1)的操作，因此不会影响程序的运行效率。
+\verb|reshape()| 是一个$O(1)$的操作，不会影响程序的运行效率。在本课程中不要使用 \verb|rank 1 array|，因为它的维度不是$(n, 1)$或$(1, n)$，在进行矩阵运算时会出现错误。
+
+\vspace{0.5\baselineskip}
+为了确保矩阵的维度正确，可以使用 \verb|assert()| 函数，例如
+\begin{python}
+assert(A.shape == (1, 4))
+\end{python}
+如果 \verb|A.shape| 不等于 \verb|(1, 4)|，则会报错。
+
+\subsection{Explanation of logistic regression cost function}
+
+对于二元分类模型，我们期望$\hat{y}$尽可能接近$y$，即$\hat{y}^{(i)}$接近$1$时，$y^{(i)}$也接近$1$，$\hat{y}^{(i)}$接近$0$时，$y^{(i)}$也接近$0$。
+
+当$y^{(i)}=1$时，得到正确分类的概率为$\hat{y}^{(i)}$；而当$y^{(i)}=0$时，得到正确分类的概率为$1-\hat{y}^{(i)}$。因此，对于第$i$个样本，可以使用下面的公式来表示这个概率：
+\begin{equation}
+	P(y^{(i)} | x^{(i)}; w, b) = (\hat{y}^{(i)})^{y^{(i)}} (1-\hat{y}^{(i)})^{1-y^{(i)}}
+\end{equation}
+假如各个样本是独立的，那么所有样本得到正确分类的概率为
+\begin{equation}
+	\begin{aligned}
+		P(y | x; w, b) &= \prod_{i=1}^{m} P(y^{(i)} | x^{(i)}; w, b)\\
+		&= \prod_{i=1}^{m} (\hat{y}^{(i)})^{y^{(i)}} (1-\hat{y}^{(i)})^{1-y^{(i)}}
+	\end{aligned}
+\end{equation}
+为了避免使用指数运算，可以在等式两边取对数，得到
+\begin{equation}
+	\begin{aligned}
+		\log P(y | x; w, b) &= \sum_{i=1}^{m} \log (\hat{y}^{(i)})^{y^{(i)}} (1-\hat{y}^{(i)})^{1-y^{(i)}}\\
+		&= \sum_{i=1}^{m} \left[ y^{(i)} \log \hat{y}^{(i)} + (1-y^{(i)}) \log (1-\hat{y}^{(i)}) \right]
+	\end{aligned}
+\end{equation}
+习惯上等式右边要取平均值，因此可以得到
+\begin{equation}
+	\frac{1}{m} \log P(y | x; w, b) = \frac{1}{m} \sum_{i=1}^{m} \left[ y^{(i)} \log \hat{y}^{(i)} + (1-y^{(i)}) \log (1-\hat{y}^{(i)}) \right]
+\end{equation}
+我们期望这个值越大越好，为了使用梯度下降法，可以对上式取负号，得到
+\begin{equation}
+	J(w, b) \triangleq - \frac{1}{m} \sum_{i=1}^{m} \left[ y^{(i)} \log \hat{y}^{(i)} + (1-y^{(i)}) \log (1-\hat{y}^{(i)}) \right]
+\end{equation}
+这就是代价函数的定义。我们期望代价函数的值越小越好，因此可以使用梯度下降法来求解$w$和$b$。
