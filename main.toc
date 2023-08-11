@@ -8,6 +8,7 @@
 \contentsline {subsection}{\numberline {1.2.2}Logistic Regression}{6}{subsection.1.2.2}%
 \contentsline {subsection}{\numberline {1.2.3}Gradient Descent}{7}{subsection.1.2.3}%
 \contentsline {subsection}{\numberline {1.2.4}Vectorization}{8}{subsection.1.2.4}%
+\contentsline {subsection}{\numberline {1.2.5}Explanation of logistic regression cost function}{10}{subsection.1.2.5}%
 \contentsline {part}{\numberline {II}Projects}{11}{part.2}%
 \contentsline {chapter}{\numberline {2}短章名}{13}{chapter.2}%
 \contentsline {section}{\numberline {2.1}长度正常的节名}{13}{section.2.1}%
