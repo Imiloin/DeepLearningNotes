@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.8.4)  11 AUG 2023 00:02
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.8.4)  11 AUG 2023 14:30
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1548,20 +1548,20 @@ Package hyperref Info: Link coloring ON on input line 91.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-File: cover_test.pdf Graphic file (type pdf)
-<use cover_test.pdf>
-File: cover_test.pdf Graphic file (type pdf)
-<use cover_test.pdf>
-File: cover_test.pdf Graphic file (type pdf)
-<use cover_test.pdf, page 1>
-File: cover_test.pdf Graphic file (type pdf)
-<use cover_test.pdf, page 1>
-File: cover_test.pdf Graphic file (type pdf)
-<use cover_test.pdf, page 1>
-File: cover_test.pdf Graphic file (type pdf)
-<use cover_test.pdf, page 1>
-File: cover_test.pdf Graphic file (type pdf)
-<use cover_test.pdf, page 1>
+File: cover.pdf Graphic file (type pdf)
+<use cover.pdf>
+File: cover.pdf Graphic file (type pdf)
+<use cover.pdf>
+File: cover.pdf Graphic file (type pdf)
+<use cover.pdf, page 1>
+File: cover.pdf Graphic file (type pdf)
+<use cover.pdf, page 1>
+File: cover.pdf Graphic file (type pdf)
+<use cover.pdf, page 1>
+File: cover.pdf Graphic file (type pdf)
+<use cover.pdf, page 1>
+File: cover.pdf Graphic file (type pdf)
+<use cover.pdf, page 1>
 [1
 
 
@@ -1934,8 +1934,8 @@ Package logreq Info: Writing requests to 'main.run.xml'.
  ) 
 Here is how much of TeX's memory you used:
  56101 strings out of 475890
- 1328805 string characters out of 5782032
- 2435285 words of memory out of 5000000
+ 1328745 string characters out of 5782032
+ 2435263 words of memory out of 5000000
  76100 multiletter control sequences out of 15000+600000
  585025 words of font info for 216 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
