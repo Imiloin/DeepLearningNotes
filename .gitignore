@@ -1,4 +1,6 @@
+imgs_projs/
 .texpadtmp
+main.pdf
 *.aux
 *.log
 *.gz

@@ -277,43 +277,53 @@ assert(A.shape == (1, 4))
 \section{Shallow Neural Networks}
 在上一节中，我们构建的模型本质上是一个一层的神经“网络”。在本节中，我们将构建一个两层的神经网络，也就是一个\textbf{浅层神经网络（Shallow Neural Network）}。
 
-\begin{center}
-\begin{tikzpicture}[x=1.5cm, y=1.5cm, >=stealth]
-	\def\nx{3}
-	\def\nu{4}
-    % 输入层
-	\foreach \i in {1,...,\nx}
-        \node[circle, draw=none] (x\i) at (0,2-\i) {$x_\i^{(i)}$};
-    \foreach \i in {1,...,\nx}
-        \node[coordinate] (lx\i) at (0.2,2-\i) {};
-    
-    % 隐藏层
-    \foreach \h in {1,...,\nu}
-        \node[circle, draw=blue, fill=white, inner sep=0pt, minimum size=10mm] (h\h) at (2,2.5-\h) {$a_\h^{[1](i)}$};
-    
-    % 输出层
-    \node[circle, draw=yellow, fill=white, inner sep=0pt, minimum size=10mm] (o) at (4,0) {$a^{[2](i)}$};
-
-	% 预测值
-	\node[circle, draw=none] (yhat) at (5.5,0) {$\hat{y}^{(i)}$};
-    
-
-    % 连接
-    \foreach \i in {1,...,\nx}
-        \foreach \h in {1,...,\nu}
-            \draw[->, color=base1] (lx\i) -- (h\h);
-    
-    \foreach \h in {1,...,\nu}
-        \draw[->, color=base1] (h\h) -- (o);
+\begin{figure}[h]
+	\centering
+	\begin{tikzpicture}[x=1.5cm, y=1.5cm, >=stealth]
+		\def\nx{3}
+		\def\nu{4}
+		% 输入层
+		\foreach \i in {1,...,\nx}
+			\node[circle, draw=none] (x\i) at (0,2-\i) {$x_\i^{(i)}$};
+		\foreach \i in {1,...,\nx}
+			\node[coordinate] (lx\i) at (0.2,2-\i) {};
+		
+		% 隐藏层
+		\foreach \h in {1,...,\nu}
+			\node[circle, draw=blue, fill=white, inner sep=0pt, minimum size=10mm] (h\h) at (2,2.5-\h) {$a_\h^{[1](i)}$};
+		
+		% 输出层
+		\node[circle, draw=yellow, fill=white, inner sep=0pt, minimum size=10mm] (o) at (4,0) {$a^{[2](i)}$};
 	
-	\draw[->, color=base1] (o) -- (yhat);
-    
-    % 标签
-	\def\labely{-2}
-	\draw [decorate,decoration={calligraphic brace,amplitude=4pt,mirror}] (-0.35,\labely) -- (0.35,\labely) node [green,midway,yshift=-0.5cm] {输入层};
-	\draw [decorate,decoration={calligraphic brace,amplitude=4pt,mirror}] (1.5,\labely) -- (2.5,\labely) node [blue,midway,yshift=-0.5cm] {隐藏层};
-	\draw [decorate,decoration={calligraphic brace,amplitude=4pt,mirror}] (3.5,\labely) -- (4.5,\labely) node [yellow,midway,yshift=-0.5cm] {输出层};
-	\draw [decorate,decoration={calligraphic brace,amplitude=4pt,mirror}] (5.15,\labely) -- (5.85,\labely) node [red,midway,yshift=-0.5cm] {预测值};
+		% 预测值
+		\node[circle, draw=none] (yhat) at (5.5,0) {$\hat{y}^{(i)}$};
+		
+	
+		% 连接
+		\foreach \i in {1,...,\nx}
+			\foreach \h in {1,...,\nu}
+				\draw[->, color=base1] (lx\i) -- (h\h);
+		
+		\foreach \h in {1,...,\nu}
+			\draw[->, color=base1] (h\h) -- (o);
+		
+		\draw[->, color=base1] (o) -- (yhat);
+		
+		% 标签
+		\def\labely{-2}
+		\draw [decorate,decoration={calligraphic brace,amplitude=4pt,mirror}] (-0.35,\labely) -- (0.35,\labely) node [green,midway,yshift=-0.5cm] {输入层};
+		\draw [decorate,decoration={calligraphic brace,amplitude=4pt,mirror}] (1.5,\labely) -- (2.5,\labely) node [blue,midway,yshift=-0.5cm] {隐藏层};
+		\draw [decorate,decoration={calligraphic brace,amplitude=4pt,mirror}] (3.5,\labely) -- (4.5,\labely) node [yellow,midway,yshift=-0.5cm] {输出层};
+		\draw [decorate,decoration={calligraphic brace,amplitude=4pt,mirror}] (5.15,\labely) -- (5.85,\labely) node [red,midway,yshift=-0.5cm] {预测值};
+	
+	\end{tikzpicture}
+	\caption{Shallow Neural Network 浅层神经网络}
+	\label{fig:shallow_nn}
+\end{figure}
 
-\end{tikzpicture}
-\end{center}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=5cm]{node.pdf}
+	\caption{单个节点的结构}
+	\label{fig:node}
+\end{figure}
