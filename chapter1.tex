@@ -28,7 +28,7 @@ Algorithms是指算法, 例如Logistic Regression、SVM、Neural Networks等。
 	\centering
 	\begin{threeparttable}
 	%%%%%
-	\caption{表格标题}
+	\caption{Notations}
 	%
 	\begin{tabular}{clcc}
 		\hline
@@ -99,7 +99,7 @@ Algorithms是指算法, 例如Logistic Regression、SVM、Neural Networks等。
 
 \subsection{Gradient Descent}
 
-训练过程使用梯度下降（Gradient Descent）算法，即：
+训练过程使用\textbf{梯度下降（Gradient Descent）算法}，即：
 \begin{equation}
 	\mathrm{var} = \mathrm{var} - \alpha \frac{\mathrm{d}J}{\mathrm{d}\mathrm{var}} \label{eq:gradient}
 \end{equation}
@@ -244,7 +244,7 @@ assert(A.shape == (1, 4))
 
 \subsection{Explanation of logistic regression cost function}
 
-对于二元分类模型，我们期望$\hat{y}$尽可能接近$y$，即$\hat{y}^{(i)}$接近$1$时，$y^{(i)}$也接近$1$，$\hat{y}^{(i)}$接近$0$时，$y^{(i)}$也接近$0$。
+对于二元分类模型，我们期望$\hat{y}$尽可能接近$y$，即${y}^{(i)}$等于$1$时，$\hat{y}^{(i)}$接近$1$，而${y}^{(i)}$等于$0$时，$\hat{y}^{(i)}$接近$0$。
 
 当$y^{(i)}=1$时，得到正确分类的概率为$\hat{y}^{(i)}$；而当$y^{(i)}=0$时，得到正确分类的概率为$1-\hat{y}^{(i)}$。因此，对于第$i$个样本，可以使用下面的公式来表示这个概率：
 \begin{equation}
@@ -273,3 +273,47 @@ assert(A.shape == (1, 4))
 	J(w, b) \triangleq - \frac{1}{m} \sum_{i=1}^{m} \left[ y^{(i)} \log \hat{y}^{(i)} + (1-y^{(i)}) \log (1-\hat{y}^{(i)}) \right]
 \end{equation}
 这就是代价函数的定义。我们期望代价函数的值越小越好，因此可以使用梯度下降法来求解$w$和$b$。
+
+\section{Shallow Neural Networks}
+在上一节中，我们构建的模型本质上是一个一层的神经“网络”。在本节中，我们将构建一个两层的神经网络，也就是一个\textbf{浅层神经网络（Shallow Neural Network）}。
+
+\begin{center}
+\begin{tikzpicture}[x=1.5cm, y=1.5cm, >=stealth]
+	\def\nx{3}
+	\def\nu{4}
+    % 输入层
+	\foreach \i in {1,...,\nx}
+        \node[circle, draw=none] (x\i) at (0,2-\i) {$x_\i^{(i)}$};
+    \foreach \i in {1,...,\nx}
+        \node[coordinate] (lx\i) at (0.2,2-\i) {};
+    
+    % 隐藏层
+    \foreach \h in {1,...,\nu}
+        \node[circle, draw=blue, fill=white, inner sep=0pt, minimum size=10mm] (h\h) at (2,2.5-\h) {$a_\h^{[1](i)}$};
+    
+    % 输出层
+    \node[circle, draw=yellow, fill=white, inner sep=0pt, minimum size=10mm] (o) at (4,0) {$a^{[2](i)}$};
+
+	% 预测值
+	\node[circle, draw=none] (yhat) at (5.5,0) {$\hat{y}^{(i)}$};
+    
+
+    % 连接
+    \foreach \i in {1,...,\nx}
+        \foreach \h in {1,...,\nu}
+            \draw[->, color=base1] (lx\i) -- (h\h);
+    
+    \foreach \h in {1,...,\nu}
+        \draw[->, color=base1] (h\h) -- (o);
+	
+	\draw[->, color=base1] (o) -- (yhat);
+    
+    % 标签
+	\def\labely{-2}
+	\draw [decorate,decoration={calligraphic brace,amplitude=4pt,mirror}] (-0.35,\labely) -- (0.35,\labely) node [green,midway,yshift=-0.5cm] {输入层};
+	\draw [decorate,decoration={calligraphic brace,amplitude=4pt,mirror}] (1.5,\labely) -- (2.5,\labely) node [blue,midway,yshift=-0.5cm] {隐藏层};
+	\draw [decorate,decoration={calligraphic brace,amplitude=4pt,mirror}] (3.5,\labely) -- (4.5,\labely) node [yellow,midway,yshift=-0.5cm] {输出层};
+	\draw [decorate,decoration={calligraphic brace,amplitude=4pt,mirror}] (5.15,\labely) -- (5.85,\labely) node [red,midway,yshift=-0.5cm] {预测值};
+
+\end{tikzpicture}
+\end{center}
