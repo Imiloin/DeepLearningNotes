@@ -68,7 +68,7 @@ Algorithms是指算法, 例如Logistic Regression、SVM、Neural Networks等。
 
 在本节中，由于只考虑一个单层单节点的神经网络，因此省略上标$[l]$，使用简化后的符号如表 \ref{tab:notations_LR} 所示。
 
-\begin{table}[h]
+\begin{table}[ht]
 	\centering
 	\begin{threeparttable}
 	\caption{Notations in Logistic Regression}
@@ -101,7 +101,7 @@ Algorithms是指算法, 例如Logistic Regression、SVM、Neural Networks等。
 	\sigma(z) = \frac{1}{1 + \mathrm{e}^{-z}} \label{eq:sigmoid}
 \end{equation}
 该函数可以把实数域$\mathbb{R}$映射到区间$(0, 1)$，可作为激活函数使用，如图 \ref{fig:sigmoid} 所示。而$z = w^\mathrm{T} x + b$为线性函数，$w$为权重（weight），$b$为偏置（bias）。
-\begin{figure}[h!]
+\begin{figure}[h!b]
 	\centering
 	\includesvg[width=8cm]{sigmoid}
 	\caption{Sigmoid 函数，关于点(0, 0.5)对称}
@@ -114,7 +114,7 @@ Algorithms是指算法, 例如Logistic Regression、SVM、Neural Networks等。
 	L(\hat{y}^{(i)}, y^{(i)}) = -\left[y^{(i)} \log \hat{y}^{(i)} + (1 - y^{(i)}) \log (1 - \hat{y}^{(i)})\right] \label{eq:loss}
 \end{equation}
 该函数与方差类似，当样本的误差越大，Loss function的值越大，如图 \ref{fig:loss} 所示。
-\begin{figure}[h!]
+\begin{figure}[h!b]
 	\centering
 	\includesvg[width=8cm]{LossFunction}
 	\caption{Loss Function 误差函数}
@@ -323,7 +323,7 @@ assert(A.shape == (1, 4))
 \vspace{0.5\baselineskip}
 每个节点会进行两个计算，分别是\textbf{线性计算}和\textbf{激活函数计算}，如图 \ref{fig:node} 所示。节点首先把上一层的所有节点的输出值乘以权重，然后把所有结果相加，再加上偏置值，得到线性计算的结果$z$。然后把$z$作为激活函数的输入，得到激活函数的输出，作为该节点的输出$a$。$z$可作为一个中间量，与$a$维度相同。
 
-\begin{figure}[h]
+\begin{figure}[hb]
 	\centering
 	\begin{tikzpicture}[x=1.5cm, y=1.5cm, >=stealth]
 		\def\nx{3}
@@ -370,7 +370,7 @@ assert(A.shape == (1, 4))
 	\label{fig:shallow_nn}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[hb]
 	\centering
 	\includegraphics[width=5cm]{node.pdf}
 	\caption{单个节点的结构}
@@ -382,7 +382,7 @@ assert(A.shape == (1, 4))
 
 常见的激活函数有sigmoid函数、tanh函数、ReLU函数、leaky ReLU函数等，如图 \ref{fig:activation} 所示。对于导数不存在的点，可以使用左导数或右导数代替。
 
-\begin{figure*}[h]
+\begin{figure*}[h!b]
 	\centering
 	\subfigure[$\mathrm{sigmoid}(z) = \frac{1}{1+\mathrm{e}^{-z}}$]{
 		\begin{minipage}[t]{0.5\linewidth}
