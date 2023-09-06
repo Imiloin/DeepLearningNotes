@@ -24,7 +24,7 @@ Algorithms是指算法, 例如Logistic Regression、SVM、Neural Networks等。
 
 表 \ref{tab:notations} 是本章用到的符号说明。
 
-\begin{table}[h]
+\begin{table}[ht]
 	\centering
 	\begin{threeparttable}
 	%%%%%
@@ -32,24 +32,26 @@ Algorithms是指算法, 例如Logistic Regression、SVM、Neural Networks等。
 	%
 	\begin{tabular}{clcc}
 		\hline
-									& \textbf{Notation}                         & \textbf{Description} & \textbf{Meaning}                                                   \\ \hline
-		\multirow{5}{*}{Sizes}      & $m$                                       & value                & 样本容量                                                               \\
-									& $n_x$                                     & value                & 单个样本的特征数（输入）                                                \\
-									& $n_y$                                     & value                & 单个样本的标签数（输出）                                                \\
-									& $n_h^{[l]}$                               &                      &                                                                    \\
-									& $L$                                       &                      &                                                                    \\ \hline
-		\multirow{9}{*}{Objects}    & $x^{(i)} \in \mathbb{R}^{n_x}$            & vector               & 第$i$个样本数据                                                          \\
-									& $X \in {\mathbb{R}^{n_x \times m}}$       & matrix               & 输入矩阵                                                               \\
-									& $a^{(i)} / y^{(i)} \in \mathbb{R}^{n_y}$  & vector               & 第$i$个样本的标签                                                         \\
-									& $Y \in {\mathbb{R}^{n_y \times m}}$       & matrix               & 标签矩阵（$n_y=1$时退化为行向量$y$）                                    \\									
-									& $\hat{y}^{(i)} \in \mathbb{R}^{n_y}$      & vector               & 第$i$个样本的标签预测值向量                                                \\
-									& $\hat{Y} \in {\mathbb{R}^{n_y \times m}}$ & matrix               & 标签预测值矩阵（$n_y=1$时退化为行向量$\hat{y}$）   						\\
-									& $W \in \mathbb{R}^{n_x \times n_y}$       & matrix               & 权重矩阵（$n_y=1$时退化为列向量$w$）                                    \\
-									& $b \in \mathbb{R}^{n_y}$                  & vector               & 标签偏置值向量                                                        \\
-									& $W^{[l]}$                                 &                      &                                                                    \\
-									& $b^{[l]}$                                 &                      &                                                                    \\ \hline
-		\multirow{2}{*}{Other}      & $J(x,W,b,y)$ or $J(\hat{y},y)$            & function             & 代价函数                                                               \\
-									& $\mathrm{d}\mathrm{var}$                  & differential         & 代价函数对变量$\mathrm{var}$的微分，即${\mathrm{d}J}/{\mathrm{d}\mathrm{var}}$ \\ \hline
+									& \textbf{Notation}                                     & \textbf{Description} & \textbf{Meaning}                                                   \\ \hline
+		\multirow{5}{*}{Sizes}      & $m$                                                   & value                & 样本容量                                                               \\
+									& $n_x$ / $n_h^{[0]}$                                   & value                & 单个样本的特征数（输入层节点数）                                         \\
+									& $n_y$ / $n_h^{[L+1]}$                                 & value                & 单个样本的标签数（输出层节点数）                                      \\
+									& $n_h^{[l]}$ / $n^{[l]}$                               & value                & 第$l$层的神经元个数（隐藏层节点数）                                   \\
+									& $L$                                                   & value                & 神经网络的层数                                                         \\ \hline
+		\multirow{9}{*}{Objects}    & $x^{(i)} \in \mathbb{R}^{n_x}$                        & vector               & 第$i$个样本数据                                                          \\
+									& $X \in {\mathbb{R}^{n_x \times m}}$                   & matrix               & 输入矩阵                                                               \\
+									& $a^{[l](i)} \in \mathbb{R}^{n^{l}}$                   & vector               & 第$i$个样本在第$l$层节点的输出                                                  \\
+									& $a_j^{[l]} \in \mathbb{R}^{1 \times {m}}$             & vector               & 第$l$层第$j$个节点的输出                                                         \\
+									& $A^{[l]} \in \mathbb{R}^{n^{[l]} \times {m}}$         & vector               & 第$l$层第$j$个节点的输出                                                         \\
+									& $y^{(i)} \in \mathbb{R}^{n_y}$                        & vector               & 第$i$个样本的标签                                                         \\
+									& $Y \in {\mathbb{R}^{n_y \times m}}$                   & matrix               & 第$l$层节点的输出矩阵                                                           \\									
+									& $\hat{y}^{(i)} \in \mathbb{R}^{n_y}$                  & vector               & 第$i$个样本的标签预测值向量                                                \\
+									& $\hat{Y} \in {\mathbb{R}^{n_y \times m}}$             & matrix               & 标签预测值矩阵（$n_y=1$时退化为行向量$\hat{y}$）   						\\
+									& $W^{[l]} \in \mathbb{R}^{n^{[l]} \times n^{[l-1]}}$   & matrix               & 第$l$层的权重矩阵                                                               \\
+									& $b^{[l]} \in \mathbb{R}^{n^{[l]}}$                    & vector               & 第$l$层的标签偏置值向量                                                        \\\hline
+		\multirow{3}{*}{Other}      & $J(X,W,b,Y)$ or $J(\hat{Y},Y)$                        & function             & 代价函数                                                                        \\
+									& $\alpha$								                & value                & 学习率                                                                        \\
+									& $\mathrm{d}\mathrm{var}$                              & differential         & 代价函数对变量$\mathrm{var}$的微分，即${\mathrm{d}J}/{\mathrm{d}\mathrm{var}}$ \\ \hline
 	\end{tabular}
 	%
 	\label{tab:notations} %%%
@@ -62,6 +64,32 @@ Algorithms是指算法, 例如Logistic Regression、SVM、Neural Networks等。
 
 \subsection{Logistic Regression}
 
+在本节中，由于只考虑一个单层单节点的神经网络，因此省略上标$[l]$，使用简化后的符号如表 \ref{tab:notations_LR} 所示。
+
+\begin{table}[h]
+	\centering
+	\begin{threeparttable}
+	\caption{Notations in Logistic Regression}
+	\begin{tabular}{clcc}
+		\hline
+									& \textbf{Notation}                         & \textbf{Description} & \textbf{Meaning}                                                   \\ \hline
+		\multirow{2}{*}{Sizes}      & $m$                                       & value                & 样本容量                                                               \\
+									& $n_x$                                     & value                & 单个样本的特征数（输入层节点数）                                         \\ \hline
+		\multirow{8}{*}{Objects}    & $x^{(i)} \in \mathbb{R}^{n_x}$            & vector               & 第$i$个样本数据                                                          \\
+									& $X \in {\mathbb{R}^{n_x \times m}}$       & matrix               & 输入矩阵                                                               \\
+									& $a^{(i)} / y^{(i)}$                       & binary               & 第$i$个样本的标签实际值                                                        \\
+									& $y \in \mathbb{R}^{m}$					& vector               & 标签实际值向量                                                          \\
+									& $\hat{y}^{(i)}$                           & binary               & 第$i$个样本的标签预测值                                                  \\
+									& $\hat{y} \in {\mathbb{R}^{m}}$            & vector               & 标签预测值向量   					                                     \\
+									& $w \in \mathbb{R}^{n_x}$                  & vector               & 权重向量                                                                \\
+									& $b$                                       & value                & 标签偏置值                                                            \\ \hline
+		\multirow{2}{*}{Other}      & $J(x,w,b,y)$ or $J(\hat{y},y)$            & function             & 代价函数                                                               \\
+									& $\mathrm{d}\mathrm{var}$                  & differential         & 代价函数对变量$\mathrm{var}$的微分，即${\mathrm{d}J}/{\mathrm{d}\mathrm{var}}$ \\ \hline
+	\end{tabular}
+	\label{tab:notations_LR}
+	\end{threeparttable}
+\end{table}
+
 对于\textbf{二元分类模型，$\bm{n_y=1}$}，相关公式如下：
 \begin{equation}
 	\hat{y}^{(i)} = \sigma(w^\mathrm{T} x^{(i)} + b) \label{eq:logistic}
@@ -70,7 +98,7 @@ Algorithms是指算法, 例如Logistic Regression、SVM、Neural Networks等。
 \begin{equation}
 	\sigma(z) = \frac{1}{1 + \mathrm{e}^{-z}} \label{eq:sigmoid}
 \end{equation}
-该函数可以把实数域$\mathbb{R}$映射到区间$(0, 1)$，如图 \ref{fig:sigmoid} 所示。而$z = w^\mathrm{T} x + b$为线性函数，$w$为权重（weight），$b$为偏置（bias）。
+该函数可以把实数域$\mathbb{R}$映射到区间$(0, 1)$，可作为激活函数使用，如图 \ref{fig:sigmoid} 所示。而$z = w^\mathrm{T} x + b$为线性函数，$w$为权重（weight），$b$为偏置（bias）。
 \begin{figure}[h]
 	\centering
 	\includesvg[width=8cm]{sigmoid}
@@ -84,7 +112,7 @@ Algorithms是指算法, 例如Logistic Regression、SVM、Neural Networks等。
 	L(\hat{y}^{(i)}, y^{(i)}) = -\left[y^{(i)} \log \hat{y}^{(i)} + (1 - y^{(i)}) \log (1 - \hat{y}^{(i)})\right] \label{eq:loss}
 \end{equation}
 该函数与方差类似，当样本的误差越大，Loss function的值越大，如图 \ref{fig:loss} 所示。
-\begin{figure}[h]
+\begin{figure}[h!]
 	\centering
 	\includesvg[width=8cm]{LossFunction}
 	\caption{Loss Function 误差函数}
@@ -275,7 +303,22 @@ assert(A.shape == (1, 4))
 这就是代价函数的定义。我们期望代价函数的值越小越好，因此可以使用梯度下降法来求解$w$和$b$。
 
 \section{Shallow Neural Networks}
-在上一节中，我们构建的模型本质上是一个一层的神经“网络”。在本节中，我们将构建一个两层的神经网络，也就是一个\textbf{浅层神经网络（Shallow Neural Network）}。
+\begin{wenxintishi}
+	在上一节中，我们构建的模型本质上是一个单节点的一层神经“网络”。在本节中，我们将构建一个两层的神经网络，也就是一个\textbf{浅层神经网络（Shallow Neural Network）}。
+\end{wenxintishi}
+
+\subsection{Neural Networks Representation}
+
+神经网络是若干“层”（Layer）的组合，每一层都是若干“节点”（Node）的组合。第一层为“输入层”（Input Layer），最后一层为“输出层”（Output Layer），中间的层为“隐藏层”（Hidden Layer）。在计数时，通常将输入层记为第$0$层，隐藏层从第$1$层开始计数。
+
+\vspace{0.5\baselineskip}
+隐藏层和输出层都是全连接层，每个节点都与上一层的所有节点相连。隐藏层和输出层的节点都是\textbf{神经元（Neuron）}，每个神经元都有一个\textbf{激活函数（Activation Function）}，用来计算该神经元的输出。隐藏层和输出层的激活函数可以不同，但是通常情况下都是相同的。
+
+\vspace{0.5\baselineskip}
+浅层神经网络具有$1$个输入层、$1$个隐藏层、$1$个输出层，其结构如图 \ref{fig:shallow_nn} 所示，该图展示了第$i$个样本的神经网络结构，每个小写字母表示一个值。实际上，神经网络会同时处理多个样本，执行矩阵运算。
+
+\vspace{0.5\baselineskip}
+每个节点会进行两个计算，分别是\textbf{线性计算}和\textbf{激活函数计算}，如图 \ref{fig:node} 所示。节点首先把上一层的所有节点的输出值乘以权重，然后把所有结果相加，再加上偏置值，得到线性计算的结果$z$。然后把$z$作为激活函数的输入，得到激活函数的输出，作为该节点的输出$a$。$z$可作为一个中间量，与$a$维度相同。
 
 \begin{figure}[h]
 	\centering
@@ -311,8 +354,11 @@ assert(A.shape == (1, 4))
 		
 		% 标签
 		\def\labely{-2}
+		\node [green] at (0,2.2) {layer 0};
+		\node [blue] at (2,2.2) {layer 1};
+		\node [yellow] at (4,2.2) {layer 2};
 		\draw [decorate,decoration={calligraphic brace,amplitude=4pt,mirror}] (-0.35,\labely) -- (0.35,\labely) node [green,midway,yshift=-0.5cm] {输入层};
-		\draw [decorate,decoration={calligraphic brace,amplitude=4pt,mirror}] (1.5,\labely) -- (2.5,\labely) node [blue,midway,yshift=-0.5cm] {隐藏层};
+		\draw [decorate,decoration={calligraphic brace,amplitude=4pt,mirror}] (1.3,\labely) -- (2.7,\labely) node [blue,midway,yshift=-0.5cm] {隐藏层};
 		\draw [decorate,decoration={calligraphic brace,amplitude=4pt,mirror}] (3.5,\labely) -- (4.5,\labely) node [yellow,midway,yshift=-0.5cm] {输出层};
 		\draw [decorate,decoration={calligraphic brace,amplitude=4pt,mirror}] (5.15,\labely) -- (5.85,\labely) node [red,midway,yshift=-0.5cm] {预测值};
 	
@@ -327,3 +373,75 @@ assert(A.shape == (1, 4))
 	\caption{单个节点的结构}
 	\label{fig:node}
 \end{figure}
+
+\subsection{Activation Functions}
+常见的激活函数有sigmoid函数、tanh函数、ReLU函数、leaky ReLU函数等，如图 \ref{fig:activation} 所示。对于导数不存在的点，可以使用左导数或右导数代替。
+
+\begin{figure*}[h]
+	\centering
+	\subfigure[$\mathrm{sigmoid}(z) = \frac{1}{1+\mathrm{e}^{-z}}$]{
+		\begin{minipage}[t]{0.5\linewidth}
+			\centering
+			\includesvg[width=7cm]{activation_sigmoid}
+		\end{minipage}
+	}%
+	\subfigure[$\mathrm{tanh}(z) = \frac{\mathrm{e}^{z} - \mathrm{e}^{-z}}{\mathrm{e}^{z} + \mathrm{e}^{-z}}$]{
+		\begin{minipage}[t]{0.5\linewidth}
+			\centering
+			\includesvg[width=7cm]{activation_tanh}
+		\end{minipage}
+	}%
+	%此处的空行很重要，想让图片在什么地方换行就在代码对应位置空行
+
+	\subfigure[$\mathrm{ReLU}(z) = \max(0, z)$]{
+		\begin{minipage}[t]{0.5\linewidth}
+			\centering
+			\includesvg[width=7cm]{activation_ReLU}
+		\end{minipage}
+	}%
+	\subfigure[$\mathrm{LeakyReLU}(z) = \max(0.01z, z)$]{
+		\begin{minipage}[t]{0.5\linewidth}
+			\centering
+			\includesvg[width=7cm]{activation_LeakyReLU}
+		\end{minipage}
+	}%
+	\centering
+	\caption{Activation Functions 激活函数}
+	\label{fig:activation}
+\end{figure*}
+
+这些激活函数的导数分别为：
+\begin{equation}
+	\begin{aligned}
+		\frac{\mathrm{d}}{\mathrm{d}z}\mathrm{sigmoid}(z) &= \mathrm{sigmoid}(z)\left(1-\mathrm{sigmoid}(z)\right) \\
+		\frac{\mathrm{d}}{\mathrm{d}z}\mathrm{tanh}(z) &= 1 - \mathrm{tanh}^2(z) \\
+		\frac{\mathrm{d}}{\mathrm{d}z}\mathrm{ReLU}(z) &= 
+			\begin{cases}
+				0, &z < 0 \\
+				1, &z \geqslant 0
+			\end{cases}\\
+		\frac{\mathrm{d}}{\mathrm{d}z}\mathrm{LeakyReLU}(z) &= 
+			\begin{cases}
+				0.01, &z < 0 \\
+				1, &z \geqslant 0
+			\end{cases}
+	\end{aligned}
+\end{equation}
+
+需要强调的是，激活函数是必要的，如果没有激活函数，那么神经网络的每一层都是线性的，无论有多少层，整个神经网络都相当于一层线性函数，这样就无法解决复杂的问题。
+
+\subsection{Gradient Descent for Neural Networks}
+在训练整个神经网络时，需要对每一层的权重和偏置进行梯度下降，因此需要对每一层的梯度进行计算。
+
+\vspace{0.5\baselineskip}
+我们的目标是最小化代价函数$J(W^{[1]}, b^{[1]}, W^{[2]}, b^{[2]}, \cdots, W^{[L]}, b^{[L]})$，其中$L$为神经网络的层数。对于第$l$层，先求出权重和偏置的偏导数，然后再进行梯度下降，即
+\begin{equation}
+	\begin{aligned}
+		W^{[l]} &:= W^{[l]} - \alpha \frac{\mathrm{d}J}{\mathrm{d}W^{[l]}} \\
+		b^{[l]} &:= b^{[l]} - \alpha \frac{\mathrm{d}J}{\mathrm{d}b^{[l]}}
+	\end{aligned}
+\end{equation}
+
+在推导过程中，需要补充一些矩阵导数运算的知识，参见附录 \ref{sec:matrix_derivative}。
+
+以下过程中使用的符号如表 \ref{tab:notations} 所示。

@@ -2,6 +2,8 @@ imgs_projs/
 .texpadtmp
 main.pdf
 *.aux
+*.toc
+*.lof
+*.lot
 *.log
 *.gz
-*.toc

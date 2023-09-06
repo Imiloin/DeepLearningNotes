@@ -2,8 +2,13 @@
 \contentsline {figure}{\numberline {1.1}{\ignorespaces Sigmoid 函数，关于点(0, 0.5)对称}}{7}{figure.1.1}%
 \contentsline {figure}{\numberline {1.2}{\ignorespaces Loss Function 误差函数}}{7}{figure.1.2}%
 \contentsline {figure}{\numberline {1.3}{\ignorespaces Shallow Neural Network 浅层神经网络}}{11}{figure.1.3}%
-\contentsline {figure}{\numberline {1.4}{\ignorespaces 单个节点的结构}}{11}{figure.1.4}%
+\contentsline {figure}{\numberline {1.4}{\ignorespaces 单个节点的结构}}{12}{figure.1.4}%
+\contentsline {figure}{\numberline {1.5}{\ignorespaces Activation Functions 激活函数}}{12}{figure.1.5}%
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {$\mathrm {sigmoid}(z) = \frac {1}{1+\mathrm {e}^{-z}}$}}}{12}{figure.1.5}%
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {$\mathrm {tanh}(z) = \frac {\mathrm {e}^{z} - \mathrm {e}^{-z}}{\mathrm {e}^{z} + \mathrm {e}^{-z}}$}}}{12}{figure.1.5}%
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {$\mathrm {ReLU}(z) = \max (0, z)$}}}{12}{figure.1.5}%
+\contentsline {subfigure}{\numberline {(d)}{\ignorespaces {$\mathrm {LeakyReLU}(z) = \max (0.01z, z)$}}}{12}{figure.1.5}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {2.1}{\ignorespaces 兰州市地图}}{17}{figure.2.1}%
+\contentsline {figure}{\numberline {2.1}{\ignorespaces 兰州市地图}}{19}{figure.2.1}%
 \addvspace {10\p@ }
 \contentsfinish 
