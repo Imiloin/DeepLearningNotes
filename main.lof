@@ -9,6 +9,5 @@
 \contentsline {subfigure}{\numberline {(c)}{\ignorespaces {$\mathrm {ReLU}(z) = \max (0, z)$}}}{12}{figure.1.5}%
 \contentsline {subfigure}{\numberline {(d)}{\ignorespaces {$\mathrm {LeakyReLU}(z) = \max (0.01z, z)$}}}{12}{figure.1.5}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {2.1}{\ignorespaces 兰州市地图}}{19}{figure.2.1}%
 \addvspace {10\p@ }
 \contentsfinish 
