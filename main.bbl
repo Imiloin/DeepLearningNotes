@@ -42,6 +42,36 @@
       \field{labeltitlesource}{title}
       \field{title}{LaTeX: A Document Preparation System}
       \field{year}{1994}
+      \true{nocite}
+    \endentry
+    \entry{matrix_cookbook}{book}{}
+      \name{author}{2}{}{%
+        {{hash=6fcb1bb06fdf433c79ec15e046e78b11}{%
+           family={Petersen},
+           familyi={P\bibinitperiod},
+           given={Kaare\bibnamedelima Brandt},
+           giveni={K\bibinitperiod\bibinitdelim B\bibinitperiod}}}%
+        {{hash=224ae05d982058025ca238efd1a02de3}{%
+           family={Pedersen},
+           familyi={P\bibinitperiod},
+           given={Michael\bibnamedelima Syskind},
+           giveni={M\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Technical University of Denmark}%
+      }
+      \strng{namehash}{5eb7c8c632df56de948130e3b82e9511}
+      \strng{fullhash}{5eb7c8c632df56de948130e3b82e9511}
+      \strng{bibnamehash}{5eb7c8c632df56de948130e3b82e9511}
+      \strng{authorbibnamehash}{5eb7c8c632df56de948130e3b82e9511}
+      \strng{authornamehash}{5eb7c8c632df56de948130e3b82e9511}
+      \strng{authorfullhash}{5eb7c8c632df56de948130e3b82e9511}
+      \field{sortinit}{P}
+      \field{sortinithash}{ff3bcf24f47321b42cb156c2cc8a8422}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{The Matrix Cookbook}
+      \field{year}{2008}
     \endentry
   \enddatalist
 \endrefsection

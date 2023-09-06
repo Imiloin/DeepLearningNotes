@@ -5,5 +5,9 @@ main.pdf
 *.toc
 *.lof
 *.lot
+*.bbl
+*.bcf
+*.blg
+*.idx
 *.log
 *.gz

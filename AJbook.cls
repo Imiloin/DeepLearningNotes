@@ -264,12 +264,12 @@
 		colframe = gray!50, boxrule=0.2mm,
 		coltitle = black,
 		fonttitle = \sffamily,
-		attach boxed title to top left = {yshift=-\tcboxedtitleheight/2,  xshift=\tcboxedtitlewidth/4},
+		attach boxed title to top left = {yshift=-\tcboxedtitleheight/2,  xshift=\tcboxedtitlewidth/2},
 		boxed title style = {boxrule=0pt, colframe=white},
 		before skip = 0.5cm,
 		top = 3mm,
 		bottom = 3mm,
-		title={Foreword}
+		title={Hint}
 	}
 \fi
 

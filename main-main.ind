@@ -5,12 +5,22 @@
       \nopagebreak
   }
 
-  \lettergroup{D}
-  \item Dedeking $\eta$ 函数, \hyperpage{17}
+  \lettergroup{A}
+  \item Activation Functions, \hyperpage{12}
 
   \indexspace
 
-  \lettergroup{W}
-  \item 五边形数定理 (pentagonal number theorem), \hyperpage{18}
+  \lettergroup{G}
+  \item Gradient Descent, \hyperpage{8}
+
+  \indexspace
+
+  \lettergroup{L}
+  \item Logistic Regression, \hyperpage{6}
+
+  \indexspace
+
+  \lettergroup{M}
+  \item Matrix derivative, \hyperpage{23}
 
 \end{theindex}

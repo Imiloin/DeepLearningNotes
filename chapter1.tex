@@ -20,9 +20,7 @@ Algorithms是指算法, 例如Logistic Regression、SVM、Neural Networks等。
 
 \section{Neural Networks Basics}
 
-\subsection{Binary Classification}
-
-表 \ref{tab:notations} 是本章用到的符号说明。
+表 \ref{tab:notations} 是本章用到的符号说明。为方便起见，所有的向量符号不会加粗，用小写字母表示；同时也不对偏导数进行专门的区分，仍使用$\mathrm{d}$符号表示偏微分。
 
 \begin{table}[ht]
 	\centering
@@ -51,7 +49,7 @@ Algorithms是指算法, 例如Logistic Regression、SVM、Neural Networks等。
 									& $b^{[l]} \in \mathbb{R}^{n^{[l]}}$                    & vector               & 第$l$层的标签偏置值向量                                                        \\\hline
 		\multirow{3}{*}{Other}      & $J(X,W,b,Y)$ or $J(\hat{Y},Y)$                        & function             & 代价函数                                                                        \\
 									& $\alpha$								                & value                & 学习率                                                                        \\
-									& $\mathrm{d}\mathrm{var}$                              & differential         & 代价函数对变量$\mathrm{var}$的微分，即${\mathrm{d}J}/{\mathrm{d}\mathrm{var}}$ \\ \hline
+									& $\mathrm{d}\mathrm{var}$                              & differential         & 代价函数对变量$\mathrm{var}$的偏微分，即${\partial J}/{\partial \mathrm{var}}$ \\ \hline
 	\end{tabular}
 	%
 	\label{tab:notations} %%%
@@ -62,7 +60,11 @@ Algorithms是指算法, 例如Logistic Regression、SVM、Neural Networks等。
 	\end{threeparttable}
 \end{table}
 
+\subsection{Binary Classification}
+\textbf{二元分类模型}的输入是一个样本$x^{(i)} \in \mathbb{R}^{n_x}$，输出是一个标签$y^{(i)} \in \{0, 1\}$，即$y^{(i)}$只能取0或1且$n_y=1$，对每一个样本得出是或否的结论。
+
 \subsection{Logistic Regression}
+\index{Logistic Regression}
 
 在本节中，由于只考虑一个单层单节点的神经网络，因此省略上标$[l]$，使用简化后的符号如表 \ref{tab:notations_LR} 所示。
 
@@ -84,13 +86,13 @@ Algorithms是指算法, 例如Logistic Regression、SVM、Neural Networks等。
 									& $w \in \mathbb{R}^{n_x}$                  & vector               & 权重向量                                                                \\
 									& $b$                                       & value                & 标签偏置值                                                            \\ \hline
 		\multirow{2}{*}{Other}      & $J(x,w,b,y)$ or $J(\hat{y},y)$            & function             & 代价函数                                                               \\
-									& $\mathrm{d}\mathrm{var}$                  & differential         & 代价函数对变量$\mathrm{var}$的微分，即${\mathrm{d}J}/{\mathrm{d}\mathrm{var}}$ \\ \hline
+									& $\mathrm{d}\mathrm{var}$                  & differential         & 代价函数对变量$\mathrm{var}$的偏微分                                    \\ \hline
 	\end{tabular}
 	\label{tab:notations_LR}
 	\end{threeparttable}
 \end{table}
 
-对于\textbf{二元分类模型，$\bm{n_y=1}$}，相关公式如下：
+对于二元分类模型，相关公式如下：
 \begin{equation}
 	\hat{y}^{(i)} = \sigma(w^\mathrm{T} x^{(i)} + b) \label{eq:logistic}
 \end{equation}
@@ -99,7 +101,7 @@ Algorithms是指算法, 例如Logistic Regression、SVM、Neural Networks等。
 	\sigma(z) = \frac{1}{1 + \mathrm{e}^{-z}} \label{eq:sigmoid}
 \end{equation}
 该函数可以把实数域$\mathbb{R}$映射到区间$(0, 1)$，可作为激活函数使用，如图 \ref{fig:sigmoid} 所示。而$z = w^\mathrm{T} x + b$为线性函数，$w$为权重（weight），$b$为偏置（bias）。
-\begin{figure}[h]
+\begin{figure}[h!]
 	\centering
 	\includesvg[width=8cm]{sigmoid}
 	\caption{Sigmoid 函数，关于点(0, 0.5)对称}
@@ -126,6 +128,7 @@ Algorithms是指算法, 例如Logistic Regression、SVM、Neural Networks等。
 相当于误差函数的平均值。
 
 \subsection{Gradient Descent}
+\index{Gradient Descent}
 
 训练过程使用\textbf{梯度下降（Gradient Descent）算法}，即：
 \begin{equation}
@@ -375,6 +378,8 @@ assert(A.shape == (1, 4))
 \end{figure}
 
 \subsection{Activation Functions}
+\index{Activation Functions}
+
 常见的激活函数有sigmoid函数、tanh函数、ReLU函数、leaky ReLU函数等，如图 \ref{fig:activation} 所示。对于导数不存在的点，可以使用左导数或右导数代替。
 
 \begin{figure*}[h]

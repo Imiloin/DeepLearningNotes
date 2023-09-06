@@ -126,14 +126,16 @@
 	\part{Projects}
 	
 	\include{chapter2}
-	这是一篇关于 LaTeX 的参考文献 \cite{lamport1994latex}。
 
 	% % % % % % % % % %
+	\part{Supplements}
+
 	\include{appendix}
 
 	% % % % % % % % % %
 	\backmatter
 	% 使用 bibLaTeX 制作书目
+	\nocite{*}	% 列出所有参考文献, 即使未在正文中引用
 	\printbibliography[heading=bibintoc]
 	
 	% 图, 表索引. 可有可无.
