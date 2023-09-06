@@ -5,27 +5,12 @@
       \nopagebreak
   }
 
-  \lettergroup{B}
-  \item Bernoulli 多项式 (Bernoulli polynomials), \hyperpage{16}
-
-  \indexspace
-
   \lettergroup{D}
-  \item Dedeking $\eta$ 函数, \hyperpage{11}
-
-  \indexspace
-
-  \lettergroup{G}
-  \item 龚自珍, \hyperpage{15}
+  \item Dedeking $\eta$ 函数, \hyperpage{17}
 
   \indexspace
 
   \lettergroup{W}
-  \item 五边形数定理 (pentagonal number theorem), \hyperpage{12}
-
-  \indexspace
-
-  \lettergroup{Z}
-  \item 周恩来, \hyperpage{16}
+  \item 五边形数定理 (pentagonal number theorem), \hyperpage{18}
 
 \end{theindex}
