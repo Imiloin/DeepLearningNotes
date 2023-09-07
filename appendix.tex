@@ -1,6 +1,7 @@
 \appendix
-\chapter{附录}
-	
+\chapter{Mathmatical}
+
+%%%%
 \section{Matrix derivative}
 \label{sec:matrix_derivative}
 \index{Matrix derivative}
@@ -9,7 +10,192 @@
 	在本节中，为便于区分，用粗体大写字母表示矩阵，用粗体小写字母表示向量，用普通小写字母表示标量。这些表示与正文不同。
 \end{wenxintishi}
 
-矩阵微积分的表示通常有两种符号约定，分别是\textbf{分子布局（Numerator Layout）}和\textbf{分母布局（Denominator Layout）}。下面将分别介绍这两种符号约定。
-分子布局的表示方法是将微分符号$\frac{\partial}{\partial x}$放在矩阵的右侧，即$\frac{\partial}{\partial x}\bm{A}$，这种表示方法在\cite{matrix_cookbook}中被称为\textbf{分子布局}。分母布局的表示方法是将微分符号$\frac{\partial}{\partial x}$放在矩阵的左侧，即$\bm{A}\frac{\partial}{\partial x}$，这种表示方法在\cite{matrix_cookbook}中被称为\textbf{分母布局}。
+矩阵微积分的表示通常有两种符号约定，分别是\textbf{分子布局（Numerator Layout）}和\textbf{分母布局（Denominator Layout）}\cite{matrix_cookbook}。下面将分别介绍这两种符号约定。
 
+%%%
 \subsection{标量关于向量的偏导数}
+如果一个标量函数$f(\bm{x})$的自变量是一个$n$维向量$\bm{x}$，那么这个标量函数就可以对这个向量$\bm{x}$求偏导数。
+
+在分子布局下，这个偏导数是一个行向量，其第$i$个元素是$f(\bm{x})$对$\bm{x}$的第$i$个元素的偏导数，即
+\begin{equation}
+	\frac{\partial f(\bm{x})}{\partial \bm{x}}
+	=\left[\frac{\partial f(\bm{x})}{\partial x_1},\frac{\partial f(\bm{x})}{\partial x_2},\cdots,\frac{\partial f(\bm{x})}{\partial x_n}\right]_{\substack{\scriptstyle 1\times n}}
+\end{equation}
+而在分母布局下，这个偏导数是一个列向量，其第$i$个元素是$f(\bm{x})$对$\bm{x}$的第$i$个元素的偏导数，即
+\begin{equation}
+	\frac{\partial f(\bm{x})}{\partial \bm{x}}
+	=\begin{bmatrix}
+		\dfrac{\partial f(\bm{x})}{\partial x_1}\\[2ex]
+		\dfrac{\partial f(\bm{x})}{\partial x_2}\\[2ex]
+		\vdots\\[2ex]
+		\dfrac{\partial f(\bm{x})}{\partial x_n}
+	\end{bmatrix}_{\substack{\scriptstyle n\times 1}}
+\end{equation}
+
+%%%
+\subsection{向量关于标量的偏导数}
+如果一个$m$维向量函数$\bm{f}(x)$的自变量是一个标量$x$，那么这个向量函数就可以对这个标量$x$求偏导数。
+
+
+在分子布局下，这个偏导数是一个列向量，其第$i$个元素是$\bm{f}(x)$对$x$的偏导数，即
+\begin{equation}
+	\frac{\partial \bm{f}(x)}{\partial x}
+	=\begin{bmatrix}
+		\dfrac{\partial f_1(x)}{\partial x}\\[2ex]
+		\dfrac{\partial f_2(x)}{\partial x}\\[2ex]
+		\vdots\\[2ex]
+		\dfrac{\partial f_m(x)}{\partial x}
+	\end{bmatrix}_{\substack{\scriptstyle m\times 1}}
+\end{equation}
+而在分母布局下，这个偏导数是一个行向量，其第$i$个元素是$\bm{f}(x)$对$x$的偏导数，即
+\begin{equation}
+	\frac{\partial \bm{f}(x)}{\partial x}
+	=\left[\frac{\partial f_1(x)}{\partial x},\frac{\partial f_2(x)}{\partial x},\cdots,\frac{\partial f_m(x)}{\partial x}\right]_{\substack{\scriptstyle 1\times m}}
+\end{equation}
+
+%%%
+\subsection{向量关于向量的偏导数}
+如果一个$m$维向量函数$\bm{f}(\bm{x})$的自变量是一个$n$维向量$\bm{x}$，那么这个向量函数就可以对这个向量$\bm{x}$求偏导数。
+
+在分子布局下，这个偏导数是一个$m\times n$维矩阵，其第$i$行第$j$列的元素是$f_i(\bm{x})$对$\bm{x}$的第$j$个元素的偏导数，即
+\begin{equation}
+	\frac{\partial \bm{f}(\bm{x})}{\partial \bm{x}}
+	=\left[\frac{\partial \bm{f}(\bm{x})}{\partial x_1},\frac{\partial \bm{f}(\bm{x})}{\partial x_2},\cdots,\frac{\partial \bm{f}(\bm{x})}{\partial x_n}\right]
+	=\begin{bmatrix}
+		\dfrac{\partial f_1(\bm{x})}{\partial x_1}&\dfrac{\partial f_1(\bm{x})}{\partial x_2}&\cdots&\dfrac{\partial f_1(\bm{x})}{\partial x_n}\\[2ex]
+		\dfrac{\partial f_2(\bm{x})}{\partial x_1}&\dfrac{\partial f_2(\bm{x})}{\partial x_2}&\cdots&\dfrac{\partial f_2(\bm{x})}{\partial x_n}\\[2ex]
+		\vdots&\vdots&\ddots&\vdots\\[2ex]
+		\dfrac{\partial f_m(\bm{x})}{\partial x_1}&\dfrac{\partial f_m(\bm{x})}{\partial x_2}&\cdots&\dfrac{\partial f_m(\bm{x})}{\partial x_n}
+	\end{bmatrix}_{\substack{\scriptstyle m\times n}}
+\end{equation}
+而在分母布局下，这个偏导数是一个$n\times m$维矩阵，其第$i$行第$j$列的元素是$f_j(\bm{x})$对$\bm{x}$的第$i$个元素的偏导数，即
+\begin{equation}
+	\frac{\partial \bm{f}(\bm{x})}{\partial \bm{x}}
+	=\left[\frac{\partial f_1(\bm{x})}{\partial \bm{x}},\frac{\partial f_2(\bm{x})}{\partial \bm{x}},\cdots,\frac{\partial f_m(\bm{x})}{\partial \bm{x}}\right]
+	=\begin{bmatrix}
+		\dfrac{\partial f_1(\bm{x})}{\partial x_1}&\dfrac{\partial f_2(\bm{x})}{\partial x_1}&\cdots&\dfrac{\partial f_m(\bm{x})}{\partial x_1}\\[2ex]
+		\dfrac{\partial f_1(\bm{x})}{\partial x_2}&\dfrac{\partial f_2(\bm{x})}{\partial x_2}&\cdots&\dfrac{\partial f_m(\bm{x})}{\partial x_2}\\[2ex]
+		\vdots&\vdots&\ddots&\vdots\\[2ex]
+		\dfrac{\partial f_1(\bm{x})}{\partial x_n}&\dfrac{\partial f_2(\bm{x})}{\partial x_n}&\cdots&\dfrac{\partial f_m(\bm{x})}{\partial x_n}
+	\end{bmatrix}_{\substack{\scriptstyle n\times m}}
+\end{equation}
+
+一个小结论是，当使用分子布局时，将分子看作列向量，结果的行数与分子相同；而当使用分母布局时，将分母看作列向量，结果的行数与分母相同。
+
+%%%
+\subsection{标量关于矩阵的偏导数\texorpdfstring{\protect\footnote{本节内容参考了\cite{matrix_derivative}}}{}}
+
+在深度学习中，代价函数是一个标量函数，而神经网络的参数通常是一个矩阵。因此，需要求标量函数对矩阵的偏导数。
+
+标量对矩阵求导，可以看作是标量对矩阵的每个元素求导，然后将结果组合成一个矩阵。结果的维度应当与被求导矩阵的维度相同，便于进行梯度下降，故应采用分母布局。本节的内容从这里开始均采用\textcolor{red}{分母布局}。
+
+一元微积分中的导数（标量对标量的导数）满足
+\begin{equation}
+	\mathrm{d}f 
+	= \frac{\partial f}{\partial x}\mathrm{d}x
+	= \langle \frac{\partial f}{\partial x}, \mathrm{d}x \rangle
+\end{equation}
+其中$\langle \bm{u}, \bm{v} \rangle$表示$\bm{u}$与$\bm{v}$的内积。
+在多元微积分（标量对向量的导数）中，这个关系可以推广为
+\begin{equation}
+	\mathrm{d}f
+	= \sum_{i=1}^{n}{\frac{\partial f}{\partial x_i}\mathrm{d}x_i} 
+	= {\frac{\partial f}{\partial \bm{x}}}^{\mathrm{T}}\mathrm{d}\bm{x}
+	= \langle \frac{\partial f}{\partial \bm{x}}, \mathrm{d}\bm{x} \rangle
+\end{equation}
+类似地，标量对矩阵的导数与微分的关系可以推广为
+\begin{equation}
+	\mathrm{d}f
+	= \langle \frac{\partial f}{\partial \bm{X}}, \mathrm{d}\bm{X} \rangle
+	\label{eq:scalar_matrix_derivative}
+\end{equation}
+两个大小相同矩阵的内积可以表示为
+\begin{equation}
+	\langle \bm{A}, \bm{B} \rangle 
+	= \sum_{i=1}^{m}{\sum_{j=1}^{n}{\frac{\partial f}{\partial x_{ij}}\mathrm{d}x_{ij}}} 
+	= \mathrm{tr}(\bm{A}^{\mathrm{T}}\bm{B})
+\end{equation}
+故式\eqref{eq:scalar_matrix_derivative}可以表示为
+\begin{equation}
+	\eqnmarkbox[WildStrawberry]{scalar_matrix_derivative_trace}{
+	\mathrm{d}f 
+	= \mathrm{tr}({\frac{\partial f}{\partial \bm{X}}}^{\mathrm{T}}\mathrm{d}\bm{X})
+	}
+	\label{eq:scalar_matrix_derivative_trace}
+\end{equation}
+这便是标量对矩阵求导与微分的关系。只要满足式\eqref{eq:scalar_matrix_derivative_trace}的关系，就能得到标量对矩阵的导数。
+
+\vspace{0.5\baselineskip}
+下面列出几条常见的矩阵微分的运算法则。注意$\odot$表示Hadamard积，即对应元素相乘。
+\begin{subequations}
+	\begin{align}
+		\mathrm{d}(\bm{X}\pm \bm{Y}) &= \mathrm{d}\bm{X} \pm \mathrm{d}\bm{Y} 
+		\label{eq:matrix_derivative_add_sub} \\
+		\mathrm{d}(\bm{XY}) &= \mathrm{d}\bm{X}\cdot \bm{Y} + \bm{X}\cdot \mathrm{d}\bm{Y}
+		\label{eq:matrix_derivative_mul} \\
+		\mathrm{d}(\bm{X}^{\mathrm{T}}) &= (\mathrm{d}\bm{X})^{\mathrm{T}}
+		\label{eq:matrix_derivative_transpose} \\
+		\mathrm{d}(\bm{X}^{-1}) &= -\bm{X}^{-1}\mathrm{d}\bm{X}\bm{X}^{-1}
+		\label{eq:matrix_derivative_inverse} \\
+		\mathrm{d}(\bm{X}\odot \bm{Y}) &= \mathrm{d}\bm{X}\odot \bm{Y} + \bm{X}\odot \mathrm{d}\bm{Y}
+		\label{eq:matrix_derivative_hadamard} \\
+		\mathrm{d}\left(g(\bm{X})\right) &= g'(\bm{X}) \odot \mathrm{d}\bm{X}
+		\label{eq:matrix_derivative_hadamard2}
+	\end{align}
+\end{subequations}
+
+对于矩阵的迹（trace）运算，有以下常用的性质，在后面的推导中会用到。
+\begin{subequations}
+	\begin{align}
+		a &= \mathrm{tr}(a)
+		\label{eq:matrix_trace_scalar} \\
+		\mathrm{tr}(\bm{A}^{\mathrm{T}}) &= \mathrm{tr}(\bm{A})
+		\label{eq:matrix_trace_transpose} \\
+		\mathrm{tr}(\bm{A}\pm\bm{B}) &= \mathrm{tr}(\bm{A}) \pm \mathrm{tr}(\bm{B})
+		\label{eq:matrix_trace_add_sub} \\
+		\mathrm{tr}(\bm{AB}) &= \mathrm{tr}(\bm{BA})
+		\label{eq:matrix_trace_mul}
+	\end{align}
+\end{subequations}
+
+在复合情况下，为了避免矩阵对矩阵求导，尽量不要使用链式法则，而是使用微分的性质\eqref{eq:scalar_matrix_derivative_trace}，通过迹运算的变形来求解。
+
+\vspace{0.5\baselineskip}
+例如，在\colorbox{LemonChiffon}{已知$\dfrac{\partial f}{\partial \bm{Y}}$和$\bm{Y}=\bm{A}\bm{X}\bm{B}$的情况下，求$\dfrac{\partial f}{\partial \bm{X}}$}，可以通过以下步骤求解。
+根据式\eqref{eq:scalar_matrix_derivative_trace}，有
+\begin{equation}
+	\mathrm{d}f = \mathrm{tr}\left({\frac{\partial f}{\partial \bm{Y}}}^{\mathrm{T}}\mathrm{d}\bm{Y}\right)
+	\label{eq:matrix_derivative_example1_1}
+\end{equation}
+对式\eqref{eq:matrix_derivative_example1_1}中的$\mathrm{d}\bm{Y}$进行展开，有
+\begin{equation}
+	\mathrm{d}\bm{Y} = \mathrm{d}(\bm{A}\bm{X}\bm{B}) = \mathrm{d}\bm{A}\cdot\bm{X}\bm{B} + \bm{A}\mathrm{d}\bm{X}\cdot\bm{B} + \bm{A}\bm{X}\mathrm{d}\bm{B}
+	\label{eq:matrix_derivative_example1_2}
+\end{equation}
+在$A$, $B$均为常量的情况下，式\eqref{eq:matrix_derivative_example1_2}中的第一项和第三项为零，故式\eqref{eq:matrix_derivative_example1_1}可以化简为
+\begin{equation}
+	\mathrm{d}f = \mathrm{tr}\left({\frac{\partial f}{\partial \bm{Y}}}^{\mathrm{T}}\bm{A}\mathrm{d}\bm{X}\bm{B}\right)
+	\label{eq:matrix_derivative_example1_3}
+\end{equation}
+根据式\eqref{eq:matrix_trace_mul}，式\eqref{eq:matrix_derivative_example1_3}可以进一步化简为
+\renewcommand{\eqnhighlightheight}{\vphantom{{\frac{\partial f}{\partial \bm{Y}}}^{\mathrm{T}}}\mathstrut}  % 调整注释框高度便于统一，默认为空
+\begin{equation}
+	\mathrm{d}f 
+	= \mathrm{tr}\left(\eqnmarkbox[blue]{c1}{{\frac{\partial f}{\partial \bm{Y}}}^{\mathrm{T}}\bm{A}\mathrm{d}\bm{X}} \eqnmarkbox[red]{c2}{\bm{B}}\right)
+	= \mathrm{tr}\left(\eqnmark[RoyalPurple]{t1}{\bm{B}{\frac{\partial f}{\partial \bm{Y}}}^{\mathrm{T}}\bm{A}} \mathrm{d}\bm{X}\right)
+	= \mathrm{tr}\left(\eqnmark[RoyalPurple]{t2}{\left(\bm{B}^{\mathrm{T}}\frac{\partial f}{\partial \bm{Y}}\bm{A}^{\mathrm{T}}\right)^{\mathrm{T}}} \mathrm{d}\bm{X}\right)
+	\vspace{1em}
+	\label{eq:matrix_derivative_example1_4}
+	\tikzset{annotate equations/arrow/.style={color=ForestGreen, >=latex', semithick, dashed}}  % 注释箭头样式，双向绿色虚线箭头，默认为空
+	\annotatetwo[yshift=-1em]{below, label below}{c1}{c2}{exchange}
+	\tikzset{annotate equations/arrow/.style={->, semithick, dashed}}  % 单向箭头
+	\annotatetwo[yshift=-1em]{below, label below}{t1}{t2}{equivalent}
+\end{equation}
+进而对比式\eqref{eq:scalar_matrix_derivative_trace}，可得出
+\renewcommand{\eqnhighlightshade}{100}  % 注释框不透明度，默认17
+\begin{equation}
+	\eqnmarkbox[LemonChiffon]{matrix_derivative_example1}{
+	\frac{\partial f}{\partial \bm{X}} = \bm{B}^{\mathrm{T}}\frac{\partial f}{\partial \bm{Y}}\bm{A}^{\mathrm{T}}
+	}
+	\label{eq:matrix_derivative_example1_5}
+\end{equation}
