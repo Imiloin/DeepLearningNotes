@@ -73,6 +73,28 @@
       \field{title}{The Matrix Cookbook}
       \field{year}{2008}
     \endentry
+    \entry{matrix_derivative}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=3c3297614b4ee424dc1d4637dd47f69e}{%
+           family={长躯鬼侠},
+           familyi={长\bibinitperiod}}}%
+      }
+      \strng{namehash}{3c3297614b4ee424dc1d4637dd47f69e}
+      \strng{fullhash}{3c3297614b4ee424dc1d4637dd47f69e}
+      \strng{bibnamehash}{3c3297614b4ee424dc1d4637dd47f69e}
+      \strng{authorbibnamehash}{3c3297614b4ee424dc1d4637dd47f69e}
+      \strng{authornamehash}{3c3297614b4ee424dc1d4637dd47f69e}
+      \strng{authorfullhash}{3c3297614b4ee424dc1d4637dd47f69e}
+      \field{sortinit}{长}
+      \field{sortinithash}{0505ad04a6f94029dc19164aa3434127}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{https://zhuanlan.zhihu.com/p/24709748}
+      \field{month}{3}
+      \field{note}{Accessed on 2023-09-07}
+      \field{title}{矩阵求导术}
+      \field{year}{2020}
+    \endentry
   \enddatalist
 \endrefsection
 \endinput
