@@ -42,14 +42,15 @@ Algorithms是指算法, 例如Logistic Regression、SVM、Neural Networks等。
 									& $X \in {\mathbb{R}^{n_x \times m}}$                   & matrix               & 输入矩阵                                                               \\
 									& $a^{[l](i)} \in \mathbb{R}^{n^{l}}$                   & vector               & 第$i$个样本在第$l$层节点的输出                                                  \\
 									& $a_j^{[l]} \in \mathbb{R}^{1 \times {m}}$             & vector               & 第$l$层第$j$个节点的输出                                                         \\
-									& $A^{[l]} \in \mathbb{R}^{n^{[l]} \times {m}}$         & vector               & 第$l$层第$j$个节点的输出                                                         \\
+									& $A^{[l]} \in \mathbb{R}^{n^{[l]} \times {m}}$         & matrix               & 第$l$层节点的输出矩阵                                                         \\
 									& $y^{(i)} \in \mathbb{R}^{n_y}$                        & vector               & 第$i$个样本的标签                                                         \\
-									& $Y \in {\mathbb{R}^{n_y \times m}}$                   & matrix               & 第$l$层节点的输出矩阵                                                           \\									
+									& $Y \in {\mathbb{R}^{n_y \times m}}$                   & matrix               & 样本标签矩阵                                                           \\									
 									& $\hat{y}^{(i)} \in \mathbb{R}^{n_y}$                  & vector               & 第$i$个样本的标签预测值向量                                                \\
 									& $\hat{Y} \in {\mathbb{R}^{n_y \times m}}$             & matrix               & 标签预测值矩阵（$n_y=1$时退化为行向量$\hat{y}$）   						\\
 									& $W^{[l]} \in \mathbb{R}^{n^{[l]} \times n^{[l-1]}}$   & matrix               & 第$l$层的权重矩阵                                                               \\
 									& $b^{[l]} \in \mathbb{R}^{n^{[l]}}$                    & vector               & 第$l$层的标签偏置值向量                                                        \\\hline
-		\multirow{4}{*}{Other}      & $g^{[l]}(z)$                                          & function             & 第$l$层的激活函数                                                         \\
+		\multirow{5}{*}{Other}      & $g^{[l]}(z)$                                          & function             & 第$l$层的激活函数                                                         \\
+									& $L^{(i)}(\hat{y}^{(i)}, y^{(i)})$                     & function             & 第$i$个样本的代价函数                                                         \\
 									& $J(X,W,b,Y)$ or $J(\hat{Y},Y)$                        & function             & 代价函数                                                                        \\
 									& $\alpha$								                & value                & 学习率                                                                        \\
 									& $\mathrm{d}\mathrm{var}$                              & differential         & 代价函数对变量$\mathrm{var}$的偏微分，即${\partial J}/{\partial \mathrm{var}}$ \\ \hline
@@ -459,6 +460,110 @@ assert(A.shape == (1, 4))
 	\end{aligned}
 \end{equation}
 
-在推导过程中，需要补充一些矩阵导数运算的知识，参见附录 \ref{sec:matrix_derivative}。
+%%%
+\subsection{Backpropagation}
+\index{Backpropagation}
+在神经网络中，梯度下降用到了\textbf{反向传播算法（Backpropagation）}，该算法的基本思想是，先计算代价函数的梯度，然后再反向传播到每一层，计算每一层$W$和$b$的梯度。
+需要注意，在每一轮梯度下降中，\textbf{所有的$X$, $Y$, $Z$, $A$都是已知的常量，而$W$, $b$是需要更新的}。
 
-以下过程中使用的符号如表 \ref{tab:notations} 所示。
+在推导过程中，需要补充一些矩阵导数运算的知识，参见附录 \ref{sec:matrix_derivative}。以下过程中使用的符号如表 \ref{tab:notations} 所示。
+
+\vspace{0.5\baselineskip}
+对于第$l$层，\colorbox{LemonChiffon}{已知$\dfrac{\mathrm{d}J}{\mathrm{d}A^{[l]}}$}和关系
+\begin{equation}
+	\vcenter{\hbox{\tikzmarknode{Zl}{$Z^{[l]}$}}} \vcenter{\hbox{$\vphantom{1}=\vphantom{1}$\tikzmarknode{Wl}{$W^{[l]}$}\tikzmarknode{Al-1}{$A^{[l-1]}$}$\vphantom{1}+\vphantom{1}$}} \begin{bmatrix} b^{[l]} & b^{[l]} & \cdots & b^{[l]} \end{bmatrix}_{\substack{\scriptstyle n^{[l]}\times m}}
+	\annotate[yshift=1em]{above}{Zl}{$n^{[l]}\times m$}
+	\annotate[yshift=-1em]{below,left}{Wl}{$n^{[l]}\times n^{[l-1]}$}
+	\annotate[yshift=-1em]{below}{Al-1}{$n^{[l-1]}\times m$}
+	\label{eq:backpropagation_known_1}
+\end{equation}
+\begin{equation}
+	\tikzmarknode{Al}{A^{[l]}} = g^{[l]}(\tikzmarknode{Zl2}{Z^{[l]}})
+	\vspace{1em}
+	\label{eq:backpropagation_known_2}
+	\annotatetwo[yshift=-1em]{below,label below}{Al}{Zl2}{$n^{[l]}\times m$}
+\end{equation}
+\colorbox{LemonChiffon}{要计算$\dfrac{\mathrm{d}J}{\mathrm{d}A^{[l-1]}}$, $\dfrac{\mathrm{d}J}{\mathrm{d}W^{[l]}}$和$\dfrac{\mathrm{d}J}{\mathrm{d}b^{[l]}}$}。
+根据结论\eqref{eq:matrix_derivative_conclusion1}，式\eqref{eq:backpropagation_known_1}可推出下面的关系
+\begin{align}
+	\frac{\mathrm{d}J}{\mathrm{d}W^{[l]}} &= \frac{\mathrm{d}J}{\mathrm{d}Z^{[l]}} A^{[l-1] \mathrm{T}} 
+	\label{eq:backpropagation_conc_1} \\
+	\frac{\mathrm{d}J}{\mathrm{d}A^{[l-1]}} &= W^{[l] \mathrm{T}} \frac{\mathrm{d}J}{\mathrm{d}Z^{[l]}}
+	\label{eq:backpropagation_conc_2}
+\end{align}
+根据结论\eqref{eq:matrix_derivative_conclusion2}，式\eqref{eq:backpropagation_known_2}表明
+\begin{equation}
+	\frac{\mathrm{d}J}{\mathrm{d}Z^{[l]}} = g^{[l]'}(Z^{[l]}) \odot \frac{\mathrm{d}J}{\mathrm{d}A^{[l]}}
+	\label{eq:backpropagation_conc_3}
+\end{equation}
+由于$b^{[l]}$在计算时进行了维度扩充，$\dfrac{\mathrm{d}J}{\mathrm{d}b^{[l]}}$的求取较为特殊。首先考虑第$i$个样本，上面的关系可以写成
+\begin{equation}
+	z^{[l](i)} = W^{[l]} a^{[l-1](i)} + b^{[l]}
+	\label{eq:backpropagation_known_1_sample}
+\end{equation}
+根据结论\eqref{eq:matrix_derivative_conclusion1}，式\eqref{eq:backpropagation_known_1_sample}可推出下面的关系
+\begin{equation}
+	\frac{\mathrm{d}L^{(i)}}{\mathrm{d}b^{[l]}} = \frac{\mathrm{d}L^{(i)}}{\mathrm{d}z^{[l](i)}}
+	\label{eq:backpropagation_known_1_sample_derivative}
+\end{equation}
+一般认为各个样本间相互独立，从而有
+\begin{equation}
+	\frac{\mathrm{d}L^{(\textcolor{blue}{i})}}{\mathrm{d}z^{[l](\textcolor{red}{j})}}=0
+	, \quad \textcolor{blue}{i} \neq \textcolor{red}{j}, \quad 0 \leqslant l \leqslant L
+	\label{eq:backpropagation_known_1_sample_derivative_independent}
+\end{equation}
+回顾代价函数的定义
+\begin{equation}
+	J = \frac{1}{m} \sum_{i=1}^{m} L^{(i)}
+\end{equation}
+结合式\eqref{eq:backpropagation_known_1_sample_derivative_independent}，可得
+\begin{equation}
+	\begin{aligned}
+		\frac{\mathrm{d}J}{\mathrm{d}z^{[l](i)}} 
+		&= \frac{1}{m}  \sum_{\textcolor{red}{j}=1}^{m} \frac{\mathrm{d}L^{(\textcolor{red}{j})}}{\mathrm{d}z^{[l](i)}} \\
+		&= \frac{1}{m}  \left( \sum_{\substack{1 \leqslant \textcolor{red}{j} \leqslant m \\ \textcolor{red}{j} \neq i}} \tikzmarknode{zero}{\frac{\mathrm{d}L^{(\textcolor{red}{j})}}{\mathrm{d}z^{[l](i)}}} + \frac{\mathrm{d}L^{(i)}}{\mathrm{d}z^{[l](i)}} \right) \\
+		&= \frac{1}{m} \frac{\mathrm{d}L^{(i)}}{\mathrm{d}z^{[l](i)}} \\
+	\end{aligned}
+	\annotate[yshift=1em]{above}{zero}{equals 0}
+\end{equation}
+两边乘$m$即得
+\begin{equation}
+	\frac{\mathrm{d}L^{(i)}}{\mathrm{d}z^{[l](i)}} = m \frac{\mathrm{d}J}{\mathrm{d}z^{[l](i)}}
+\end{equation}
+结合式\eqref{eq:backpropagation_known_1_sample_derivative}和代价函数定义，可推知
+\begin{equation}
+	\begin{aligned}
+		\frac{\mathrm{d}J}{\mathrm{d}b^{[l]}} 
+		&= \frac{1}{m} \sum_{i=1}^{m} \frac{\mathrm{d}L^{(i)}}{\mathrm{d}b^{[l]}} \\
+		&= \frac{1}{m} \sum_{i=1}^{m} \frac{\mathrm{d}L^{(i)}}{\mathrm{d}z^{[l](i)}} \\
+		&= \frac{1}{m} \sum_{i=1}^{m} m \frac{\mathrm{d}J}{\mathrm{d}z^{[l](i)}} \\
+		&= \tikzmarknode{db}{\sum_{i=1}^{m} \frac{\mathrm{d}J}{\mathrm{d}z^{[l](i)}}}
+	\label{eq:backpropagation_conc_4}
+	\end{aligned}
+	\vspace{2em}
+	\annotate[yshift=0em]{below}{db}{相当于$\dfrac{\mathrm{d}J}{\mathrm{d}Z^{[l]}}$沿水平方向求和}
+\end{equation}
+综合式\eqref{eq:backpropagation_conc_3}, \eqref{eq:backpropagation_conc_2}, \eqref{eq:backpropagation_conc_1}, 和\eqref{eq:backpropagation_conc_4}，可得
+\begin{align}
+	\frac{\mathrm{d}J}{\mathrm{d}Z^{[l]}} &= g^{[l]'}(Z^{[l]}) \odot \frac{\mathrm{d}J}{\mathrm{d}A^{[l]}} \\
+	\frac{\mathrm{d}J}{\mathrm{d}A^{[l-1]}} &= W^{[l] \mathrm{T}} \frac{\mathrm{d}J}{\mathrm{d}Z^{[l]}} \\
+	\frac{\mathrm{d}J}{\mathrm{d}W^{[l]}} &= \frac{\mathrm{d}J}{\mathrm{d}Z^{[l]}} A^{[l-1] \mathrm{T}} \label{eq:dw_real} \\
+	\frac{\mathrm{d}J}{\mathrm{d}b^{[l]}} &= \sum_{i=1}^{m} \frac{\mathrm{d}J}{\mathrm{d}z^{[l](i)}} \label{eq:db_real}
+\end{align}
+在实际使用时，式\eqref{eq:dw_real}和\eqref{eq:db_real}通常会除以$m$（实际上这对训练没有影响，相当于学习率进行了缩放），以减小梯度的大小，即
+\begin{align}
+	\frac{\mathrm{d}J}{\mathrm{d}W^{[l]}} &= \frac{1}{m} \frac{\mathrm{d}J}{\mathrm{d}Z^{[l]}} A^{[l-1] \mathrm{T}} \\
+	\frac{\mathrm{d}J}{\mathrm{d}b^{[l]}} &= \frac{1}{m} \sum_{i=1}^{m} \frac{\mathrm{d}J}{\mathrm{d}z^{[l](i)}}
+\end{align}
+将以上结论写成伪代码形式，
+\begin{align}
+	\mathtt{dZ^{\textcolor{Magenta}{[}l\textcolor{Magenta}{]}}} &= \mathtt{g^{\textcolor{Magenta}{[}l\textcolor{Magenta}{]}'}\textcolor{yellow}{(}Z^{\textcolor{Magenta}{[}l\textcolor{Magenta}{]}}\textcolor{yellow}{)} \,\tikzmarknode{star}{*}\, dA^{\textcolor{Magenta}{[}l\textcolor{Magenta}{]}}} \\
+	\mathtt{dA^{\textcolor{Magenta}{[}l-\textcolor{green}{1}\textcolor{Magenta}{]}}} &= \mathtt{W^{\textcolor{Magenta}{[}l\textcolor{Magenta}{]} T} dZ^{\textcolor{Magenta}{[}l\textcolor{Magenta}{]}}} \\
+	\mathtt{dW^{\textcolor{Magenta}{[}l\textcolor{Magenta}{]}}} &= \mathtt{\frac{1}{m} dZ^{\textcolor{Magenta}{[}l\textcolor{Magenta}{]}} A^{\textcolor{Magenta}{[}l-\textcolor{green}{1}\textcolor{Magenta}{]}T}} \label{eq:dw} \\
+	\mathtt{db^{\textcolor{Magenta}{[}l\textcolor{Magenta}{]}}} &= \mathtt{\frac{1}{m} np.sum\textcolor{yellow}{(}dZ^{\textcolor{Magenta}{[}l\textcolor{Magenta}{]}}, axis=\textcolor{green}{1}, keepdims=\textcolor{blue}{True}\textcolor{yellow}{)}} \label{eq:db}
+	\annotate[yshift=1.5em]{above}{star}{element-wise multiplication}
+\end{align}
+这便是反向传播算法的计算方法。从输出层开始逐层向前计算，直到第$1$层，即可得到所有的梯度。
+
+\vspace{0.5\baselineskip}
+对于浅层神经网络，
