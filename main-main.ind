@@ -6,7 +6,12 @@
   }
 
   \lettergroup{A}
-  \item Activation Functions, \hyperpage{12}
+  \item Activation Functions, \hyperpage{11}
+
+  \indexspace
+
+  \lettergroup{B}
+  \item Backpropagation, \hyperpage{12}
 
   \indexspace
 
