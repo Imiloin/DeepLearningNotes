@@ -35,18 +35,18 @@ Algorithms是指算法, 例如Logistic Regression、SVM、Neural Networks等。
 									& \textbf{Notation}                                     & \textbf{Description} & \textbf{Meaning}                                                   \\ \hline
 		\multirow{5}{*}{Sizes}      & $m$                                                   & value                & 样本容量                                                               \\
 									& $n_x$ / $n_h^{[0]}$                                   & value                & 单个样本的特征数（输入层节点数）                                         \\
-									& $n_y$ / $n_h^{[L+1]}$                                 & value                & 单个样本的标签数（输出层节点数）                                      \\
+									& $n_y$ / $n_h^{[L]}$                                   & value                & 单个样本的标签数（输出层节点数）                                      \\
 									& $n_h^{[l]}$ / $n^{[l]}$                               & value                & 第$l$层的神经元个数（隐藏层节点数）                                   \\
 									& $L$                                                   & value                & 神经网络的层数                                                         \\ \hline
 		\multirow{11}{*}{Objects}   & $x^{(i)} \in \mathbb{R}^{n_x}$                        & vector               & 第$i$个样本数据                                                          \\
-									& $X \in {\mathbb{R}^{n_x \times m}}$                   & matrix               & 输入矩阵                                                               \\
+									& $X / A^{[0]} \in {\mathbb{R}^{n_x \times m}}$         & matrix               & 输入矩阵                                                               \\
 									& $a^{[l](i)} \in \mathbb{R}^{n^{l}}$                   & vector               & 第$i$个样本在第$l$层节点的输出                                                  \\
 									& $a_j^{[l]} \in \mathbb{R}^{1 \times {m}}$             & vector               & 第$l$层第$j$个节点的输出                                                         \\
 									& $A^{[l]} \in \mathbb{R}^{n^{[l]} \times {m}}$         & matrix               & 第$l$层节点的输出矩阵                                                         \\
 									& $y^{(i)} \in \mathbb{R}^{n_y}$                        & vector               & 第$i$个样本的标签                                                         \\
 									& $Y \in {\mathbb{R}^{n_y \times m}}$                   & matrix               & 样本标签矩阵                                                           \\									
 									& $\hat{y}^{(i)} \in \mathbb{R}^{n_y}$                  & vector               & 第$i$个样本的标签预测值向量                                                \\
-									& $\hat{Y} \in {\mathbb{R}^{n_y \times m}}$             & matrix               & 标签预测值矩阵（$n_y=1$时退化为行向量$\hat{y}$）   						\\
+									& $\hat{Y} / A^{[L]} \in {\mathbb{R}^{n_y \times m}}$   & matrix               & 标签预测值矩阵（$n_y=1$时退化为行向量$\hat{y}$）   						\\
 									& $W^{[l]} \in \mathbb{R}^{n^{[l]} \times n^{[l-1]}}$   & matrix               & 第$l$层的权重矩阵                                                               \\
 									& $b^{[l]} \in \mathbb{R}^{n^{[l]}}$                    & vector               & 第$l$层的标签偏置值向量                                                        \\\hline
 		\multirow{5}{*}{Other}      & $g^{[l]}(z)$                                          & function             & 第$l$层的激活函数                                                         \\
@@ -334,7 +334,7 @@ assert(A.shape == (1, 4))
 \vspace{0.5\baselineskip}
 每个节点会进行两个计算，分别是\textbf{线性计算}和\textbf{激活函数计算}，如图 \ref{fig:node} 所示。节点首先把上一层的所有节点的输出值乘以权重，然后把所有结果相加，再加上偏置值，得到线性计算的结果$z$。然后把$z$作为激活函数的输入，得到激活函数的输出，作为该节点的输出$a$。$z$可作为一个中间量，与$a$维度相同。
 
-\begin{figure}[hb]
+\begin{figure}[h!bt]
 	\centering
 	\begin{tikzpicture}[x=1.5cm, y=1.5cm, >=stealth]
 		\def\nx{3}
@@ -381,7 +381,7 @@ assert(A.shape == (1, 4))
 	\label{fig:shallow_nn}
 \end{figure}
 
-\begin{figure}[hb]
+\begin{figure}[h!bt]
 	\centering
 	\includegraphics[width=5cm]{node.pdf}
 	\caption{单个节点的结构}
@@ -394,7 +394,7 @@ assert(A.shape == (1, 4))
 
 常见的激活函数有sigmoid函数、tanh函数、ReLU函数、leaky ReLU函数等，如图 \ref{fig:activation} 所示。对于导数不存在的点，可以使用左导数或右导数代替。
 
-\begin{figure*}[h!b]
+\begin{figure*}[h!bt]
 	\centering
 	\subfigure[$\mathrm{sigmoid}(z) = \frac{1}{1+\mathrm{e}^{-z}}$]{
 		\begin{minipage}[t]{0.5\linewidth}
@@ -463,7 +463,7 @@ assert(A.shape == (1, 4))
 %%%
 \subsection{Backpropagation}
 \index{Backpropagation}
-在神经网络中，梯度下降用到了\textbf{反向传播算法（Backpropagation）}，该算法的基本思想是，先计算代价函数的梯度，然后再反向传播到每一层，计算每一层$W$和$b$的梯度。
+在神经网络中，梯度下降用到了\textbf{反向传播算法（Backpropagation）}，该算法的基本思想是，先计算代价函数对输出层的梯度，然后再反向传播到每一层，计算每一层$W$和$b$的梯度。
 需要注意，在每一轮梯度下降中，\textbf{所有的$X$, $Y$, $Z$, $A$都是已知的常量，而$W$, $b$是需要更新的}。
 
 在推导过程中，需要补充一些矩阵导数运算的知识，参见附录 \ref{sec:matrix_derivative}。以下过程中使用的符号如表 \ref{tab:notations} 所示。
@@ -544,26 +544,98 @@ assert(A.shape == (1, 4))
 	\annotate[yshift=0em]{below}{db}{相当于$\dfrac{\mathrm{d}J}{\mathrm{d}Z^{[l]}}$沿水平方向求和}
 \end{equation}
 综合式\eqref{eq:backpropagation_conc_3}, \eqref{eq:backpropagation_conc_2}, \eqref{eq:backpropagation_conc_1}, 和\eqref{eq:backpropagation_conc_4}，可得
+\footnote{此推导结果与课程不同，主要区别是系数$\dfrac{1}{m}$的位置不同。课程中将$\dfrac{1}{m}$放在了所有的$\dfrac{\mathrm{d}J}{\mathrm{d}W}$和$\dfrac{\mathrm{d}J}{\mathrm{d}b}$处，但实际上应该位于$\dfrac{\mathrm{d}J}{\mathrm{d}A^{[L]}}$处并反向传播至各层。但是这不会影响最终的结果。}
 \begin{align}
 	\frac{\mathrm{d}J}{\mathrm{d}Z^{[l]}} &= g^{[l]'}(Z^{[l]}) \odot \frac{\mathrm{d}J}{\mathrm{d}A^{[l]}} \\
 	\frac{\mathrm{d}J}{\mathrm{d}A^{[l-1]}} &= W^{[l] \mathrm{T}} \frac{\mathrm{d}J}{\mathrm{d}Z^{[l]}} \\
 	\frac{\mathrm{d}J}{\mathrm{d}W^{[l]}} &= \frac{\mathrm{d}J}{\mathrm{d}Z^{[l]}} A^{[l-1] \mathrm{T}} \label{eq:dw_real} \\
 	\frac{\mathrm{d}J}{\mathrm{d}b^{[l]}} &= \sum_{i=1}^{m} \frac{\mathrm{d}J}{\mathrm{d}z^{[l](i)}} \label{eq:db_real}
 \end{align}
-在实际使用时，式\eqref{eq:dw_real}和\eqref{eq:db_real}通常会除以$m$（实际上这对训练没有影响，相当于学习率进行了缩放），以减小梯度的大小，即
-\begin{align}
-	\frac{\mathrm{d}J}{\mathrm{d}W^{[l]}} &= \frac{1}{m} \frac{\mathrm{d}J}{\mathrm{d}Z^{[l]}} A^{[l-1] \mathrm{T}} \\
-	\frac{\mathrm{d}J}{\mathrm{d}b^{[l]}} &= \frac{1}{m} \sum_{i=1}^{m} \frac{\mathrm{d}J}{\mathrm{d}z^{[l](i)}}
-\end{align}
 将以上结论写成伪代码形式，
 \begin{align}
 	\mathtt{dZ^{\textcolor{Magenta}{[}l\textcolor{Magenta}{]}}} &= \mathtt{g^{\textcolor{Magenta}{[}l\textcolor{Magenta}{]}'}\textcolor{yellow}{(}Z^{\textcolor{Magenta}{[}l\textcolor{Magenta}{]}}\textcolor{yellow}{)} \,\tikzmarknode{star}{*}\, dA^{\textcolor{Magenta}{[}l\textcolor{Magenta}{]}}} \\
 	\mathtt{dA^{\textcolor{Magenta}{[}l-\textcolor{green}{1}\textcolor{Magenta}{]}}} &= \mathtt{W^{\textcolor{Magenta}{[}l\textcolor{Magenta}{]} T} dZ^{\textcolor{Magenta}{[}l\textcolor{Magenta}{]}}} \\
-	\mathtt{dW^{\textcolor{Magenta}{[}l\textcolor{Magenta}{]}}} &= \mathtt{\frac{1}{m} dZ^{\textcolor{Magenta}{[}l\textcolor{Magenta}{]}} A^{\textcolor{Magenta}{[}l-\textcolor{green}{1}\textcolor{Magenta}{]}T}} \label{eq:dw} \\
-	\mathtt{db^{\textcolor{Magenta}{[}l\textcolor{Magenta}{]}}} &= \mathtt{\frac{1}{m} np.sum\textcolor{yellow}{(}dZ^{\textcolor{Magenta}{[}l\textcolor{Magenta}{]}}, axis=\textcolor{green}{1}, keepdims=\textcolor{blue}{True}\textcolor{yellow}{)}} \label{eq:db}
+	\mathtt{dW^{\textcolor{Magenta}{[}l\textcolor{Magenta}{]}}} &= \mathtt{dZ^{\textcolor{Magenta}{[}l\textcolor{Magenta}{]}} A^{\textcolor{Magenta}{[}l-\textcolor{green}{1}\textcolor{Magenta}{]}T}} \label{eq:dw} \\
+	\mathtt{db^{\textcolor{Magenta}{[}l\textcolor{Magenta}{]}}} &= \mathtt{np.sum\textcolor{yellow}{(}dZ^{\textcolor{Magenta}{[}l\textcolor{Magenta}{]}}, axis=\textcolor{green}{1}, keepdims=\textcolor{blue}{True}\textcolor{yellow}{)}} \label{eq:db}
 	\annotate[yshift=1.5em]{above}{star}{element-wise multiplication}
 \end{align}
-这便是反向传播算法的计算方法。从输出层开始逐层向前计算，直到第$1$层，即可得到所有的梯度。
+
+下面来\colorbox{LemonChiffon}{计算$\dfrac{\mathrm{d}J}{\mathrm{d}A^{[L]}}$}。回顾损失函数（交叉熵损失函数）的定义
+\begin{equation}
+	L^{(i)} = -\left[y^{(i)} \log \hat{y}^{(i)} + (1 - y^{(i)}) \log (1 - \hat{y}^{(i)})\right]
+\end{equation}
+对其求导，可得
+\begin{equation}
+	\frac{\mathrm{d}L^{(i)}}{\mathrm{d}\hat{y}^{(i)}} = -\frac{y^{(i)}}{\hat{y}^{(i)}} + \frac{1 - y^{(i)}}{1 - \hat{y}^{(i)}}
+\end{equation}
+从而
+\begin{equation}
+	\frac{\mathrm{d}J}{\mathrm{d}\hat{y}^{(i)}} 
+	= \frac{1}{m} \sum_{\textcolor{red}{j}=1}^{m} \frac{\mathrm{d}L^{(\textcolor{red}{j})}}{\mathrm{d}\hat{y}^{(i)}} 
+	= \frac{1}{m} \frac{\mathrm{d}L^{(i)}}{\mathrm{d}\hat{y}^{(i)}} 
+	= \frac{1}{m} \left(-\frac{y^{(i)}}{\hat{y}^{(i)}} + \frac{1 - y^{(i)}}{1 - \hat{y}^{(i)}}\right)
+\end{equation}
+将各个样本的值写在一起，可得
+\begin{equation}
+	\frac{\mathrm{d}J}{\mathrm{d}\hat{Y}} 
+	= \begin{bmatrix} \dfrac{\mathrm{d}J}{\mathrm{d}\hat{y}^{(1)}} & \dfrac{\mathrm{d}J}{\mathrm{d}\hat{y}^{(2)}} & \cdots & \dfrac{\mathrm{d}J}{\mathrm{d}\hat{y}^{(m)}} \end{bmatrix}
+	= \frac{1}{m} \left(-\frac{Y}{\hat{Y}} + \frac{1 - Y}{1 - \hat{Y}}\right)
+\end{equation}
+即
+\begin{equation}
+	\frac{\mathrm{d}J}{\mathrm{d}A^{[L]}} 
+	= \frac{1}{m} \left(-\frac{Y}{A^{[L]}} + \frac{1 - Y}{1 - A^{[L]}}\right)
+\end{equation}
+写成伪代码形式为
+\begin{equation}
+	\mathtt{dA^{\textcolor{Magenta}{[}L\textcolor{Magenta}{]}}} = \mathtt{\frac{1}{m} \textcolor{blue}{(}np.divide\textcolor{yellow}{(}Y, A^{\textcolor{Magenta}{[}L\textcolor{Magenta}{]}}\textcolor{yellow}{)} - np.divide\textcolor{yellow}{(}1 - Y, 1 - A^{\textcolor{Magenta}{[}L\textcolor{Magenta}{]}}\textcolor{yellow}{)}}\textcolor{blue}{)} \label{eq:da}
+\end{equation}
+\textbf{从输出层开始，先得到$\dfrac{\mathrm{d}J}{\mathrm{d}A^{[L]}}$（也就是$\dfrac{\mathrm{d}J}{\mathrm{d}\hat{Y}}$），然后逐层向前计算，直到第$1$层，即可得到所有的梯度。}
+
+\vspace{\baselineskip}
+对于本节要构建的浅层神经网络，使用的激活函数为sigmoid函数，
+\begin{equation}
+	A = g(Z) \quad \Rightarrow \quad g'(Z) = A(1-A)
+\end{equation}
+利用
+\begin{equation}
+	\frac{\mathrm{d}J}{\mathrm{d}A^{[2]}} 
+	= \frac{1}{m} \left(-\frac{Y}{A^{[2]}} + \frac{1 - Y}{1 - A^{[2]}}\right)
+\end{equation}
+可得
+\begin{align}
+	\frac{\mathrm{d}J}{\mathrm{d}Z^{[2]}} &= A^{[2]}(1-A^{[2]}) \odot \frac{\mathrm{d}J}{\mathrm{d}A^{[2]}} = \frac{1}{m}(A^{[2]}-Y) \\
+	\frac{\mathrm{d}J}{\mathrm{d}A^{[1]}} &= W^{[2] \mathrm{T}} \frac{\mathrm{d}J}{\mathrm{d}Z^{[2]}} \\
+	\frac{\mathrm{d}J}{\mathrm{d}W^{[2]}} &= \frac{\mathrm{d}J}{\mathrm{d}Z^{[2]}} A^{[1] \mathrm{T}} \\
+	\frac{\mathrm{d}J}{\mathrm{d}b^{[2]}} &= \sum_{i=1}^{m} \frac{\mathrm{d}J}{\mathrm{d}z^{[2](i)}}
+\end{align}
+进而
+\begin{align}
+	\frac{\mathrm{d}J}{\mathrm{d}Z^{[1]}} &= A^{[1]}(1-A^{[1]}) \odot \frac{\mathrm{d}J}{\mathrm{d}A^{[1]}} = W^{[2] \mathrm{T}} \frac{\mathrm{d}J}{\mathrm{d}Z^{[2]}} \odot A^{[1]}(1-A^{[1]}) \\
+	\frac{\mathrm{d}J}{\mathrm{d}W^{[1]}} &= \frac{\mathrm{d}J}{\mathrm{d}Z^{[1]}} A^{[0] \mathrm{T}} = \frac{\mathrm{d}J}{\mathrm{d}Z^{[1]}} X^{\mathrm{T}} \\
+	\frac{\mathrm{d}J}{\mathrm{d}b^{[1]}} &= \sum_{i=1}^{m} \frac{\mathrm{d}J}{\mathrm{d}z^{[1](i)}}
+\end{align}
+总结为伪代码形式
+\begin{align}
+	\mathtt{dZ^{\textcolor{Magenta}{[}2\textcolor{Magenta}{]}}} &= \mathtt{\frac{1}{m} \textcolor{yellow}{(}A^{\textcolor{Magenta}{[}2\textcolor{Magenta}{]}}-Y\textcolor{yellow}{)}} \\
+	\mathtt{dW^{\textcolor{Magenta}{[}2\textcolor{Magenta}{]}}} &= \mathtt{dZ^{\textcolor{Magenta}{[}2\textcolor{Magenta}{]}} A^{\textcolor{Magenta}{[}1\textcolor{Magenta}{]}T}} \\
+	\mathtt{db^{\textcolor{Magenta}{[}2\textcolor{Magenta}{]}}} &= \mathtt{np.sum\textcolor{yellow}{(}dZ^{\textcolor{Magenta}{[}2\textcolor{Magenta}{]}}, axis=\textcolor{green}{1}, keepdims=\textcolor{blue}{True}\textcolor{yellow}{)}} \\
+	\mathtt{dZ^{\textcolor{Magenta}{[}1\textcolor{Magenta}{]}}} &= \mathtt{W^{\textcolor{Magenta}{[}2\textcolor{Magenta}{]}T} dZ^{\textcolor{Magenta}{[}2\textcolor{Magenta}{]}} * A^{\textcolor{Magenta}{[}1\textcolor{Magenta}{]}}\textcolor{yellow}{(}1 - A^{\textcolor{Magenta}{[}1\textcolor{Magenta}{]}}\textcolor{yellow}{)}} \\
+	\mathtt{dW^{\textcolor{Magenta}{[}1\textcolor{Magenta}{]}}} &= \mathtt{dZ^{\textcolor{Magenta}{[}1\textcolor{Magenta}{]}} X^T} \\
+	\mathtt{db^{\textcolor{Magenta}{[}1\textcolor{Magenta}{]}}} &= \mathtt{np.sum\textcolor{yellow}{(}dZ^{\textcolor{Magenta}{[}1\textcolor{Magenta}{]}}, axis=\textcolor{green}{1}, keepdims=\textcolor{blue}{True}\textcolor{yellow}{)}}
+\end{align}
+
+%%%
+\subsection{Random Initialization}
+在神经网络中，权重的初始值不能全部为$0$，否则会导致神经网络各层的神经元进行相同的计算，无法正常工作。
 
 \vspace{0.5\baselineskip}
-对于浅层神经网络，
+在神经网络中，权重的初始值通常使用随机数生成，如
+\begin{equation}
+	W^{[l]} = \mathtt{np.random.randn}(n^{[l]}, n^{[l-1]}) \times 0.01
+\end{equation}
+其中，$\mathtt{np.random.randn}(n^{[l]}, n^{[l-1]})$表示生成一个$n^{[l]} \times n^{[l-1]}$的随机矩阵，每个元素都是从均值为$0$，方差为$1$的高斯分布中随机取值，然后再乘以$0.01$。乘上$0.01$是为了保证$W^{[l]}$的值不会太大，在初始时在激活函数梯度较大处（靠近$0$）进行训练，否则会导致激活函数的输入值过大，从而导致梯度消失或梯度爆炸。\\
+对于偏置，可以直接使用$0$初始化，
+\begin{equation}
+	b^{[l]} = \mathtt{np.zeros}((n^{[l]}, 1))
+\end{equation}
