@@ -8,6 +8,8 @@
 \contentsline {subfigure}{\numberline {(b)}{\ignorespaces {$\mathrm {tanh}(z) = \frac {\mathrm {e}^{z} - \mathrm {e}^{-z}}{\mathrm {e}^{z} + \mathrm {e}^{-z}}$}}}{13}{figure.1.5}%
 \contentsline {subfigure}{\numberline {(c)}{\ignorespaces {$\mathrm {ReLU}(z) = \max (0, z)$}}}{13}{figure.1.5}%
 \contentsline {subfigure}{\numberline {(d)}{\ignorespaces {$\mathrm {LeakyReLU}(z) = \max (0.01z, z)$}}}{13}{figure.1.5}%
+\contentsline {figure}{\numberline {1.6}{\ignorespaces Deep Neural Network}}{17}{figure.1.6}%
+\contentsline {figure}{\numberline {1.7}{\ignorespaces Propagation Blocks}}{18}{figure.1.7}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \contentsfinish 

@@ -44,6 +44,27 @@
       \field{year}{1994}
       \true{nocite}
     \endentry
+    \entry{dotnets}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=4632bea73a15769ab822d493c01e6be4}{%
+           family={martisak},
+           familyi={m\bibinitperiod}}}%
+      }
+      \strng{namehash}{4632bea73a15769ab822d493c01e6be4}
+      \strng{fullhash}{4632bea73a15769ab822d493c01e6be4}
+      \strng{bibnamehash}{4632bea73a15769ab822d493c01e6be4}
+      \strng{authorbibnamehash}{4632bea73a15769ab822d493c01e6be4}
+      \strng{authornamehash}{4632bea73a15769ab822d493c01e6be4}
+      \strng{authorfullhash}{4632bea73a15769ab822d493c01e6be4}
+      \field{sortinit}{m}
+      \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{https://github.com/martisak/dotnets}
+      \field{note}{Accessed on 2023-09-13}
+      \field{title}{dotnets}
+      \field{year}{2018}
+    \endentry
     \entry{matrix_cookbook}{book}{}
       \name{author}{2}{}{%
         {{hash=6fcb1bb06fdf433c79ec15e046e78b11}{%

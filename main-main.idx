@@ -1,5 +1,6 @@
 \indexentry{Logistic Regression|hyperpage}{6}
 \indexentry{Gradient Descent|hyperpage}{8}
 \indexentry{Activation Functions|hyperpage}{11}
-\indexentry{Backpropagation|hyperpage}{12}
-\indexentry{Matrix derivative|hyperpage}{23}
+\indexentry{Backpropagation|hyperpage}{13}
+\indexentry{Forward Propagation|hyperpage}{17}
+\indexentry{Matrix derivative|hyperpage}{25}

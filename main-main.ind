@@ -11,7 +11,12 @@
   \indexspace
 
   \lettergroup{B}
-  \item Backpropagation, \hyperpage{12}
+  \item Backpropagation, \hyperpage{13}
+
+  \indexspace
+
+  \lettergroup{F}
+  \item Forward Propagation, \hyperpage{17}
 
   \indexspace
 
@@ -26,6 +31,6 @@
   \indexspace
 
   \lettergroup{M}
-  \item Matrix derivative, \hyperpage{23}
+  \item Matrix derivative, \hyperpage{25}
 
 \end{theindex}

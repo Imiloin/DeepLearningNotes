@@ -471,10 +471,11 @@ assert(A.shape == (1, 4))
 \vspace{0.5\baselineskip}
 对于第$l$层，\colorbox{LemonChiffon}{已知$\dfrac{\mathrm{d}J}{\mathrm{d}A^{[l]}}$}和关系
 \begin{equation}
-	\vcenter{\hbox{\tikzmarknode{Zl}{$Z^{[l]}$}}} \vcenter{\hbox{$\vphantom{1}=\vphantom{1}$\tikzmarknode{Wl}{$W^{[l]}$}\tikzmarknode{Al-1}{$A^{[l-1]}$}$\vphantom{1}+\vphantom{1}$}} \begin{bmatrix} b^{[l]} & b^{[l]} & \cdots & b^{[l]} \end{bmatrix}_{\substack{\scriptstyle n^{[l]}\times m}}
+	\vcenter{\hbox{\tikzmarknode{Zl}{$Z^{[l]}$}}} \vcenter{\hbox{$\vphantom{1}=\vphantom{1}$\tikzmarknode{Wl}{$W^{[l]}$}\tikzmarknode{Al-1}{$A^{[l-1]}$}$\vphantom{1}+\vphantom{1}$}} \begin{bmatrix} \tikzmarknode[outer ysep=2pt]{bl}{b^{[l]}} & b^{[l]} & \cdots & b^{[l]} \end{bmatrix}_{\substack{\scriptstyle n^{[l]}\times m}}
 	\annotate[yshift=1em]{above}{Zl}{$n^{[l]}\times m$}
 	\annotate[yshift=-1em]{below,left}{Wl}{$n^{[l]}\times n^{[l-1]}$}
 	\annotate[yshift=-1em]{below}{Al-1}{$n^{[l-1]}\times m$}
+	\annotate[yshift=1em]{above}{bl}{$n^{[l]}\times 1$}
 	\label{eq:backpropagation_known_1}
 \end{equation}
 \begin{equation}
@@ -541,7 +542,9 @@ assert(A.shape == (1, 4))
 	\label{eq:backpropagation_conc_4}
 	\end{aligned}
 	\vspace{2em}
+	\renewcommand{\eqnannotationstrut}{\rule[-0.7\baselineskip]{0pt}{1.5\baselineskip}}
 	\annotate[yshift=0em]{below}{db}{相当于$\dfrac{\mathrm{d}J}{\mathrm{d}Z^{[l]}}$沿水平方向求和}
+	\renewcommand{\eqnannotationstrut}{\strut} % package default
 \end{equation}
 综合式\eqref{eq:backpropagation_conc_3}, \eqref{eq:backpropagation_conc_2}, \eqref{eq:backpropagation_conc_1}, 和\eqref{eq:backpropagation_conc_4}，可得
 \footnote{此推导结果与课程不同，主要区别是系数$\dfrac{1}{m}$的位置不同。课程中将$\dfrac{1}{m}$放在了所有的$\dfrac{\mathrm{d}J}{\mathrm{d}W}$和$\dfrac{\mathrm{d}J}{\mathrm{d}b}$处，但实际上应该位于$\dfrac{\mathrm{d}J}{\mathrm{d}A^{[L]}}$处并反向传播至各层。但是这不会影响最终的结果。}
@@ -553,13 +556,15 @@ assert(A.shape == (1, 4))
 \end{align}
 将以上结论写成伪代码形式，
 \begin{align}
-	\mathtt{dZ^{\textcolor{Magenta}{[}l\textcolor{Magenta}{]}}} &= \mathtt{g^{\textcolor{Magenta}{[}l\textcolor{Magenta}{]}'}\textcolor{yellow}{(}Z^{\textcolor{Magenta}{[}l\textcolor{Magenta}{]}}\textcolor{yellow}{)} \,\tikzmarknode{star}{*}\, dA^{\textcolor{Magenta}{[}l\textcolor{Magenta}{]}}} \\
-	\mathtt{dA^{\textcolor{Magenta}{[}l-\textcolor{green}{1}\textcolor{Magenta}{]}}} &= \mathtt{W^{\textcolor{Magenta}{[}l\textcolor{Magenta}{]} T} dZ^{\textcolor{Magenta}{[}l\textcolor{Magenta}{]}}} \\
-	\mathtt{dW^{\textcolor{Magenta}{[}l\textcolor{Magenta}{]}}} &= \mathtt{dZ^{\textcolor{Magenta}{[}l\textcolor{Magenta}{]}} A^{\textcolor{Magenta}{[}l-\textcolor{green}{1}\textcolor{Magenta}{]}T}} \label{eq:dw} \\
+	\mathtt{dZ^{\textcolor{Magenta}{[}l\textcolor{Magenta}{]}}} &= \mathtt{g^{\textcolor{Magenta}{[}l\textcolor{Magenta}{]}'}\textcolor{yellow}{(}Z^{\textcolor{Magenta}{[}l\textcolor{Magenta}{]}}\textcolor{yellow}{)} \,\tikzmarknode[outer ysep=2pt]{star}{*}\, dA^{\textcolor{Magenta}{[}l\textcolor{Magenta}{]}}} \\
+	\mathtt{dA^{\textcolor{Magenta}{[}l-\textcolor{green}{1}\textcolor{Magenta}{]}}} &= \mathtt{np.dot\textcolor{yellow}{(}W^{\textcolor{Magenta}{[}l\textcolor{Magenta}{]}}.T, dZ^{\textcolor{Magenta}{[}l\textcolor{Magenta}{]}}\textcolor{yellow}{)}} \\
+	\mathtt{dW^{\textcolor{Magenta}{[}l\textcolor{Magenta}{]}}} &= \mathtt{np.dot\textcolor{yellow}{(}dZ^{\textcolor{Magenta}{[}l\textcolor{Magenta}{]}}, A^{\textcolor{Magenta}{[}l-\textcolor{green}{1}\textcolor{Magenta}{]}}.T\textcolor{yellow}{)}} \label{eq:dw} \\
 	\mathtt{db^{\textcolor{Magenta}{[}l\textcolor{Magenta}{]}}} &= \mathtt{np.sum\textcolor{yellow}{(}dZ^{\textcolor{Magenta}{[}l\textcolor{Magenta}{]}}, axis=\textcolor{green}{1}, keepdims=\textcolor{blue}{True}\textcolor{yellow}{)}} \label{eq:db}
 	\annotate[yshift=1.5em]{above}{star}{element-wise multiplication}
 \end{align}
+逐元素相乘使用*或\;\verb|np.multiply|\;均可，区别在于\;\verb|np.multiply|\;可以进行维度扩充。计算得到的\;\verb|dW|\;和\;\verb|db|\;存入\;\verb|grads|\;字典中，然后使用梯度下降法更新$W$和$b$。
 
+\vspace{0.5\baselineskip}
 下面来\colorbox{LemonChiffon}{计算$\dfrac{\mathrm{d}J}{\mathrm{d}A^{[L]}}$}。回顾损失函数（交叉熵损失函数）的定义
 \begin{equation}
 	L^{(i)} = -\left[y^{(i)} \log \hat{y}^{(i)} + (1 - y^{(i)}) \log (1 - \hat{y}^{(i)})\right]
@@ -588,15 +593,16 @@ assert(A.shape == (1, 4))
 \end{equation}
 写成伪代码形式为
 \begin{equation}
-	\mathtt{dA^{\textcolor{Magenta}{[}L\textcolor{Magenta}{]}}} = \mathtt{\frac{1}{m} \textcolor{blue}{(}np.divide\textcolor{yellow}{(}Y, A^{\textcolor{Magenta}{[}L\textcolor{Magenta}{]}}\textcolor{yellow}{)} - np.divide\textcolor{yellow}{(}1 - Y, 1 - A^{\textcolor{Magenta}{[}L\textcolor{Magenta}{]}}\textcolor{yellow}{)}}\textcolor{blue}{)} \label{eq:da}
+	\mathtt{dA^{\textcolor{Magenta}{[}L\textcolor{Magenta}{]}}} = \mathtt{\textcolor{blue}{(}np.divide\textcolor{yellow}{(}Y, A^{\textcolor{Magenta}{[}L\textcolor{Magenta}{]}}\textcolor{yellow}{)} - np.divide\textcolor{yellow}{(}1 - Y, 1 - A^{\textcolor{Magenta}{[}L\textcolor{Magenta}{]}}\textcolor{yellow}{)}\textcolor{blue}{)}/m} \label{eq:da}
 \end{equation}
 \textbf{从输出层开始，先得到$\dfrac{\mathrm{d}J}{\mathrm{d}A^{[L]}}$（也就是$\dfrac{\mathrm{d}J}{\mathrm{d}\hat{Y}}$），然后逐层向前计算，直到第$1$层，即可得到所有的梯度。}
 
 \vspace{\baselineskip}
-对于本节要构建的浅层神经网络，使用的激活函数为sigmoid函数，
-\begin{equation}
-	A = g(Z) \quad \Rightarrow \quad g'(Z) = A(1-A)
-\end{equation}
+对于本节要构建的浅层神经网络，第一层使用的激活函数为tanh函数，而第二层使用的激活函数为sigmoid函数，
+\begin{align}
+	A^{[1]} = g^{[1]}(Z^{[1]}) &\quad \Rightarrow \quad g^{[1]'}(Z) = 1-A^{[1]2} \\
+	A^{[2]} = g^{[2]}(Z^{[2]}) &\quad \Rightarrow \quad g^{[2]'}(Z) = A^{[2]}(1-A^{[2]})
+\end{align}
 利用
 \begin{equation}
 	\frac{\mathrm{d}J}{\mathrm{d}A^{[2]}} 
@@ -611,17 +617,17 @@ assert(A.shape == (1, 4))
 \end{align}
 进而
 \begin{align}
-	\frac{\mathrm{d}J}{\mathrm{d}Z^{[1]}} &= A^{[1]}(1-A^{[1]}) \odot \frac{\mathrm{d}J}{\mathrm{d}A^{[1]}} = W^{[2] \mathrm{T}} \frac{\mathrm{d}J}{\mathrm{d}Z^{[2]}} \odot A^{[1]}(1-A^{[1]}) \\
+	\frac{\mathrm{d}J}{\mathrm{d}Z^{[1]}} &= (1-A^{[1]2}) \odot \frac{\mathrm{d}J}{\mathrm{d}A^{[1]}} = W^{[2] \mathrm{T}} \frac{\mathrm{d}J}{\mathrm{d}Z^{[2]}} \odot (1-A^{[1]2}) \\
 	\frac{\mathrm{d}J}{\mathrm{d}W^{[1]}} &= \frac{\mathrm{d}J}{\mathrm{d}Z^{[1]}} A^{[0] \mathrm{T}} = \frac{\mathrm{d}J}{\mathrm{d}Z^{[1]}} X^{\mathrm{T}} \\
 	\frac{\mathrm{d}J}{\mathrm{d}b^{[1]}} &= \sum_{i=1}^{m} \frac{\mathrm{d}J}{\mathrm{d}z^{[1](i)}}
 \end{align}
 总结为伪代码形式
 \begin{align}
-	\mathtt{dZ^{\textcolor{Magenta}{[}2\textcolor{Magenta}{]}}} &= \mathtt{\frac{1}{m} \textcolor{yellow}{(}A^{\textcolor{Magenta}{[}2\textcolor{Magenta}{]}}-Y\textcolor{yellow}{)}} \\
-	\mathtt{dW^{\textcolor{Magenta}{[}2\textcolor{Magenta}{]}}} &= \mathtt{dZ^{\textcolor{Magenta}{[}2\textcolor{Magenta}{]}} A^{\textcolor{Magenta}{[}1\textcolor{Magenta}{]}T}} \\
+	\mathtt{dZ^{\textcolor{Magenta}{[}2\textcolor{Magenta}{]}}} &= \mathtt{\textcolor{yellow}{(}A^{\textcolor{Magenta}{[}2\textcolor{Magenta}{]}}-Y\textcolor{yellow}{)}/m} \\
+	\mathtt{dW^{\textcolor{Magenta}{[}2\textcolor{Magenta}{]}}} &= \mathtt{np.dot\textcolor{yellow}{(}dZ^{\textcolor{Magenta}{[}2\textcolor{Magenta}{]}}, A^{\textcolor{Magenta}{[}1\textcolor{Magenta}{]}}.T\textcolor{yellow}{)}} \\
 	\mathtt{db^{\textcolor{Magenta}{[}2\textcolor{Magenta}{]}}} &= \mathtt{np.sum\textcolor{yellow}{(}dZ^{\textcolor{Magenta}{[}2\textcolor{Magenta}{]}}, axis=\textcolor{green}{1}, keepdims=\textcolor{blue}{True}\textcolor{yellow}{)}} \\
-	\mathtt{dZ^{\textcolor{Magenta}{[}1\textcolor{Magenta}{]}}} &= \mathtt{W^{\textcolor{Magenta}{[}2\textcolor{Magenta}{]}T} dZ^{\textcolor{Magenta}{[}2\textcolor{Magenta}{]}} * A^{\textcolor{Magenta}{[}1\textcolor{Magenta}{]}}\textcolor{yellow}{(}1 - A^{\textcolor{Magenta}{[}1\textcolor{Magenta}{]}}\textcolor{yellow}{)}} \\
-	\mathtt{dW^{\textcolor{Magenta}{[}1\textcolor{Magenta}{]}}} &= \mathtt{dZ^{\textcolor{Magenta}{[}1\textcolor{Magenta}{]}} X^T} \\
+	\mathtt{dZ^{\textcolor{Magenta}{[}1\textcolor{Magenta}{]}}} &= \mathtt{np.dot\textcolor{yellow}{(}W^{\textcolor{Magenta}{[}2\textcolor{Magenta}{]}}.T, dZ^{\textcolor{Magenta}{[}2\textcolor{Magenta}{]}}\textcolor{yellow}{)} * \textcolor{yellow}{(}\textcolor{green}{1} - A^{\textcolor{Magenta}{[}1\textcolor{Magenta}{]}} * A^{\textcolor{Magenta}{[}1\textcolor{Magenta}{]}}\textcolor{yellow}{)}} \\
+	\mathtt{dW^{\textcolor{Magenta}{[}1\textcolor{Magenta}{]}}} &= \mathtt{np.dot\textcolor{yellow}{(}dZ^{\textcolor{Magenta}{[}1\textcolor{Magenta}{]}}, X.T\textcolor{yellow}{)}} \\
 	\mathtt{db^{\textcolor{Magenta}{[}1\textcolor{Magenta}{]}}} &= \mathtt{np.sum\textcolor{yellow}{(}dZ^{\textcolor{Magenta}{[}1\textcolor{Magenta}{]}}, axis=\textcolor{green}{1}, keepdims=\textcolor{blue}{True}\textcolor{yellow}{)}}
 \end{align}
 
@@ -637,5 +643,52 @@ assert(A.shape == (1, 4))
 其中，$\mathtt{np.random.randn}(n^{[l]}, n^{[l-1]})$表示生成一个$n^{[l]} \times n^{[l-1]}$的随机矩阵，每个元素都是从均值为$0$，方差为$1$的高斯分布中随机取值，然后再乘以$0.01$。乘上$0.01$是为了保证$W^{[l]}$的值不会太大，在初始时在激活函数梯度较大处（靠近$0$）进行训练，否则会导致激活函数的输入值过大，从而导致梯度消失或梯度爆炸。\\
 对于偏置，可以直接使用$0$初始化，
 \begin{equation}
-	b^{[l]} = \mathtt{np.zeros}((n^{[l]}, 1))
+	b^{[l]} = \mathtt{np.zeros}\tikzmarknode[outer ysep=2pt]{op}{((n^{[l]}, 1))}
+	\annotate[yshift=0em]{below}{op}{two levels of parentheses}
+	\vspace{1.5em}
 \end{equation}
+初始化的$W$和$b$存入\;\verb|parameters|\;字典中。
+
+%%%%
+\section{Deep Neural Network}
+
+%%%
+\subsection{Deep L-layer neural network}
+深层神经网络（Deep Neural Network）是指神经网络的具有更多的隐藏层，如图 \ref{fig:deep_nn} 所示。在深层神经网络中，每一层的神经元数目不一定相同，但是输入层和输出层的神经元数目需要与问题相匹配。
+\begin{figure}[h!bt]
+    \centering
+    \includegraphics[width=14cm]{deep_nn.pdf}
+    \caption[Deep Neural Network]{Deep Neural Network\setcounter{footnote}{0}\footnotemark}
+    \label{fig:deep_nn}
+\end{figure}
+\footnotetext{使用\cite{dotnets}绘制}
+
+事实上，神经网络的层数并不是越多越好。在尝试用神经网络解决问题时，可以先从单纯的逻辑回归和浅层神经网络开始，如果其无法解决问题再尝试深层神经网络。
+
+%%%
+\subsection{Forward Propagation in a Deep Network}
+\index{Forward Propagation}
+\textbf{前向传播（Forward Propagation）}是指从输入层开始，逐层计算，直到输出层，得到最终的输出值。在前向传播过程中，对于每一层都已知$A^{[l-1]}$，需要计算$Z^{[l]}$和$A^{[l]}$，计算公式如下：
+\begin{align}
+	Z^{[l]} &= W^{[l]} A^{[l-1]} + b^{[l]} \\
+	A^{[l]} &= g^{[l]}(Z^{[l]})
+\end{align}
+对于输入层，$A^{[0]} = X$，以此为起点逐层向前计算。在计算完一层后，通常需要把$A^{[l]}$或$Z^{[l]}$存入\;\verb|cache|，以便在反向传播时使用，而$W^{[l]}$和$b^{[l]}$从\;\verb|parameters|\;中读取。
+
+%%%
+\subsection{Building Blocks of Deep Neural Networks}
+一张图 \ref{fig:blocks_fb} 即可说明。
+\begin{figure}[h!b]
+    \centering
+    \includegraphics[width=16cm]{blocks_fb.pdf}
+    \caption{Propagation Blocks}
+    \label{fig:blocks_fb}
+\end{figure}
+
+一轮迭代包括前向传播和反向传播两个过程，每轮迭代都会不断更新参数$W$和$b$。经过多轮迭代后，可以得到最终的$W$和$b$，然后使用这些参数进行预测。
+
+%%%
+\subsection{Parameters vs Hyperparameters}
+\textbf{参数（Parameters）}是指神经网络中的$W$和$b$，而\textbf{超参数（Hyperparameters）}是指学习率$\alpha$、迭代次数$T$、神经网络中的层数$L$、每层的神经元数目$n$、激活函数$g$等。
+
+之所以把层数、神经元数目、激活函数等称为超参数，是因为这些参数的值是相对于算法本身而言的，需要人为设定，而不能通过训练得到。在实际应用中，通常需要多次尝试不同的超参数，才能得到较好的结果。
