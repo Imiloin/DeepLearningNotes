@@ -1,5 +1,5 @@
 @echo off
-del *.aux *.toc *.lof *.lot *.bbl *.bcf *.blg *.idx
+del *.aux *.out *.xml *.thm *.toc *.lof *.lot *.bbl *.bcf *.blg *.idx *.ind *.log *.gz
 xelatex -shell-escape main.tex
 biber main.bcf
 xelatex -shell-escape main.tex
