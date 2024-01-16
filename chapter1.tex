@@ -24,7 +24,7 @@ Algorithms是指算法, 例如Logistic Regression、SVM、Neural Networks等。
 
 表 \ref{tab:notations} 是本章用到的符号说明。为方便起见，所有的向量符号不会加粗，用小写字母表示；同时也不对偏导数进行专门的区分，仍使用$\mathrm{d}$符号表示偏微分。
 
-\begin{table}[ht]
+\begin{table}[htb!]
     \centering
     \begin{threeparttable}
     %%
@@ -74,7 +74,7 @@ Algorithms是指算法, 例如Logistic Regression、SVM、Neural Networks等。
 
 在本节中，由于只考虑一个单层单节点的神经网络，因此省略上标$[l]$，使用简化后的符号如表 \ref{tab:notations_LR} 所示。
 
-\begin{table}[ht]
+\begin{table}[htb!]
     \centering
     \begin{threeparttable}
     \caption{Notations in Logistic Regression}
@@ -562,7 +562,7 @@ assert(A.shape == (1, 4))
     \mathtt{db^{\textcolor{Magenta}{[}l\textcolor{Magenta}{]}}} &= \mathtt{np.sum\textcolor{yellow}{(}dZ^{\textcolor{Magenta}{[}l\textcolor{Magenta}{]}}, axis=\textcolor{green}{1}, keepdims=\textcolor{blue}{True}\textcolor{yellow}{)}} \label{eq:db}
     \annotate[yshift=1.5em]{above}{star}{element-wise multiplication}
 \end{align}
-逐元素相乘使用*或\;\verb|np.multiply|\;均可，区别在于\;\verb|np.multiply|\;可以进行维度扩充。计算得到的\;\verb|dW|\;和\;\verb|db|\;存入\;\verb|grads|\;字典中，然后使用梯度下降法更新$W$和$b$。
+逐元素相乘使用*或 \verb|np.multiply| 均可，区别在于 \verb|np.multiply| 可以进行维度扩充。计算得到的 \verb|dW| 和 \verb|db| 存入 \verb|grads| 字典中，然后使用梯度下降法更新$W$和$b$。
 
 \vspace{0.5\baselineskip}
 下面来\colorbox{LemonChiffon}{计算$\dfrac{\mathrm{d}J}{\mathrm{d}A^{[L]}}$}。回顾损失函数（交叉熵损失函数）的定义
@@ -647,7 +647,7 @@ assert(A.shape == (1, 4))
     \annotate[yshift=0em]{below}{op}{two levels of parentheses}
     \vspace{1.5em}
 \end{equation}
-初始化的$W$和$b$存入\;\verb|parameters|\;字典中。
+初始化的$W$和$b$存入 \verb|parameters| 字典中。
 
 %%%%
 \section{Deep Neural Network}
@@ -673,14 +673,14 @@ assert(A.shape == (1, 4))
     Z^{[l]} &= W^{[l]} A^{[l-1]} + b^{[l]} \\
     A^{[l]} &= g^{[l]}(Z^{[l]})
 \end{align}
-对于输入层，$A^{[0]} = X$，以此为起点逐层向前计算。在计算完一层后，通常需要把$A^{[l]}$或$Z^{[l]}$存入\;\verb|cache|，以便在反向传播时使用，而$W^{[l]}$和$b^{[l]}$从\;\verb|parameters|\;中读取。
+对于输入层，$A^{[0]} = X$，以此为起点逐层向前计算。在计算完一层后，通常需要把$A^{[l]}$或$Z^{[l]}$存入 \verb|cache|，以便在反向传播时使用，而$W^{[l]}$和$b^{[l]}$从 \verb|parameters| 中读取。
 
 %%%
 \subsection{Building Blocks of Deep Neural Networks}
 一张图 \ref{fig:blocks_fb} 即可说明。
 \begin{figure}[h!b]
     \centering
-    \includegraphics[width=16cm]{blocks_fb.pdf}
+    \includegraphics[width=\textwidth]{blocks_fb.pdf}
     \caption{Propagation Blocks}
     \label{fig:blocks_fb}
 \end{figure}
