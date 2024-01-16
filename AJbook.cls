@@ -46,7 +46,7 @@
 % 基于 book class, 选项一并载入.
 \LoadClass[10pt]{book}
 
-\RequirePackage{fontspec}				% XeLaTeX
+\RequirePackage[no-math]{fontspec}				% XeLaTeX
 \RequirePackage[CJKchecksingle]{xeCJK}	% XeCJK
 \RequirePackage{CJKnumb}				% 使用 CJK 数字
 

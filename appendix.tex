@@ -10,7 +10,7 @@
 	在本节中，为便于区分，用粗体大写字母表示矩阵，用粗体小写字母表示向量，用普通小写字母表示标量。这些表示与正文不同。
 \end{wenxintishi}
 
-矩阵微积分的表示通常有两种符号约定，分别是\textbf{分子布局（Numerator Layout）}和\textbf{分母布局（Denominator Layout）}（可参考\cite{matrix_cookbook}）。下面将分别介绍这两种符号约定。
+矩阵微积分的表示通常有两种符号约定，分别是\textbf{分子布局（Numerator Layout）}和\textbf{分母布局（Denominator Layout）}（可参考\cite{petersen2008matrix}）。下面将分别介绍这两种符号约定。
 
 %%%
 \subsection{标量关于向量的偏导数}
@@ -83,7 +83,7 @@
 一个小结论是，当使用分子布局时，将分子看作列向量，结果的行数与分子相同；而当使用分母布局时，将分母看作列向量，结果的行数与分母相同。
 
 %%%
-\subsection[标量关于矩阵的偏导数]{标量关于矩阵的偏导数\footnote{本节内容参考了\cite{matrix_derivative}}}
+\subsection[标量关于矩阵的偏导数]{标量关于矩阵的偏导数\footnote{本节内容参考了\cite{zhihu2020matrix}}}
 
 在深度学习中，代价函数是一个标量函数，而神经网络的参数通常是一个矩阵。因此，需要求标量函数对矩阵的偏导数。
 
@@ -91,35 +91,35 @@
 
 一元微积分中的导数（标量对标量的导数）满足
 \begin{equation}
-	\mathrm{d}f 
-	= \frac{\partial f}{\partial x}\mathrm{d}x
-	= \langle \frac{\partial f}{\partial x}, \mathrm{d}x \rangle
+	\d f 
+	= \frac{\partial f}{\partial x}\d x
+	= \langle \frac{\partial f}{\partial x}, \d x \rangle
 \end{equation}
 其中$\langle \bm{u}, \bm{v} \rangle$表示$\bm{u}$与$\bm{v}$的内积。
 在多元微积分（标量对向量的导数）中，这个关系可以推广为
 \begin{equation}
-	\mathrm{d}f
-	= \sum_{i=1}^{n}{\frac{\partial f}{\partial x_i}\mathrm{d}x_i} 
-	= {\frac{\partial f}{\partial \bm{x}}}^{\mathrm{T}}\mathrm{d}\bm{x}
-	= \langle \frac{\partial f}{\partial \bm{x}}, \mathrm{d}\bm{x} \rangle
+	\d f
+	= \sum_{i=1}^{n}{\frac{\partial f}{\partial x_i}\d x_i} 
+	= {\frac{\partial f}{\partial \bm{x}}}^{\mathrm{T}}\d \bm{x}
+	= \langle \frac{\partial f}{\partial \bm{x}}, \d \bm{x} \rangle
 \end{equation}
 类似地，标量对矩阵的导数与微分的关系可以推广为
 \begin{equation}
-	\mathrm{d}f
-	= \langle \frac{\partial f}{\partial \bm{X}}, \mathrm{d}\bm{X} \rangle
+	\d f
+	= \langle \frac{\partial f}{\partial \bm{X}}, \d \bm{X} \rangle
 	\label{eq:scalar_matrix_derivative}
 \end{equation}
 两个大小相同矩阵的内积可以表示为
 \begin{equation}
 	\langle \bm{A}, \bm{B} \rangle 
-	= \sum_{i=1}^{m}{\sum_{j=1}^{n}{\frac{\partial f}{\partial x_{ij}}\mathrm{d}x_{ij}}} 
+	= \sum_{i=1}^{m}{\sum_{j=1}^{n}{\frac{\partial f}{\partial x_{ij}}\d x_{ij}}} 
 	= \mathrm{tr}(\bm{A}^{\mathrm{T}}\bm{B})
 \end{equation}
 故式\eqref{eq:scalar_matrix_derivative}可以表示为
 \begin{equation}
 	\eqnmarkbox[WildStrawberry]{scalar_matrix_derivative_trace}{
-	\mathrm{d}f 
-	= \mathrm{tr}\left({\frac{\partial f}{\partial \bm{X}}}^{\mathrm{T}}\mathrm{d}\bm{X}\right)
+	\d f 
+	= \mathrm{tr}\left({\frac{\partial f}{\partial \bm{X}}}^{\mathrm{T}}\d \bm{X}\right)
 	}
 	\label{eq:scalar_matrix_derivative_trace}
 \end{equation}
@@ -128,17 +128,17 @@
 下面列出几条常见的矩阵微分的运算法则。注意$\odot$表示Hadamard积，即对应元素相乘。
 \begin{subequations}
 	\begin{align}
-		\mathrm{d}(\bm{X}\pm \bm{Y}) &= \mathrm{d}\bm{X} \pm \mathrm{d}\bm{Y} 
+		\d (\bm{X}\pm \bm{Y}) &= \d \bm{X} \pm \d \bm{Y} 
 		\label{eq:matrix_derivative_add_sub} \\
-		\mathrm{d}(\bm{XY}) &= \mathrm{d}\bm{X}\cdot \bm{Y} + \bm{X}\cdot \mathrm{d}\bm{Y}
+		\d (\bm{XY}) &= \d \bm{X}\cdot \bm{Y} + \bm{X}\cdot \d \bm{Y}
 		\label{eq:matrix_derivative_mul} \\
-		\mathrm{d}(\bm{X}^{\mathrm{T}}) &= (\mathrm{d}\bm{X})^{\mathrm{T}}
+		\d (\bm{X}^{\mathrm{T}}) &= (\d \bm{X})^{\mathrm{T}}
 		\label{eq:matrix_derivative_transpose} \\
-		\mathrm{d}(\bm{X}^{-1}) &= -\bm{X}^{-1}\mathrm{d}\bm{X}\bm{X}^{-1}
+		\d (\bm{X}^{-1}) &= -\bm{X}^{-1}\d \bm{X}\bm{X}^{-1}
 		\label{eq:matrix_derivative_inverse} \\
-		\mathrm{d}(\bm{X}\odot \bm{Y}) &= \mathrm{d}\bm{X}\odot \bm{Y} + \bm{X}\odot \mathrm{d}\bm{Y}
+		\d (\bm{X}\odot \bm{Y}) &= \d \bm{X}\odot \bm{Y} + \bm{X}\odot \d \bm{Y}
 		\label{eq:matrix_derivative_hadamard} \\
-		\mathrm{d}\left(g(\bm{X})\right) &= g'(\bm{X}) \odot \mathrm{d}\bm{X}
+		\d \left(g(\bm{X})\right) &= g'(\bm{X}) \odot \d \bm{X}
 		\label{eq:matrix_derivative_hadamard2}
 	\end{align}
 \end{subequations}
@@ -166,26 +166,26 @@
 \colorbox{LemonChiffon}{已知$\dfrac{\partial f}{\partial \bm{Y}}$和$\bm{Y}=\bm{A}\bm{X}\bm{B}$，求$\dfrac{\partial f}{\partial \bm{X}}$}。
 根据式\eqref{eq:scalar_matrix_derivative_trace}，有
 \begin{equation}
-	\mathrm{d}f = \mathrm{tr}\left({\frac{\partial f}{\partial \bm{Y}}}^{\mathrm{T}}\mathrm{d}\bm{Y}\right)
+	\d f = \mathrm{tr}\left({\frac{\partial f}{\partial \bm{Y}}}^{\mathrm{T}}\d \bm{Y}\right)
 	\label{eq:matrix_derivative_example1_1}
 \end{equation}
-对式\eqref{eq:matrix_derivative_example1_1}中的$\mathrm{d}\bm{Y}$进行展开，有
+对式\eqref{eq:matrix_derivative_example1_1}中的$\d \bm{Y}$进行展开，有
 \begin{equation}
-	\mathrm{d}\bm{Y} = \mathrm{d}(\bm{A}\bm{X}\bm{B}) = \mathrm{d}\bm{A}\cdot\bm{X}\bm{B} + \bm{A}\mathrm{d}\bm{X}\cdot\bm{B} + \bm{A}\bm{X}\mathrm{d}\bm{B}
+	\d \bm{Y} = \d (\bm{A}\bm{X}\bm{B}) = \d \bm{A}\cdot\bm{X}\bm{B} + \bm{A}\d \bm{X}\cdot\bm{B} + \bm{A}\bm{X}\d \bm{B}
 	\label{eq:matrix_derivative_example1_2}
 \end{equation}
 在$A$, $B$均为常量的情况下，式\eqref{eq:matrix_derivative_example1_2}中的第一项和第三项为零，故式\eqref{eq:matrix_derivative_example1_1}可以化简为
 \begin{equation}
-	\mathrm{d}f = \mathrm{tr}\left({\frac{\partial f}{\partial \bm{Y}}}^{\mathrm{T}}\bm{A}\mathrm{d}\bm{X}\bm{B}\right)
+	\d f = \mathrm{tr}\left({\frac{\partial f}{\partial \bm{Y}}}^{\mathrm{T}}\bm{A}\d\bm{X}\bm{B}\right)
 	\label{eq:matrix_derivative_example1_3}
 \end{equation}
 根据式\eqref{eq:matrix_trace_mul}，式\eqref{eq:matrix_derivative_example1_3}可以进一步改写为
 \renewcommand{\eqnhighlightheight}{\vphantom{{\frac{\partial f}{\partial \bm{Y}}}^{\mathrm{T}}}\mathstrut}  % 调整注释框高度便于统一，默认为空
 \begin{equation}
-	\mathrm{d}f 
-	= \mathrm{tr}\left(\eqnmarkbox[blue]{c1}{{\frac{\partial f}{\partial \bm{Y}}}^{\mathrm{T}}\bm{A}\mathrm{d}\bm{X}} \eqnmarkbox[red]{c2}{\bm{B}}\right)
-	= \mathrm{tr}\left(\eqnmark[RoyalPurple]{t1}{\bm{B}{\frac{\partial f}{\partial \bm{Y}}}^{\mathrm{T}}\bm{A}} \mathrm{d}\bm{X}\right)
-	= \mathrm{tr}\left(\eqnmark[RoyalPurple]{t2}{\left(\bm{A}^{\mathrm{T}}\frac{\partial f}{\partial \bm{Y}}\bm{B}^{\mathrm{T}}\right)^{\mathrm{T}}} \mathrm{d}\bm{X}\right)
+	\d f 
+	= \mathrm{tr}\left(\eqnmarkbox[blue]{c1}{{\frac{\partial f}{\partial \bm{Y}}}^{\mathrm{T}}\bm{A}\d \bm{X}} \eqnmarkbox[red]{c2}{\bm{B}}\right)
+	= \mathrm{tr}\left(\eqnmark[RoyalPurple]{t1}{\bm{B}{\frac{\partial f}{\partial \bm{Y}}}^{\mathrm{T}}\bm{A}} \d \bm{X}\right)
+	= \mathrm{tr}\left(\eqnmark[RoyalPurple]{t2}{\left(\bm{A}^{\mathrm{T}}\frac{\partial f}{\partial \bm{Y}}\bm{B}^{\mathrm{T}}\right)^{\mathrm{T}}} \d \bm{X}\right)
 	\vspace{1em}
 	\label{eq:matrix_derivative_example1_4}
 	\tikzset{annotate equations/arrow/.style={color=ForestGreen, >=latex', semithick, dashed}}  % 注释箭头样式，双向绿色虚线箭头，默认为空
@@ -207,26 +207,26 @@
 \colorbox{Aquamarine!30}{已知$\dfrac{\partial f}{\partial \bm{Y}}$和$\bm{Y}=g(\bm{X})\odot\bm{X}$，求$\dfrac{\partial f}{\partial \bm{X}}$}。
 我们同样有
 \begin{equation}
-	\mathrm{d}f = \mathrm{tr}\left({\frac{\partial f}{\partial \bm{Y}}}^{\mathrm{T}}\mathrm{d}\bm{Y}\right)
+	\d f = \mathrm{tr}\left({\frac{\partial f}{\partial \bm{Y}}}^{\mathrm{T}}\d \bm{Y}\right)
 	\label{eq:matrix_derivative_example2_1}
 \end{equation}
 由式\eqref{eq:matrix_derivative_hadamard2}，
 \begin{equation}
-	\mathrm{d}\bm{Y} = \mathrm{d}\left(g(\bm{X})\right) = g'(\bm{X}) \odot \mathrm{d}\bm{X}
+	\d \bm{Y} = \d \left(g(\bm{X})\right) = g'(\bm{X}) \odot \d \bm{X}
 	\label{eq:matrix_derivative_example2_2}
 \end{equation}
 代入\eqref{eq:matrix_derivative_example2_1}，
 \begin{equation}
-	\mathrm{d}f = \mathrm{tr}\left({\frac{\partial f}{\partial \bm{Y}}}^{\mathrm{T}}\left(\vphantom{A^T}g'(\bm{X}) \odot \mathrm{d}\bm{X}\right)\right)
+	\d f = \mathrm{tr}\left({\frac{\partial f}{\partial \bm{Y}}}^{\mathrm{T}}\left(\vphantom{A^T}g'(\bm{X}) \odot \d \bm{X}\right)\right)
 	\label{eq:matrix_derivative_example2_3}
 \end{equation}
 根据式\eqref{eq:matrix_trace_hadamard}，式\eqref{eq:matrix_derivative_example2_3}可以进一步改写为
 \begin{equation}
 	\begin{aligned}
-		\mathrm{d}f 
-		&= \mathrm{tr}\left(\eqnmark[Olive]{}{\frac{\partial f}{\partial \bm{Y}}}^{\mathrm{T}}\left(\vphantom{A^T}\eqnmark[Teal]{}{g'(\bm{X})} \odot \eqnmark[Maroon]{}{\mathrm{d}\bm{X}}\right)\right) \\
-		&= \mathrm{tr}\left(\left({\eqnmark[Olive]{}{\frac{\partial f}{\partial \bm{Y}}}\odot \eqnmark[Teal]{}{g'(\bm{X})}}\right)^{\mathrm{T}}\eqnmark[Maroon]{}{\mathrm{d}\bm{X}}\right) \\
-		&= \mathrm{tr}\left(\left({\eqnmark[Teal]{}{g'(\bm{X})} \odot \eqnmark[Olive]{}{\frac{\partial f}{\partial \bm{Y}}}}\right)^{\mathrm{T}}\eqnmark[Maroon]{}{\mathrm{d}\bm{X}}\right)
+		\d f 
+		&= \mathrm{tr}\left(\eqnmark[Olive]{}{\frac{\partial f}{\partial \bm{Y}}}^{\mathrm{T}}\left(\vphantom{A^T}\eqnmark[Teal]{}{g'(\bm{X})} \odot \eqnmark[Maroon]{}{\d \bm{X}}\right)\right) \\
+		&= \mathrm{tr}\left(\left({\eqnmark[Olive]{}{\frac{\partial f}{\partial \bm{Y}}}\odot \eqnmark[Teal]{}{g'(\bm{X})}}\right)^{\mathrm{T}}\eqnmark[Maroon]{}{\d \bm{X}}\right) \\
+		&= \mathrm{tr}\left(\left({\eqnmark[Teal]{}{g'(\bm{X})} \odot \eqnmark[Olive]{}{\frac{\partial f}{\partial \bm{Y}}}}\right)^{\mathrm{T}}\eqnmark[Maroon]{}{\d \bm{X}}\right)
 	\end{aligned}
 \end{equation}
 对比式\eqref{eq:scalar_matrix_derivative_trace}，可得出

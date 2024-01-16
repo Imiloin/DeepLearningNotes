@@ -20,7 +20,7 @@ Algorithms是指算法, 例如Logistic Regression、SVM、Neural Networks等。
 %%%%
 \section{Neural Networks Basics}
 
-表 \ref{tab:notations} 是本章用到的符号说明。为方便起见，所有的向量符号不会加粗，用小写字母表示；同时也不对偏导数进行专门的区分，仍使用$\mathrm{d}$符号表示偏微分。
+表 \ref{tab:notations} 是本章用到的符号说明。为方便起见，所有的向量符号不会加粗，用小写字母表示；同时也不对偏导数进行专门的区分，仍使用$\d $符号表示偏微分。
 
 \begin{table}[htb!]
     \centering
@@ -51,7 +51,7 @@ Algorithms是指算法, 例如Logistic Regression、SVM、Neural Networks等。
                                     & $L^{(i)}(\hat{y}^{(i)}, y^{(i)})$                     & function             & 第$i$个样本的代价函数                                                         \\
                                     & $J(X,W,b,Y)$ or $J(\hat{Y},Y)$                        & function             & 代价函数                                                                        \\
                                     & $\alpha$								                & value                & 学习率                                                                        \\
-                                    & $\mathrm{d}\mathrm{var}$                              & differential         & 代价函数对变量$\mathrm{var}$的偏微分，即${\partial J}/{\partial \mathrm{var}}$ \\ \hline
+                                    & $\d \mathrm{var}$                              & differential         & 代价函数对变量$\mathrm{var}$的偏微分，即${\partial J}/{\partial \mathrm{var}}$ \\ \hline
     \end{tabular}
     %
     \label{tab:notations} %
@@ -90,7 +90,7 @@ Algorithms是指算法, 例如Logistic Regression、SVM、Neural Networks等。
                                     & $w \in \mathbb{R}^{n_x}$                  & vector               & 权重向量                                                                \\
                                     & $b$                                       & value                & 标签偏置值                                                            \\ \hline
         \multirow{2}{*}{Other}      & $J(x,w,b,y)$ or $J(\hat{y},y)$            & function             & 代价函数                                                               \\
-                                    & $\mathrm{d}\mathrm{var}$                  & differential         & 代价函数对变量$\mathrm{var}$的偏微分                                    \\ \hline
+                                    & $\d \mathrm{var}$                  & differential         & 代价函数对变量$\mathrm{var}$的偏微分                                    \\ \hline
     \end{tabular}
     \label{tab:notations_LR}
     \end{threeparttable}
@@ -112,7 +112,7 @@ Algorithms是指算法, 例如Logistic Regression、SVM、Neural Networks等。
     \label{fig:sigmoid}
 \end{figure}
 
-对某一个样本而言，Loss function（误差函数）定义为:
+对某一个样本而言，交叉熵形式的 Loss function（误差函数）定义为：\index{Loss Function}
 \begin{equation}
     L(\hat{y}^{(i)}, y^{(i)}) = -\left[y^{(i)} \log \hat{y}^{(i)} + (1 - y^{(i)}) \log (1 - \hat{y}^{(i)})\right] \label{eq:loss}
 \end{equation}
@@ -124,9 +124,12 @@ Algorithms是指算法, 例如Logistic Regression、SVM、Neural Networks等。
     \label{fig:loss}
 \end{figure}
 
-对整个模型而言，Cost function（代价函数）定义为:
+对整个模型而言，Cost function（代价函数/损失函数）定义为：\index{Cost Function}
 \begin{equation}
-    J(w, b) = \frac{1}{m} \sum_{i=1}^{m} L(\hat{y}^{(i)}, y^{(i)}) = -\frac{1}{m} \sum_{i=1}^{m} \left[y^{(i)} \log \hat{y}^{(i)} + (1 - y^{(i)}) \log (1 - \hat{y}^{(i)})\right] \label{eq:cost}
+    \begin{aligned}
+        J(w, b) &\triangleq  \frac{1}{m} \sum_{i=1}^{m} L(\hat{y}^{(i)}, y^{(i)}) \\
+        &= -\frac{1}{m} \sum_{i=1}^{m} \left[y^{(i)} \log \hat{y}^{(i)} + (1 - y^{(i)}) \log (1 - \hat{y}^{(i)})\right] \label{eq:cost}
+    \end{aligned}
 \end{equation}
 相当于误差函数的平均值。
 
@@ -136,14 +139,14 @@ Algorithms是指算法, 例如Logistic Regression、SVM、Neural Networks等。
 
 训练过程使用\textbf{梯度下降（Gradient Descent）算法}，即：
 \begin{equation}
-    \mathrm{var} = \mathrm{var} - \alpha \frac{\mathrm{d}J}{\mathrm{d}\mathrm{var}} \label{eq:gradient}
+    \mathrm{var} = \mathrm{var} - \alpha \frac{\d J}{\d \mathrm{var}} \label{eq:gradient}
 \end{equation}
 
 其中$\mathrm{var}$为一个需要调整的参数，$\alpha$为学习率（Learning Rate）。对于Logistic Regression，梯度下降算法的表达式为：
 \begin{equation}
     \begin{aligned}
-    w &:= w - \alpha \frac{\mathrm{d}J}{\mathrm{d}w} \\
-    b &:= b - \alpha \frac{\mathrm{d}J}{\mathrm{d}b}
+    w &:= w - \alpha \frac{\d J}{\d w} \\
+    b &:= b - \alpha \frac{\d J}{\d b}
     \end{aligned} 
     \label{eq:gradient_logistic}
 \end{equation}
@@ -161,34 +164,34 @@ Algorithms是指算法, 例如Logistic Regression、SVM、Neural Networks等。
 进行求导（$x$, $y$均为常量），有
 \begin{equation}
     \begin{aligned}
-    &\frac{\mathrm{d}L}{\mathrm{d}\hat{y}^{(i)}} = -\frac{y^{(i)}}{\hat{y}^{(i)}} + \frac{1 - y^{(i)}}{1 - \hat{y}^{(i)}} \\
-    &\frac{\mathrm{d}\hat{y}^{(i)}}{\mathrm{d}z} = \frac{\mathrm{e}^{-z}}{(1 + \mathrm{e}^{-z})^2} = \frac{1}{1 + \mathrm{e}^{-z}}(1 - \frac{1}{1 + \mathrm{e}^{-z}}) = \hat{y}^{(i)}(1 - \hat{y}^{(i)})\\
+    &\frac{\d L}{\d \hat{y}^{(i)}} = -\frac{y^{(i)}}{\hat{y}^{(i)}} + \frac{1 - y^{(i)}}{1 - \hat{y}^{(i)}} \\
+    &\frac{\d \hat{y}^{(i)}}{\d z} = \frac{\mathrm{e}^{-z}}{(1 + \mathrm{e}^{-z})^2} = \frac{1}{1 + \mathrm{e}^{-z}}(1 - \frac{1}{1 + \mathrm{e}^{-z}}) = \hat{y}^{(i)}(1 - \hat{y}^{(i)})\\
     \end{aligned}
 \end{equation}
 用链式法则，有
 \begin{equation}
-    \frac{\mathrm{d}L}{\mathrm{d}z} = \frac{\mathrm{d}L}{\mathrm{d}\hat{y}^{(i)}} \frac{\mathrm{d}\hat{y}^{(i)}}{\mathrm{d}z} = (-\frac{y^{(i)}}{\hat{y}^{(i)}} + \frac{1 - y^{(i)}}{1 - \hat{y}^{(i)}})\hat{y}^{(i)}(1 - \hat{y}^{(i)}) = \hat{y}^{(i)} - y^{(i)}
+    \frac{\d L}{\d z} = \frac{\d L}{\d \hat{y}^{(i)}} \frac{\d \hat{y}^{(i)}}{\d z} = (-\frac{y^{(i)}}{\hat{y}^{(i)}} + \frac{1 - y^{(i)}}{1 - \hat{y}^{(i)}})\hat{y}^{(i)}(1 - \hat{y}^{(i)}) = \hat{y}^{(i)} - y^{(i)}
 \end{equation}
 进而有
 \begin{equation}
     \begin{aligned}
-    \frac{\mathrm{d}L}{\mathrm{d}w_j} &= \frac{\mathrm{d}L}{\mathrm{d}z} \frac{\mathrm{d}z}{\mathrm{d}w_j} = x_j^{(i)} (\hat{y}^{(i)} - y^{(i)}) \quad (1 \leqslant j \leqslant n_x) \\
-    \frac{\mathrm{d}L}{\mathrm{d}b} &= \frac{\mathrm{d}L}{\mathrm{d}z} \frac{\mathrm{d}z}{\mathrm{d}b} = \hat{y}^{(i)} - y^{(i)}
+    \frac{\d L}{\d w_j} &= \frac{\d L}{\d z} \frac{\d z}{\d w_j} = x_j^{(i)} (\hat{y}^{(i)} - y^{(i)}) \quad (1 \leqslant j \leqslant n_x) \\
+    \frac{\d L}{\d b} &= \frac{\d L}{\d z} \frac{\d z}{\d b} = \hat{y}^{(i)} - y^{(i)}
     \end{aligned}
 \end{equation}
 
 对于整个训练集，在一个循环中我们对每一个样本都进行一次梯度下降，并对所有样本的梯度进行平均，有
 \begin{equation}
     \begin{aligned}
-        \frac{\mathrm{d}J}{\mathrm{d}w_j} &= \frac{1}{m} \sum_{i=1}^{m} \frac{\mathrm{d}L}{\mathrm{d}w_j} = \frac{1}{m} \sum_{i=1}^{m} x_j^{(i)} (\hat{y}^{(i)} - y^{(i)}) \quad (1 \leqslant j \leqslant n_x)\\
-        \frac{\mathrm{d}J}{\mathrm{d}b} &= \frac{1}{m} \sum_{i=1}^{m} \frac{\mathrm{d}L}{\mathrm{d}b} = \frac{1}{m} \sum_{i=1}^{m} (\hat{y}^{(i)} - y^{(i)})
+        \frac{\d J}{\d w_j} &= \frac{1}{m} \sum_{i=1}^{m} \frac{\d L}{\d w_j} = \frac{1}{m} \sum_{i=1}^{m} x_j^{(i)} (\hat{y}^{(i)} - y^{(i)}) \quad (1 \leqslant j \leqslant n_x)\\
+        \frac{\d J}{\d b} &= \frac{1}{m} \sum_{i=1}^{m} \frac{\d L}{\d b} = \frac{1}{m} \sum_{i=1}^{m} (\hat{y}^{(i)} - y^{(i)})
     \end{aligned}
 \end{equation}
 得到梯度的平均值后，再进行参数更新，即
 \begin{equation}
     \begin{aligned}
-    w_j &:= w_j - \alpha \frac{\mathrm{d}J}{\mathrm{d}w} \quad (1 \leqslant j \leqslant n_x) \\
-    b &:= b - \alpha \frac{\mathrm{d}J}{\mathrm{d}b}
+    w_j &:= w_j - \alpha \frac{\d J}{\d w} \quad (1 \leqslant j \leqslant n_x) \\
+    b &:= b - \alpha \frac{\d J}{\d b}
     \end{aligned} 
 \end{equation}
 这样就完成了一轮梯度下降的循环。重复多次梯度下降，直到$J$收敛或达到最大迭代次数，就得到了最终的$w$, $b$。
@@ -217,8 +220,8 @@ Z = np.dot(w.T, X) + b
 同理，要实现
 \begin{equation}
     \begin{aligned}
-        \frac{\mathrm{d}J}{\mathrm{d}w_j} &= \frac{1}{m} \sum_{i=1}^{m} \frac{\mathrm{d}L}{\mathrm{d}w_j} = \frac{1}{m} \sum_{i=1}^{m} x_j^{(i)} (\hat{y}^{(i)} - y^{(i)}) \quad (1 \leqslant j \leqslant n_x)\\
-        \frac{\mathrm{d}J}{\mathrm{d}b} &= \frac{1}{m} \sum_{i=1}^{m} \frac{\mathrm{d}L}{\mathrm{d}b} = \frac{1}{m} \sum_{i=1}^{m} (\hat{y}^{(i)} - y^{(i)})
+        \frac{\d J}{\d w_j} &= \frac{1}{m} \sum_{i=1}^{m} \frac{\d L}{\d w_j} = \frac{1}{m} \sum_{i=1}^{m} x_j^{(i)} (\hat{y}^{(i)} - y^{(i)}) \quad (1 \leqslant j \leqslant n_x)\\
+        \frac{\d J}{\d b} &= \frac{1}{m} \sum_{i=1}^{m} \frac{\d L}{\d b} = \frac{1}{m} \sum_{i=1}^{m} (\hat{y}^{(i)} - y^{(i)})
     \end{aligned}
 \end{equation}
 可以继续使用下面的代码
@@ -266,7 +269,7 @@ print(A.T)
  [3]
  [4]]
 \end{python}
-\verb|reshape()| 是一个$O(1)$的操作，不会影响程序的运行效率。在本课程中不要使用 \verb|rank 1 array|，因为它的维度不是$(n, 1)$或$(1, n)$，在进行矩阵运算时会出现错误。
+\verb|reshape()| 是一个$\mathrm{O}(1)$的操作，不会影响程序的运行效率。在本课程中不要使用 \verb|rank 1 array|，因为它的维度不是$(n, 1)$或$(1, n)$，在进行矩阵运算时会出现错误。
 
 为了确保矩阵的维度正确，可以使用 \verb|assert()| 函数，例如
 \begin{python}
@@ -303,7 +306,7 @@ assert(A.shape == (1, 4))
 \end{equation}
 我们期望这个值越大越好，为了使用梯度下降法，可以对上式取负号，得到
 \begin{equation}
-    J(w, b) \triangleq - \frac{1}{m} \sum_{i=1}^{m} \left[ y^{(i)} \log \hat{y}^{(i)} + (1-y^{(i)}) \log (1-\hat{y}^{(i)}) \right]
+    J(w, b) = - \frac{1}{m} \sum_{i=1}^{m} \left[ y^{(i)} \log \hat{y}^{(i)} + (1-y^{(i)}) \log (1-\hat{y}^{(i)}) \right]
 \end{equation}
 这就是代价函数的定义。我们期望代价函数的值越小越好，因此可以使用梯度下降法来求解$w$和$b$。
 
@@ -373,7 +376,7 @@ assert(A.shape == (1, 4))
 
 \begin{figure}[h!bt]
     \centering
-    \includegraphics[width=5cm]{node.pdf}
+    \includegraphics[width=4cm]{node.pdf}
     \caption{单个节点的结构}
     \label{fig:node}
 \end{figure}
@@ -420,14 +423,14 @@ assert(A.shape == (1, 4))
 这些激活函数的导数分别为：
 \begin{equation}
     \begin{aligned}
-        \frac{\mathrm{d}}{\mathrm{d}z}\mathrm{sigmoid}(z) &= \mathrm{sigmoid}(z)\left(1-\mathrm{sigmoid}(z)\right) \\
-        \frac{\mathrm{d}}{\mathrm{d}z}\mathrm{tanh}(z) &= 1 - \mathrm{tanh}^2(z) \\
-        \frac{\mathrm{d}}{\mathrm{d}z}\mathrm{ReLU}(z) &= 
+        \frac{\d }{\d z}\mathrm{sigmoid}(z) &= \mathrm{sigmoid}(z)\left(1-\mathrm{sigmoid}(z)\right) \\
+        \frac{\d }{\d z}\mathrm{tanh}(z) &= 1 - \mathrm{tanh}^2(z) \\
+        \frac{\d }{\d z}\mathrm{ReLU}(z) &= 
             \begin{cases}
                 0, &z < 0 \\
                 1, &z \geqslant 0
             \end{cases}\\
-        \frac{\mathrm{d}}{\mathrm{d}z}\mathrm{LeakyReLU}(z) &= 
+        \frac{\d }{\d z}\mathrm{LeakyReLU}(z) &= 
             \begin{cases}
                 0.01, &z < 0 \\
                 1, &z \geqslant 0
@@ -444,27 +447,27 @@ assert(A.shape == (1, 4))
 我们的目标是最小化代价函数$J(W^{[1]}, b^{[1]}, W^{[2]}, b^{[2]}, \cdots, W^{[L]}, b^{[L]})$，其中$L$为神经网络的层数。对于第$l$层，先求出权重和偏置的偏导数，然后再进行梯度下降，即
 \begin{equation}
     \begin{aligned}
-        W^{[l]} &:= W^{[l]} - \alpha \frac{\mathrm{d}J}{\mathrm{d}W^{[l]}} \\
-        b^{[l]} &:= b^{[l]} - \alpha \frac{\mathrm{d}J}{\mathrm{d}b^{[l]}}
+        W^{[l]} &:= W^{[l]} - \alpha \frac{\d J}{\d W^{[l]}} \\
+        b^{[l]} &:= b^{[l]} - \alpha \frac{\d J}{\d b^{[l]}}
     \end{aligned}
 \end{equation}
 
 %%%
 \subsection{Backpropagation}
 \index{Backpropagation}
-在神经网络中，梯度下降用到了\textbf{反向传播算法（Backpropagation）}，该算法的基本思想是，先计算代价函数对输出层的梯度，然后再反向传播到每一层，计算每一层$W$和$b$的梯度。
+在神经网络中，梯度下降用到了\textbf{反向传播/后向传播算法（Backpropagation）}，该算法的基本思想是，先计算代价函数对输出层的梯度，然后再反向传播到每一层，计算每一层$W$和$b$的梯度。
 需要注意，在每一轮梯度下降中，\textbf{所有的$X$, $Y$, $Z$, $A$都是已知的常量，而$W$, $b$是需要更新的}。
 
 在推导过程中，需要补充一些矩阵导数运算的知识，参见附录 \ref{sec:matrix_derivative}。以下过程中使用的符号如表 \ref{tab:notations} 所示。
 
-对于第$l$层，\colorbox{LemonChiffon}{已知$\dfrac{\mathrm{d}J}{\mathrm{d}A^{[l]}}$}和关系
+对于第$l$层，\colorbox{LemonChiffon}{已知$\dfrac{\d J}{\d A^{[l]}}$}和关系\footnote{为了避免一次转置运算，此处的$W$其实是“横放”的，从其行列数可以看出。在上一节中，$w$是作为一个列向量而不是行向量出现的。}
 \begin{equation}
     \vcenter{\hbox{\tikzmarknode{Zl}{$Z^{[l]}$}}} \vcenter{\hbox{$\vphantom{1}=\vphantom{1}$\tikzmarknode{Wl}{$W^{[l]}$}\tikzmarknode{Al-1}{$A^{[l-1]}$}$\vphantom{1}+\vphantom{1}$}} \begin{bmatrix} \tikzmarknode[outer ysep=2pt]{bl}{b^{[l]}} & b^{[l]} & \cdots & b^{[l]} \end{bmatrix}_{\substack{\scriptstyle n^{[l]}\times m}}
     \annotate[yshift=1em]{above}{Zl}{$n^{[l]}\times m$}
     \annotate[yshift=-1em]{below,left}{Wl}{$n^{[l]}\times n^{[l-1]}$}
     \annotate[yshift=-1em]{below}{Al-1}{$n^{[l-1]}\times m$}
     \annotate[yshift=1em]{above}{bl}{$n^{[l]}\times 1$}
-    \label{eq:backpropagation_known_1}\footnote{为了避免一次转置运算，此处的$W$其实是“横放”的，从其行列数可以看出。在上一节中，$w$是作为一个列向量而不是行向量出现的。}
+    \label{eq:backpropagation_known_1}
 \end{equation}
 \begin{equation}
     \tikzmarknode{Al}{A^{[l]}} = g^{[l]}(\tikzmarknode{Zl2}{Z^{[l]}})
@@ -472,75 +475,75 @@ assert(A.shape == (1, 4))
     \label{eq:backpropagation_known_2}
     \annotatetwo[yshift=-1em]{below,label below}{Al}{Zl2}{$n^{[l]}\times m$}
 \end{equation}
-\colorbox{LemonChiffon}{要计算$\dfrac{\mathrm{d}J}{\mathrm{d}A^{[l-1]}}$, $\dfrac{\mathrm{d}J}{\mathrm{d}W^{[l]}}$和$\dfrac{\mathrm{d}J}{\mathrm{d}b^{[l]}}$}。
+\colorbox{LemonChiffon}{要计算$\dfrac{\d J}{\d A^{[l-1]}}$, $\dfrac{\d J}{\d W^{[l]}}$和$\dfrac{\d J}{\d b^{[l]}}$}。
 根据结论\eqref{eq:matrix_derivative_conclusion1}，式\eqref{eq:backpropagation_known_1}可推出下面的关系
 \begin{align}
-    \frac{\mathrm{d}J}{\mathrm{d}W^{[l]}} &= \frac{\mathrm{d}J}{\mathrm{d}Z^{[l]}} A^{[l-1] \mathrm{T}} 
+    \frac{\d J}{\d W^{[l]}} &= \frac{\d J}{\d Z^{[l]}} A^{[l-1] \mathrm{T}} 
     \label{eq:backpropagation_conc_1} \\
-    \frac{\mathrm{d}J}{\mathrm{d}A^{[l-1]}} &= W^{[l] \mathrm{T}} \frac{\mathrm{d}J}{\mathrm{d}Z^{[l]}}
+    \frac{\d J}{\d A^{[l-1]}} &= W^{[l] \mathrm{T}} \frac{\d J}{\d Z^{[l]}}
     \label{eq:backpropagation_conc_2}
 \end{align}
 根据结论\eqref{eq:matrix_derivative_conclusion2}，式\eqref{eq:backpropagation_known_2}表明
 \begin{equation}
-    \frac{\mathrm{d}J}{\mathrm{d}Z^{[l]}} = g^{[l]'}(Z^{[l]}) \odot \frac{\mathrm{d}J}{\mathrm{d}A^{[l]}}
+    \frac{\d J}{\d Z^{[l]}} = g^{[l]'}(Z^{[l]}) \odot \frac{\d J}{\d A^{[l]}}
     \label{eq:backpropagation_conc_3}
 \end{equation}
-由于$b^{[l]}$在计算时进行了维度扩充，$\dfrac{\mathrm{d}J}{\mathrm{d}b^{[l]}}$的求取较为特殊。首先考虑第$i$个样本，上面的关系可以写成
+由于$b^{[l]}$在计算时进行了维度扩充，$\dfrac{\d J}{\d b^{[l]}}$的求取较为特殊。首先考虑第$i$个样本，上面的关系可以写成
 \begin{equation}
     z^{[l](i)} = W^{[l]} a^{[l-1](i)} + b^{[l]}
     \label{eq:backpropagation_known_1_sample}
 \end{equation}
 根据结论\eqref{eq:matrix_derivative_conclusion1}，式\eqref{eq:backpropagation_known_1_sample}可推出下面的关系
 \begin{equation}
-    \frac{\mathrm{d}L^{(i)}}{\mathrm{d}b^{[l]}} = \frac{\mathrm{d}L^{(i)}}{\mathrm{d}z^{[l](i)}}
+    \frac{\d L^{(i)}}{\d b^{[l]}} = \frac{\d L^{(i)}}{\d z^{[l](i)}}
     \label{eq:backpropagation_known_1_sample_derivative}
 \end{equation}
 一般认为各个样本间相互独立，从而有
 \begin{equation}
-    \frac{\mathrm{d}L^{(\textcolor{blue}{i})}}{\mathrm{d}z^{[l](\textcolor{red}{j})}}=0
+    \frac{\d L^{(\textcolor{blue}{i})}}{\d z^{[l](\textcolor{red}{j})}}=0
     , \quad \textcolor{blue}{i} \neq \textcolor{red}{j}, \quad 0 \leqslant l \leqslant L
     \label{eq:backpropagation_known_1_sample_derivative_independent}
 \end{equation}
 回顾代价函数的定义
 \begin{equation}
-    J = \frac{1}{m} \sum_{i=1}^{m} L^{(i)}
+    J = \frac{1}{m} \sum_{i=1}^{m} L(\hat{y}^{(i)}, y^{(i)})
 \end{equation}
 结合式\eqref{eq:backpropagation_known_1_sample_derivative_independent}，可得
 \begin{equation}
     \begin{aligned}
-        \frac{\mathrm{d}J}{\mathrm{d}z^{[l](i)}} 
-        &= \frac{1}{m}  \sum_{\textcolor{red}{j}=1}^{m} \frac{\mathrm{d}L^{(\textcolor{red}{j})}}{\mathrm{d}z^{[l](i)}} \\
-        &= \frac{1}{m}  \left( \sum_{\substack{1 \leqslant \textcolor{red}{j} \leqslant m \\ \textcolor{red}{j} \neq i}} \tikzmarknode{zero}{\frac{\mathrm{d}L^{(\textcolor{red}{j})}}{\mathrm{d}z^{[l](i)}}} + \frac{\mathrm{d}L^{(i)}}{\mathrm{d}z^{[l](i)}} \right) \\
-        &= \frac{1}{m} \frac{\mathrm{d}L^{(i)}}{\mathrm{d}z^{[l](i)}} \\
+        \frac{\d J}{\d z^{[l](i)}} 
+        &= \frac{1}{m}  \sum_{\textcolor{red}{j}=1}^{m} \frac{\d L^{(\textcolor{red}{j})}}{\d z^{[l](i)}} \\
+        &= \frac{1}{m}  \left( \sum_{\substack{1 \leqslant \textcolor{red}{j} \leqslant m \\ \textcolor{red}{j} \neq i}} \tikzmarknode{zero}{\frac{\d L^{(\textcolor{red}{j})}}{\d z^{[l](i)}}} + \frac{\d L^{(i)}}{\d z^{[l](i)}} \right) \\
+        &= \frac{1}{m} \frac{\d L^{(i)}}{\d z^{[l](i)}} \\
     \end{aligned}
     \annotate[yshift=1em]{above}{zero}{equals 0}
 \end{equation}
 两边乘$m$即得
 \begin{equation}
-    \frac{\mathrm{d}L^{(i)}}{\mathrm{d}z^{[l](i)}} = m \frac{\mathrm{d}J}{\mathrm{d}z^{[l](i)}}
+    \frac{\d L^{(i)}}{\d z^{[l](i)}} = m \frac{\d J}{\d z^{[l](i)}}
 \end{equation}
 结合式\eqref{eq:backpropagation_known_1_sample_derivative}和代价函数定义，可推知
 \begin{equation}
     \begin{aligned}
-        \frac{\mathrm{d}J}{\mathrm{d}b^{[l]}} 
-        &= \frac{1}{m} \sum_{i=1}^{m} \frac{\mathrm{d}L^{(i)}}{\mathrm{d}b^{[l]}} \\
-        &= \frac{1}{m} \sum_{i=1}^{m} \frac{\mathrm{d}L^{(i)}}{\mathrm{d}z^{[l](i)}} \\
-        &= \frac{1}{m} \sum_{i=1}^{m} m \frac{\mathrm{d}J}{\mathrm{d}z^{[l](i)}} \\
-        &= \tikzmarknode{db}{\sum_{i=1}^{m} \frac{\mathrm{d}J}{\mathrm{d}z^{[l](i)}}}
+        \frac{\d J}{\d b^{[l]}} 
+        &= \frac{1}{m} \sum_{i=1}^{m} \frac{\d L^{(i)}}{\d b^{[l]}} \\
+        &= \frac{1}{m} \sum_{i=1}^{m} \frac{\d L^{(i)}}{\d z^{[l](i)}} \\
+        &= \frac{1}{m} \sum_{i=1}^{m} m \frac{\d J}{\d z^{[l](i)}} \\
+        &= \tikzmarknode{db}{\sum_{i=1}^{m} \frac{\d J}{\d z^{[l](i)}}}
     \label{eq:backpropagation_conc_4}
     \end{aligned}
     \vspace{2em}
     \renewcommand{\eqnannotationstrut}{\rule[-0.7\baselineskip]{0pt}{1.5\baselineskip}}
-    \annotate[yshift=0em]{below}{db}{相当于$\dfrac{\mathrm{d}J}{\mathrm{d}Z^{[l]}}$沿水平方向求和}
+    \annotate[yshift=0em]{below}{db}{相当于$\dfrac{\d J}{\d Z^{[l]}}$沿水平方向求和}
     \renewcommand{\eqnannotationstrut}{\strut} % package default
 \end{equation}
 综合式\eqref{eq:backpropagation_conc_3}, \eqref{eq:backpropagation_conc_2}, \eqref{eq:backpropagation_conc_1}, 和\eqref{eq:backpropagation_conc_4}，可得
-\footnote{此推导结果与课程不同，主要区别是系数$\dfrac{1}{m}$的位置不同。课程中将$\dfrac{1}{m}$放在了所有的$\dfrac{\mathrm{d}J}{\mathrm{d}W}$和$\dfrac{\mathrm{d}J}{\mathrm{d}b}$处，但实际上应该位于$\dfrac{\mathrm{d}J}{\mathrm{d}A^{[L]}}$处并反向传播至各层。但是这不会影响最终的结果。}
+\footnote{此推导结果与课程不同，主要区别是系数$\dfrac{1}{m}$的位置不同。课程中将$\dfrac{1}{m}$放在了所有的$\dfrac{\d J}{\d W}$和$\dfrac{\d J}{\d b}$处，但实际上应该位于$\dfrac{\d J}{\d A^{[L]}}$处并反向传播至各层。但是这不会影响最终的结果。}
 \begin{align}
-    \frac{\mathrm{d}J}{\mathrm{d}Z^{[l]}} &= g^{[l]'}(Z^{[l]}) \odot \frac{\mathrm{d}J}{\mathrm{d}A^{[l]}} \\
-    \frac{\mathrm{d}J}{\mathrm{d}A^{[l-1]}} &= W^{[l] \mathrm{T}} \frac{\mathrm{d}J}{\mathrm{d}Z^{[l]}} \\
-    \frac{\mathrm{d}J}{\mathrm{d}W^{[l]}} &= \frac{\mathrm{d}J}{\mathrm{d}Z^{[l]}} A^{[l-1] \mathrm{T}} \label{eq:dw_real} \\
-    \frac{\mathrm{d}J}{\mathrm{d}b^{[l]}} &= \sum_{i=1}^{m} \frac{\mathrm{d}J}{\mathrm{d}z^{[l](i)}} \label{eq:db_real}
+    \frac{\d J}{\d Z^{[l]}} &= g^{[l]'}(Z^{[l]}) \odot \frac{\d J}{\d A^{[l]}} \\
+    \frac{\d J}{\d A^{[l-1]}} &= W^{[l] \mathrm{T}} \frac{\d J}{\d Z^{[l]}} \\
+    \frac{\d J}{\d W^{[l]}} &= \frac{\d J}{\d Z^{[l]}} A^{[l-1] \mathrm{T}} \label{eq:dw_real} \\
+    \frac{\d J}{\d b^{[l]}} &= \sum_{i=1}^{m} \frac{\d J}{\d z^{[l](i)}} \label{eq:db_real}
 \end{align}
 将以上结论写成伪代码形式，
 \begin{align}
@@ -552,37 +555,37 @@ assert(A.shape == (1, 4))
 \end{align}
 逐元素相乘使用*或 \verb|np.multiply| 均可，区别在于 \verb|np.multiply| 可以进行维度扩充。计算得到的 \verb|dW| 和 \verb|db| 存入 \verb|grads| 字典中，然后使用梯度下降法更新$W$和$b$。
 
-下面来\colorbox{LemonChiffon}{计算$\dfrac{\mathrm{d}J}{\mathrm{d}A^{[L]}}$}。回顾损失函数（交叉熵损失函数）的定义
+下面来\colorbox{LemonChiffon}{计算$\dfrac{\d J}{\d A^{[L]}}$}。回顾损失函数（交叉熵损失函数）的定义
 \begin{equation}
     L^{(i)} = -\left[y^{(i)} \log \hat{y}^{(i)} + (1 - y^{(i)}) \log (1 - \hat{y}^{(i)})\right]
 \end{equation}
 对其求导，可得
 \begin{equation}
-    \frac{\mathrm{d}L^{(i)}}{\mathrm{d}\hat{y}^{(i)}} = -\frac{y^{(i)}}{\hat{y}^{(i)}} + \frac{1 - y^{(i)}}{1 - \hat{y}^{(i)}}
+    \frac{\d L^{(i)}}{\d \hat{y}^{(i)}} = -\frac{y^{(i)}}{\hat{y}^{(i)}} + \frac{1 - y^{(i)}}{1 - \hat{y}^{(i)}}
 \end{equation}
 从而
 \begin{equation}
-    \frac{\mathrm{d}J}{\mathrm{d}\hat{y}^{(i)}} 
-    = \frac{1}{m} \sum_{\textcolor{red}{j}=1}^{m} \frac{\mathrm{d}L^{(\textcolor{red}{j})}}{\mathrm{d}\hat{y}^{(i)}} 
-    = \frac{1}{m} \frac{\mathrm{d}L^{(i)}}{\mathrm{d}\hat{y}^{(i)}} 
+    \frac{\d J}{\d \hat{y}^{(i)}} 
+    = \frac{1}{m} \sum_{\textcolor{red}{j}=1}^{m} \frac{\d L^{(\textcolor{red}{j})}}{\d \hat{y}^{(i)}} 
+    = \frac{1}{m} \frac{\d L^{(i)}}{\d \hat{y}^{(i)}} 
     = \frac{1}{m} \left(-\frac{y^{(i)}}{\hat{y}^{(i)}} + \frac{1 - y^{(i)}}{1 - \hat{y}^{(i)}}\right)
 \end{equation}
 将各个样本的值写在一起，可得
 \begin{equation}
-    \frac{\mathrm{d}J}{\mathrm{d}\hat{Y}} 
-    = \begin{bmatrix} \dfrac{\mathrm{d}J}{\mathrm{d}\hat{y}^{(1)}} & \dfrac{\mathrm{d}J}{\mathrm{d}\hat{y}^{(2)}} & \cdots & \dfrac{\mathrm{d}J}{\mathrm{d}\hat{y}^{(m)}} \end{bmatrix}
+    \frac{\d J}{\d \hat{Y}} 
+    = \begin{bmatrix} \dfrac{\d J}{\d \hat{y}^{(1)}} & \dfrac{\d J}{\d \hat{y}^{(2)}} & \cdots & \dfrac{\d J}{\d \hat{y}^{(m)}} \end{bmatrix}
     = \frac{1}{m} \left(-\frac{Y}{\hat{Y}} + \frac{1 - Y}{1 - \hat{Y}}\right)
 \end{equation}
 即
 \begin{equation}
-    \frac{\mathrm{d}J}{\mathrm{d}A^{[L]}} 
+    \frac{\d J}{\d A^{[L]}} 
     = \frac{1}{m} \left(-\frac{Y}{A^{[L]}} + \frac{1 - Y}{1 - A^{[L]}}\right)
 \end{equation}
 写成伪代码形式为
 \begin{equation}
     \mathtt{dA^{\textcolor{Magenta}{[}L\textcolor{Magenta}{]}}} = \mathtt{\textcolor{blue}{(}np.divide\textcolor{yellow}{(}Y, A^{\textcolor{Magenta}{[}L\textcolor{Magenta}{]}}\textcolor{yellow}{)} - np.divide\textcolor{yellow}{(}1 - Y, 1 - A^{\textcolor{Magenta}{[}L\textcolor{Magenta}{]}}\textcolor{yellow}{)}\textcolor{blue}{)}/m} \label{eq:da}
 \end{equation}
-\textbf{从输出层开始，先得到$\dfrac{\mathrm{d}J}{\mathrm{d}A^{[L]}}$（也就是$\dfrac{\mathrm{d}J}{\mathrm{d}\hat{Y}}$），然后逐层向前计算，直到第$1$层，即可得到所有的梯度。}
+\textbf{从输出层开始，先得到$\dfrac{\d J}{\d A^{[L]}}$（也就是$\dfrac{\d J}{\d \hat{Y}}$），然后逐层向前计算，直到第$1$层，即可得到所有的梯度。}
 
 \vspace{\baselineskip}
 对于本节要构建的浅层神经网络，第一层使用的激活函数为tanh函数，而第二层使用的激活函数为sigmoid函数，
@@ -592,21 +595,21 @@ assert(A.shape == (1, 4))
 \end{align}
 利用
 \begin{equation}
-    \frac{\mathrm{d}J}{\mathrm{d}A^{[2]}} 
+    \frac{\d J}{\d A^{[2]}} 
     = \frac{1}{m} \left(-\frac{Y}{A^{[2]}} + \frac{1 - Y}{1 - A^{[2]}}\right)
 \end{equation}
 可得
 \begin{align}
-    \frac{\mathrm{d}J}{\mathrm{d}Z^{[2]}} &= A^{[2]}(1-A^{[2]}) \odot \frac{\mathrm{d}J}{\mathrm{d}A^{[2]}} = \frac{1}{m}(A^{[2]}-Y) \\
-    \frac{\mathrm{d}J}{\mathrm{d}A^{[1]}} &= W^{[2] \mathrm{T}} \frac{\mathrm{d}J}{\mathrm{d}Z^{[2]}} \\
-    \frac{\mathrm{d}J}{\mathrm{d}W^{[2]}} &= \frac{\mathrm{d}J}{\mathrm{d}Z^{[2]}} A^{[1] \mathrm{T}} \\
-    \frac{\mathrm{d}J}{\mathrm{d}b^{[2]}} &= \sum_{i=1}^{m} \frac{\mathrm{d}J}{\mathrm{d}z^{[2](i)}}
+    \frac{\d J}{\d Z^{[2]}} &= A^{[2]}(1-A^{[2]}) \odot \frac{\d J}{\d A^{[2]}} = \frac{1}{m}(A^{[2]}-Y) \\
+    \frac{\d J}{\d A^{[1]}} &= W^{[2] \mathrm{T}} \frac{\d J}{\d Z^{[2]}} \\
+    \frac{\d J}{\d W^{[2]}} &= \frac{\d J}{\d Z^{[2]}} A^{[1] \mathrm{T}} \\
+    \frac{\d J}{\d b^{[2]}} &= \sum_{i=1}^{m} \frac{\d J}{\d z^{[2](i)}}
 \end{align}
 进而
 \begin{align}
-    \frac{\mathrm{d}J}{\mathrm{d}Z^{[1]}} &= (1-A^{[1]2}) \odot \frac{\mathrm{d}J}{\mathrm{d}A^{[1]}} = W^{[2] \mathrm{T}} \frac{\mathrm{d}J}{\mathrm{d}Z^{[2]}} \odot (1-A^{[1]2}) \\
-    \frac{\mathrm{d}J}{\mathrm{d}W^{[1]}} &= \frac{\mathrm{d}J}{\mathrm{d}Z^{[1]}} A^{[0] \mathrm{T}} = \frac{\mathrm{d}J}{\mathrm{d}Z^{[1]}} X^{\mathrm{T}} \\
-    \frac{\mathrm{d}J}{\mathrm{d}b^{[1]}} &= \sum_{i=1}^{m} \frac{\mathrm{d}J}{\mathrm{d}z^{[1](i)}}
+    \frac{\d J}{\d Z^{[1]}} &= (1-A^{[1]2}) \odot \frac{\d J}{\d A^{[1]}} = W^{[2] \mathrm{T}} \frac{\d J}{\d Z^{[2]}} \odot (1-A^{[1]2}) \\
+    \frac{\d J}{\d W^{[1]}} &= \frac{\d J}{\d Z^{[1]}} A^{[0] \mathrm{T}} = \frac{\d J}{\d Z^{[1]}} X^{\mathrm{T}} \\
+    \frac{\d J}{\d b^{[1]}} &= \sum_{i=1}^{m} \frac{\d J}{\d z^{[1](i)}}
 \end{align}
 总结为伪代码形式
 \begin{align}
@@ -647,7 +650,7 @@ assert(A.shape == (1, 4))
     \caption[Deep Neural Network]{Deep Neural Network\setcounter{footnote}{0}\footnotemark}
     \label{fig:deep_nn}
 \end{figure}
-\footnotetext{使用\cite{dotnets}绘制}
+\footnotetext{使用\cite{martisak2018dotnets}绘制}
 
 事实上，神经网络的层数并不是越多越好。在尝试用神经网络解决问题时，可以先从单纯的逻辑回归和浅层神经网络开始，如果其无法解决问题再尝试深层神经网络。
 
