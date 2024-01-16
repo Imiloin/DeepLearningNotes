@@ -4,8 +4,6 @@
 \section{Introduction to Deep Learning}
 机器学习本质上就是训练模型来完成\textbf{从输入到输出($\bm{X\to Y}$)的映射}。例如, 给定一张猫的照片, 机器学习模型可以输出``这是一只猫''的结论。
 
-\vspace{0.5\baselineskip} % 半行距
-
 深度学习有3大要点：
 \begin{itemize}	
     \item Data
@@ -114,7 +112,6 @@ Algorithms是指算法, 例如Logistic Regression、SVM、Neural Networks等。
     \label{fig:sigmoid}
 \end{figure}
 
-\vspace{0.5\baselineskip}
 对某一个样本而言，Loss function（误差函数）定义为:
 \begin{equation}
     L(\hat{y}^{(i)}, y^{(i)}) = -\left[y^{(i)} \log \hat{y}^{(i)} + (1 - y^{(i)}) \log (1 - \hat{y}^{(i)})\right] \label{eq:loss}
@@ -152,7 +149,6 @@ Algorithms是指算法, 例如Logistic Regression、SVM、Neural Networks等。
 \end{equation}
 其中$:=$表示赋值，通过不断更新$w$, $b$的值使$J$尽可能小。下面介绍具体实现
 
-\vspace{0.5\baselineskip}
 对于一个样本，有
 \begin{equation}
     \begin{aligned}
@@ -181,7 +177,6 @@ Algorithms是指算法, 例如Logistic Regression、SVM、Neural Networks等。
     \end{aligned}
 \end{equation}
 
-\vspace{0.5\baselineskip}
 对于整个训练集，在一个循环中我们对每一个样本都进行一次梯度下降，并对所有样本的梯度进行平均，有
 \begin{equation}
     \begin{aligned}
@@ -243,7 +238,6 @@ db = db.reshape(ny, 1)
 \end{python}
 \verb|np.sum()| 函数的 \verb|axis| 参数表示沿着哪个维度进行求和，\verb|axis=0| 表示沿着列求和，\verb|axis=1| 表示沿着行求和。
 
-\vspace{0.5\baselineskip}
 在 \verb|numpy| 中，矩阵的维度扩充与 \verb|matlab| 类似，可以自动扩充，也可以使用 \verb|reshape| 函数进行扩充。
 
 矩阵（或向量）在保存时，使用了两重方括号，例如 \verb|[[1, 2], [3, 4]] / [[3, 6, 9]]|，而数组仅有一重方括号，例如 \verb|[1, 2, 3, 4]|。
@@ -274,7 +268,6 @@ print(A.T)
 \end{python}
 \verb|reshape()| 是一个$O(1)$的操作，不会影响程序的运行效率。在本课程中不要使用 \verb|rank 1 array|，因为它的维度不是$(n, 1)$或$(1, n)$，在进行矩阵运算时会出现错误。
 
-\vspace{0.5\baselineskip}
 为了确保矩阵的维度正确，可以使用 \verb|assert()| 函数，例如
 \begin{python}
 assert(A.shape == (1, 4))
@@ -325,13 +318,10 @@ assert(A.shape == (1, 4))
 
 神经网络是若干“层”（Layer）的组合，每一层都是若干“节点”（Node）的组合。第一层为“输入层”（Input Layer），最后一层为“输出层”（Output Layer），中间的层为“隐藏层”（Hidden Layer）。在计数时，通常将输入层记为第$0$层，隐藏层从第$1$层开始计数。
 
-\vspace{0.5\baselineskip}
 隐藏层和输出层都是全连接层，每个节点都与上一层的所有节点相连。隐藏层和输出层的节点都是\textbf{神经元（Neuron）}，每个神经元都有一个\textbf{激活函数（Activation Function）}，用来计算该神经元的输出。隐藏层和输出层的激活函数可以不同，但是通常情况下都是相同的。
 
-\vspace{0.5\baselineskip}
 浅层神经网络具有$1$个输入层、$1$个隐藏层、$1$个输出层，其结构如图 \ref{fig:shallow_nn} 所示，该图展示了第$i$个样本的神经网络结构，每个小写字母表示一个值。实际上，神经网络会同时处理多个样本，执行矩阵运算。
 
-\vspace{0.5\baselineskip}
 每个节点会进行两个计算，分别是\textbf{线性计算}和\textbf{激活函数计算}，如图 \ref{fig:node} 所示。节点首先把上一层的所有节点的输出值乘以权重，然后把所有结果相加，再加上偏置值，得到线性计算的结果$z$。然后把$z$作为激活函数的输入，得到激活函数的输出，作为该节点的输出$a$。$z$可作为一个中间量，与$a$维度相同。
 
 \begin{figure}[h!bt]
@@ -451,7 +441,6 @@ assert(A.shape == (1, 4))
 \subsection{Gradient Descent for Neural Networks}
 在训练整个神经网络时，需要对每一层的权重和偏置进行梯度下降，因此需要对每一层的梯度进行计算。
 
-\vspace{0.5\baselineskip}
 我们的目标是最小化代价函数$J(W^{[1]}, b^{[1]}, W^{[2]}, b^{[2]}, \cdots, W^{[L]}, b^{[L]})$，其中$L$为神经网络的层数。对于第$l$层，先求出权重和偏置的偏导数，然后再进行梯度下降，即
 \begin{equation}
     \begin{aligned}
@@ -468,7 +457,6 @@ assert(A.shape == (1, 4))
 
 在推导过程中，需要补充一些矩阵导数运算的知识，参见附录 \ref{sec:matrix_derivative}。以下过程中使用的符号如表 \ref{tab:notations} 所示。
 
-\vspace{0.5\baselineskip}
 对于第$l$层，\colorbox{LemonChiffon}{已知$\dfrac{\mathrm{d}J}{\mathrm{d}A^{[l]}}$}和关系
 \begin{equation}
     \vcenter{\hbox{\tikzmarknode{Zl}{$Z^{[l]}$}}} \vcenter{\hbox{$\vphantom{1}=\vphantom{1}$\tikzmarknode{Wl}{$W^{[l]}$}\tikzmarknode{Al-1}{$A^{[l-1]}$}$\vphantom{1}+\vphantom{1}$}} \begin{bmatrix} \tikzmarknode[outer ysep=2pt]{bl}{b^{[l]}} & b^{[l]} & \cdots & b^{[l]} \end{bmatrix}_{\substack{\scriptstyle n^{[l]}\times m}}
@@ -564,7 +552,6 @@ assert(A.shape == (1, 4))
 \end{align}
 逐元素相乘使用*或 \verb|np.multiply| 均可，区别在于 \verb|np.multiply| 可以进行维度扩充。计算得到的 \verb|dW| 和 \verb|db| 存入 \verb|grads| 字典中，然后使用梯度下降法更新$W$和$b$。
 
-\vspace{0.5\baselineskip}
 下面来\colorbox{LemonChiffon}{计算$\dfrac{\mathrm{d}J}{\mathrm{d}A^{[L]}}$}。回顾损失函数（交叉熵损失函数）的定义
 \begin{equation}
     L^{(i)} = -\left[y^{(i)} \log \hat{y}^{(i)} + (1 - y^{(i)}) \log (1 - \hat{y}^{(i)})\right]
@@ -635,7 +622,6 @@ assert(A.shape == (1, 4))
 \subsection{Random Initialization}
 在神经网络中，权重的初始值不能全部为$0$，否则会导致神经网络各层的神经元进行相同的计算，无法正常工作。
 
-\vspace{0.5\baselineskip}
 在神经网络中，权重的初始值通常使用随机数生成，如
 \begin{equation}
     W^{[l]} = \mathtt{np.random.randn}(n^{[l]}, n^{[l-1]}) \times 0.01
@@ -678,7 +664,7 @@ assert(A.shape == (1, 4))
 %%%
 \subsection{Building Blocks of Deep Neural Networks}
 一张图 \ref{fig:blocks_fb} 即可说明。
-\begin{figure}[h!b]
+\begin{figure}[htb!]
     \centering
     \includegraphics[width=\textwidth]{blocks_fb.pdf}
     \caption{Propagation Blocks}

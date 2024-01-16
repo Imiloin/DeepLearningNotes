@@ -125,7 +125,6 @@
 \end{equation}
 这便是标量对矩阵求导与微分的关系。只要满足式\eqref{eq:scalar_matrix_derivative_trace}的关系，就能得到标量对矩阵的导数。
 
-\vspace{0.5\baselineskip}
 下面列出几条常见的矩阵微分的运算法则。注意$\odot$表示Hadamard积，即对应元素相乘。
 \begin{subequations}
 	\begin{align}
@@ -163,7 +162,7 @@
 在复合情况下，为了避免矩阵对矩阵求导，尽量不要使用链式法则，而是使用微分的性质\eqref{eq:scalar_matrix_derivative_trace}，通过迹运算的变形来求解。
 
 \begin{example}\label{example:matrix_derivative1}
-\vspace{0.5\baselineskip}
+% \vspace{0.5\baselineskip}
 \colorbox{LemonChiffon}{已知$\dfrac{\partial f}{\partial \bm{Y}}$和$\bm{Y}=\bm{A}\bm{X}\bm{B}$，求$\dfrac{\partial f}{\partial \bm{X}}$}。
 根据式\eqref{eq:scalar_matrix_derivative_trace}，有
 \begin{equation}
@@ -240,7 +239,6 @@
 \end{equation}
 \end{example}
 
-\vspace{0.5\baselineskip}
 从例\ref{example:matrix_derivative1}和例\ref{example:matrix_derivative2}可得到下面的结论
 \begin{align}
 	\bm{Y}=\bm{A}\bm{X}\bm{B} \quad &\Rightarrow \quad \frac{\partial f}{\partial \bm{X}} = \bm{A}^{\mathrm{T}}\frac{\partial f}{\partial \bm{Y}}\bm{B}^{\mathrm{T}}

@@ -39,10 +39,12 @@
 \usepackage{ytableau}
 \usepackage{multirow}
 \usepackage{threeparttable}	% 表格注释
-\graphicspath{{imgs/}}	% 设定图片目录
 \usepackage{pythonhighlight}
 \usepackage{subfigure} % 并排图片宏包
 \usepackage{float} % 图片位置，H选项
+\usepackage[bottom, hang]{footmisc} % Force footnotes to the bottom of the page
+
+\graphicspath{{imgs/}}	% 设定图片目录
 
 % \usepackage[inkscapearea=page]{svg}	% 插入 svg 图形，需要 Inkscape 支持以及 -shell-escape 选项
 
@@ -104,7 +106,7 @@
 \renewcommand*\arraystretch{1.5}
 
 % 修改段间距
-% \setlength{\parskip}{0.5\baselineskip}
+\setlength{\parskip}{0.5\baselineskip}
 
 % 自订公式的编号 (非必要)
 \numberwithin{equation}{section}
