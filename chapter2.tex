@@ -55,8 +55,11 @@
 \index{Regularization}
 
 正则化（Regularization）是一种减小模型复杂度的方法，可以防止模型过拟合。
-需要理解，正则化的目的是改变（通常是缩小）在更新权重和偏置时的梯度值，其本身并不干预模型的前向传播和反向传播过程。
 正则化的方法有很多，这里介绍两种常用的正则化方法：$L_2$正则化和Dropout。
+
+\begin{hint}
+    正则化的目的是改变（通常是缩小）在更新权重和偏置时的梯度值，其本身并不干预模型的前向传播和反向传播过程。
+\end{hint}
 
 \subsubsection{$\mathsf{L_2}$ regularization}
 
@@ -116,7 +119,7 @@ Dropout 是以层为单位来使用的，即在设定的某些 Dropout 层中，
 一种常见的Dropout实现为Inverted dropout。假设第$l$层被设置为Dropout层，设置一个保留概率 \verb|keep_prob| ，
 则在每次迭代的前向传播中，先用原有的方式计算出第$l$层的激活值$A^{[l]}$，然后构造一个布尔矩阵
 \begin{equation}
-    \mathtt{D^{\textcolor{Magenta}{[}l\textcolor{Magenta}{]}}} = \mathtt{np.random.rand\textcolor{yellow}{(} A^{\textcolor{Magenta}{[}l\textcolor{Magenta}{]}}.shape\textcolor{Magenta}{[}0\textcolor{Magenta}{]}, A^{\textcolor{Magenta}{[}l\textcolor{Magenta}{]}}.shape\textcolor{Magenta}{[}1\textcolor{Magenta}{]} \textcolor{yellow}{)} < keep\_prob}
+    \mathtt{D^{\textcolor{Magenta}{[}l\textcolor{Magenta}{]}}} = \mathtt{np.random.rand\textcolor{yellow}{(} A^{\textcolor{Magenta}{[}l\textcolor{Magenta}{]}}.shape\textcolor{Magenta}{[}\textcolor{green}{0}\textcolor{Magenta}{]}, A^{\textcolor{Magenta}{[}l\textcolor{Magenta}{]}}.shape\textcolor{Magenta}{[}\textcolor{green}{1}\textcolor{Magenta}{]} \textcolor{yellow}{)} < keep\_prob}
 \end{equation}
 将这个布尔矩阵与$A^{[l]}$相乘，即可将第$l$层的部分输出置零
 \begin{equation}

@@ -29,13 +29,15 @@ Algorithms是指算法, 例如Logistic Regression、SVM、Neural Networks等。
     \caption{Notations}
     %
     \begin{tabular}{clcc}
-        \hline
-                                    & \textbf{Notation}                                     & \textbf{Description} & \textbf{Meaning}                                                   \\ \hline
+        \toprule
+                                    & \textbf{Notation}                                     & \textbf{Description} & \textbf{Meaning}                                                   \\ 
+        \midrule
         \multirow{5}{*}{Sizes}      & $m$                                                   & value                & 样本容量                                                               \\
                                     & $n_x$ / $n_h^{[0]}$                                   & value                & 单个样本的特征数（输入层节点数）                                         \\
                                     & $n_y$ / $n_h^{[L]}$                                   & value                & 单个样本的标签数（输出层节点数）                                      \\
                                     & $n_h^{[l]}$ / $n^{[l]}$                               & value                & 第$l$层的神经元个数（隐藏层节点数）                                   \\
-                                    & $L$                                                   & value                & 神经网络的层数                                                         \\ \hline
+                                    & $L$                                                   & value                & 神经网络的层数                                                         \\ 
+        \midrule
         \multirow{11}{*}{Objects}   & $x^{(i)} \in \mathbb{R}^{n_x}$                        & vector               & 第$i$个样本数据                                                          \\
                                     & $X / A^{[0]} \in {\mathbb{R}^{n_x \times m}}$         & matrix               & 输入矩阵                                                               \\
                                     & $a^{[l](i)} \in \mathbb{R}^{n^{l}}$                   & vector               & 第$i$个样本在第$l$层节点的输出                                                  \\
@@ -46,12 +48,16 @@ Algorithms是指算法, 例如Logistic Regression、SVM、Neural Networks等。
                                     & $\hat{y}^{(i)} \in \mathbb{R}^{n_y}$                  & vector               & 第$i$个样本的标签预测值向量                                                \\
                                     & $\hat{Y} / A^{[L]} \in {\mathbb{R}^{n_y \times m}}$   & matrix               & 标签预测值矩阵（$n_y=1$时退化为行向量$\hat{y}$）   						\\
                                     & $W^{[l]} \in \mathbb{R}^{n^{[l]} \times n^{[l-1]}}$   & matrix               & 第$l$层的权重矩阵                                                               \\
-                                    & $b^{[l]} \in \mathbb{R}^{n^{[l]}}$                    & vector               & 第$l$层的标签偏置值向量                                                        \\\hline
-        \multirow{5}{*}{Other}      & $g^{[l]}(z)$                                          & function             & 第$l$层的激活函数                                                         \\
+                                    & $b^{[l]} \in \mathbb{R}^{n^{[l]}}$                    & vector               & 第$l$层的标签偏置值向量                                                        \\
+        \midrule
+        \multirow{7}{*}{Other}      & $g^{[l]}(z)$                                          & function             & 第$l$层的激活函数                                                         \\
                                     & $L^{(i)}(\hat{y}^{(i)}, y^{(i)})$                     & function             & 第$i$个样本的代价函数                                                         \\
                                     & $J(X,W,b,Y)$ or $J(\hat{Y},Y)$                        & function             & 代价函数                                                                        \\
                                     & $\alpha$								                & value                & 学习率                                                                        \\
-                                    & $\d \mathrm{var}$                              & differential         & 代价函数对变量$\mathrm{var}$的偏微分，即${\partial J}/{\partial \mathrm{var}}$ \\ \hline
+                                    & $\d \mathrm{var}$                                     & differential         & 代价函数对变量$\mathrm{var}$的偏微分，即${\partial J}/{\partial \mathrm{var}}$ \\
+                                    & $\lambda$                                             & value                & 正则化参数                                                             \\  
+                                    & \verb|keep_prob|                                      & value                & Dropout算法的保留概率                                                      \\ 
+        \bottomrule
     \end{tabular}
     %
     \label{tab:notations} %
@@ -77,10 +83,10 @@ Algorithms是指算法, 例如Logistic Regression、SVM、Neural Networks等。
     \begin{threeparttable}
     \caption{Notations in Logistic Regression}
     \begin{tabular}{clcc}
-        \hline
-                                    & \textbf{Notation}                         & \textbf{Description} & \textbf{Meaning}                                                   \\ \hline
+        \toprule
+                                    & \textbf{Notation}                         & \textbf{Description} & \textbf{Meaning}                                                   \\ \midrule
         \multirow{2}{*}{Sizes}      & $m$                                       & value                & 样本容量                                                               \\
-                                    & $n_x$                                     & value                & 单个样本的特征数（输入层节点数）                                         \\ \hline
+                                    & $n_x$                                     & value                & 单个样本的特征数（输入层节点数）                                         \\ \midrule
         \multirow{8}{*}{Objects}    & $x^{(i)} \in \mathbb{R}^{n_x}$            & vector               & 第$i$个样本数据                                                          \\
                                     & $X \in {\mathbb{R}^{n_x \times m}}$       & matrix               & 输入矩阵                                                               \\
                                     & $a^{(i)} / y^{(i)}$                       & binary               & 第$i$个样本的标签实际值                                                        \\
@@ -88,9 +94,10 @@ Algorithms是指算法, 例如Logistic Regression、SVM、Neural Networks等。
                                     & $\hat{y}^{(i)}$                           & binary               & 第$i$个样本的标签预测值                                                  \\
                                     & $\hat{y} \in {\mathbb{R}^{m}}$            & vector               & 标签预测值向量   					                                     \\
                                     & $w \in \mathbb{R}^{n_x}$                  & vector               & 权重向量                                                                \\
-                                    & $b$                                       & value                & 标签偏置值                                                            \\ \hline
+                                    & $b$                                       & value                & 标签偏置值                                                            \\ \midrule
         \multirow{2}{*}{Other}      & $J(x,w,b,y)$ or $J(\hat{y},y)$            & function             & 代价函数                                                               \\
-                                    & $\d \mathrm{var}$                  & differential         & 代价函数对变量$\mathrm{var}$的偏微分                                    \\ \hline
+                                    & $\d \mathrm{var}$                  & differential         & 代价函数对变量$\mathrm{var}$的偏微分                                    \\ 
+        \bottomrule
     \end{tabular}
     \label{tab:notations_LR}
     \end{threeparttable}
@@ -202,11 +209,11 @@ Algorithms是指算法, 例如Logistic Regression、SVM、Neural Networks等。
 一个重要的原则是，在训练过程中要避免使用循环，而是使用向量化的方法。向量化可以调用并行计算，相对于循环的串行计算效率更高。\\
 要完成下面的矩阵操作，
 \begin{equation}
-    Z =
+    \vcenter{\hbox{$\vphantom{z^{(1)}}Z =$}}
     \begin{bmatrix}
         z^{(1)} & z^{(2)} & \cdots & z^{(m)}
     \end{bmatrix}
-    = w^\mathrm{T} X + 
+    \vcenter{\hbox{$\vphantom{z^{(1)}}= w^\mathrm{T} X + $}}
     \begin{bmatrix}
         b & b & \cdots & b
     \end{bmatrix}
@@ -312,9 +319,9 @@ assert(A.shape == (1, 4))
 
 %%%%
 \section{Shallow Neural Networks}
-\begin{wenxintishi}
+\begin{hint}
     在上一节中，我们构建的模型本质上是一个单节点的一层神经“网络”。在本节中，我们将构建一个两层的神经网络，也就是一个\textbf{浅层神经网络（Shallow Neural Network）}。
-\end{wenxintishi}
+\end{hint}
 
 %%%
 \subsection{Neural Networks Representation}

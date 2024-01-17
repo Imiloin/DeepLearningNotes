@@ -227,7 +227,7 @@
 \fi
 
 % 习题提示 (定义为环境, 穿插文中)
-\newenvironment{hint}{%
+\newenvironment{tishi}{%
 	\ifvmode % 用 \ifvmode 测试: 如果提示另起新段, 则不加空白.
 		\ignorespaces	% 消除横向空白, 优于 \unskip
 	\else
@@ -240,7 +240,7 @@
 
 % 每章开头的学习提示 (定义为环境)
 \if@AJ@traditional
-	\newtcolorbox{wenxintishi}{
+	\newtcolorbox{hint}{
 		breakable,
 		enhanced,
 		width = \textwidth,
@@ -256,7 +256,7 @@
 		title={閱讀提示}
 	}
 \else
-	\newtcolorbox{wenxintishi}{
+	\newtcolorbox{hint}{
 		breakable,
 		enhanced,
 		width = \textwidth,
