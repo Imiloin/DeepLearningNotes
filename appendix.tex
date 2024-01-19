@@ -115,7 +115,7 @@
 	= \sum_{i=1}^{m}{\sum_{j=1}^{n}{\frac{\partial f}{\partial x_{ij}}\d x_{ij}}} 
 	= \mathrm{tr}(\bm{A}^{\mathrm{T}}\bm{B})
 \end{equation}
-故式\eqref{eq:scalar_matrix_derivative}可以表示为
+故式~\eqref{eq:scalar_matrix_derivative} 可以表示为
 \begin{equation}
 	\eqnmarkbox[WildStrawberry]{scalar_matrix_derivative_trace}{
 	\d f 
@@ -123,7 +123,7 @@
 	}
 	\label{eq:scalar_matrix_derivative_trace}
 \end{equation}
-这便是标量对矩阵求导与微分的关系。只要满足式\eqref{eq:scalar_matrix_derivative_trace}的关系，就能得到标量对矩阵的导数。
+这便是标量对矩阵求导与微分的关系。只要满足式~\eqref{eq:scalar_matrix_derivative_trace} 的关系，就能得到标量对矩阵的导数。
 
 下面列出几条常见的矩阵微分的运算法则。注意$\odot$表示Hadamard积，即对应元素相乘。
 \begin{subequations}
@@ -164,22 +164,22 @@
 \begin{example}\label{example:matrix_derivative1}
 % \vspace{0.5\baselineskip}
 \colorbox{LemonChiffon}{已知$\dfrac{\partial f}{\partial \bm{Y}}$和$\bm{Y}=\bm{A}\bm{X}\bm{B}$，求$\dfrac{\partial f}{\partial \bm{X}}$}。
-根据式\eqref{eq:scalar_matrix_derivative_trace}，有
+根据式~\eqref{eq:scalar_matrix_derivative_trace}，有
 \begin{equation}
 	\d f = \mathrm{tr}\left({\frac{\partial f}{\partial \bm{Y}}}^{\mathrm{T}}\d \bm{Y}\right)
 	\label{eq:matrix_derivative_example1_1}
 \end{equation}
-对式\eqref{eq:matrix_derivative_example1_1}中的$\d \bm{Y}$进行展开，有
+对式~\eqref{eq:matrix_derivative_example1_1} 中的$\d \bm{Y}$进行展开，有
 \begin{equation}
 	\d \bm{Y} = \d (\bm{A}\bm{X}\bm{B}) = \d \bm{A}\cdot\bm{X}\bm{B} + \bm{A}\d \bm{X}\cdot\bm{B} + \bm{A}\bm{X}\d \bm{B}
 	\label{eq:matrix_derivative_example1_2}
 \end{equation}
-在$A$, $B$均为常量的情况下，式\eqref{eq:matrix_derivative_example1_2}中的第一项和第三项为零，故式\eqref{eq:matrix_derivative_example1_1}可以化简为
+在$A$, $B$均为常量的情况下，式~\eqref{eq:matrix_derivative_example1_2} 中的第一项和第三项为零，故式~\eqref{eq:matrix_derivative_example1_1} 可以化简为
 \begin{equation}
 	\d f = \mathrm{tr}\left({\frac{\partial f}{\partial \bm{Y}}}^{\mathrm{T}}\bm{A}\d\bm{X}\bm{B}\right)
 	\label{eq:matrix_derivative_example1_3}
 \end{equation}
-根据式\eqref{eq:matrix_trace_mul}，式\eqref{eq:matrix_derivative_example1_3}可以进一步改写为
+根据式~\eqref{eq:matrix_trace_mul}，式~\eqref{eq:matrix_derivative_example1_3} 可以进一步改写为
 \renewcommand{\eqnhighlightheight}{\vphantom{{\frac{\partial f}{\partial \bm{Y}}}^{\mathrm{T}}}\mathstrut}  % 调整注释框高度便于统一，默认为空
 \begin{equation}
 	\d f 
@@ -193,7 +193,7 @@
 	\tikzset{annotate equations/arrow/.style={->, semithick, dashed}}  % 单向箭头
 	\annotatetwo[yshift=-1em]{below, label below}{t1}{t2}{equivalent}
 \end{equation}
-进而对比式\eqref{eq:scalar_matrix_derivative_trace}，可得出
+进而对比式~\eqref{eq:scalar_matrix_derivative_trace}，可得出
 \renewcommand{\eqnhighlightshade}{100}  % 注释框不透明度，默认17
 \begin{equation}
 	\eqnmarkbox[LemonChiffon]{matrix_derivative_example1}{
@@ -210,17 +210,17 @@
 	\d f = \mathrm{tr}\left({\frac{\partial f}{\partial \bm{Y}}}^{\mathrm{T}}\d \bm{Y}\right)
 	\label{eq:matrix_derivative_example2_1}
 \end{equation}
-由式\eqref{eq:matrix_derivative_hadamard2}，
+由式~\eqref{eq:matrix_derivative_hadamard2}，
 \begin{equation}
 	\d \bm{Y} = \d \left(g(\bm{X})\right) = g'(\bm{X}) \odot \d \bm{X}
 	\label{eq:matrix_derivative_example2_2}
 \end{equation}
-代入\eqref{eq:matrix_derivative_example2_1}，
+代入式~\eqref{eq:matrix_derivative_example2_1}，
 \begin{equation}
 	\d f = \mathrm{tr}\left({\frac{\partial f}{\partial \bm{Y}}}^{\mathrm{T}}\left(\vphantom{A^T}g'(\bm{X}) \odot \d \bm{X}\right)\right)
 	\label{eq:matrix_derivative_example2_3}
 \end{equation}
-根据式\eqref{eq:matrix_trace_hadamard}，式\eqref{eq:matrix_derivative_example2_3}可以进一步改写为
+根据式~\eqref{eq:matrix_trace_hadamard}，式~\eqref{eq:matrix_derivative_example2_3} 可以进一步改写为
 \begin{equation}
 	\begin{aligned}
 		\d f 
@@ -229,7 +229,7 @@
 		&= \mathrm{tr}\left(\left({\eqnmark[Teal]{}{g'(\bm{X})} \odot \eqnmark[Olive]{}{\frac{\partial f}{\partial \bm{Y}}}}\right)^{\mathrm{T}}\eqnmark[Maroon]{}{\d \bm{X}}\right)
 	\end{aligned}
 \end{equation}
-对比式\eqref{eq:scalar_matrix_derivative_trace}，可得出
+对比式~\eqref{eq:scalar_matrix_derivative_trace}，可得出
 \renewcommand{\eqnhighlightshade}{30}  % 注释框不透明度，默认17
 \begin{equation}
 	\eqnmarkbox[Aquamarine]{matrix_derivative_example2}{

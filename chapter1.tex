@@ -482,14 +482,14 @@ assert(A.shape == (1, 4))
     \annotatetwo[yshift=-1em]{below,label below}{Al}{Zl2}{$n^{[l]}\times m$}
 \end{equation}
 \colorbox{LemonChiffon}{要计算$\dfrac{\d J}{\d A^{[l-1]}}$, $\dfrac{\d J}{\d W^{[l]}}$和$\dfrac{\d J}{\d b^{[l]}}$}。
-根据结论\eqref{eq:matrix_derivative_conclusion1}，式\eqref{eq:backpropagation_known_1}可推出下面的关系
+根据结论~\eqref{eq:matrix_derivative_conclusion1}，式~\eqref{eq:backpropagation_known_1} 可推出下面的关系
 \begin{align}
     \frac{\d J}{\d W^{[l]}} &= \frac{\d J}{\d Z^{[l]}} A^{[l-1] \mathrm{T}} 
     \label{eq:backpropagation_conc_1} \\
     \frac{\d J}{\d A^{[l-1]}} &= W^{[l] \mathrm{T}} \frac{\d J}{\d Z^{[l]}}
     \label{eq:backpropagation_conc_2}
 \end{align}
-根据结论\eqref{eq:matrix_derivative_conclusion2}，式\eqref{eq:backpropagation_known_2}表明
+根据结论~\eqref{eq:matrix_derivative_conclusion2}，式~\eqref{eq:backpropagation_known_2} 表明
 \begin{equation}
     \frac{\d J}{\d Z^{[l]}} = g^{[l]'}(Z^{[l]}) \odot \frac{\d J}{\d A^{[l]}}
     \label{eq:backpropagation_conc_3}
@@ -499,7 +499,7 @@ assert(A.shape == (1, 4))
     z^{[l](i)} = W^{[l]} a^{[l-1](i)} + b^{[l]}
     \label{eq:backpropagation_known_1_sample}
 \end{equation}
-根据结论\eqref{eq:matrix_derivative_conclusion1}，式\eqref{eq:backpropagation_known_1_sample}可推出下面的关系
+根据结论~\eqref{eq:matrix_derivative_conclusion1}，式~\eqref{eq:backpropagation_known_1_sample} 可推出下面的关系
 \begin{equation}
     \frac{\d L^{(i)}}{\d b^{[l]}} = \frac{\d L^{(i)}}{\d z^{[l](i)}}
     \label{eq:backpropagation_known_1_sample_derivative}
@@ -514,7 +514,7 @@ assert(A.shape == (1, 4))
 \begin{equation}
     J = \frac{1}{m} \sum_{i=1}^{m} L(\hat{y}^{(i)}, y^{(i)})
 \end{equation}
-结合式\eqref{eq:backpropagation_known_1_sample_derivative_independent}，可得
+结合式~\eqref{eq:backpropagation_known_1_sample_derivative_independent}，可得
 \begin{equation}
     \begin{aligned}
         \frac{\d J}{\d z^{[l](i)}} 
@@ -528,7 +528,7 @@ assert(A.shape == (1, 4))
 \begin{equation}
     \frac{\d L^{(i)}}{\d z^{[l](i)}} = m \frac{\d J}{\d z^{[l](i)}}
 \end{equation}
-结合式\eqref{eq:backpropagation_known_1_sample_derivative}和代价函数定义，可推知
+结合式~\eqref{eq:backpropagation_known_1_sample_derivative} 和代价函数定义，可推知
 \begin{equation}
     \begin{aligned}
         \frac{\d J}{\d b^{[l]}} 
@@ -543,7 +543,7 @@ assert(A.shape == (1, 4))
     \annotate[yshift=0em]{below}{db}{相当于$\dfrac{\d J}{\d Z^{[l]}}$沿水平方向求和}
     \renewcommand{\eqnannotationstrut}{\strut} % package default
 \end{equation}
-综合式\eqref{eq:backpropagation_conc_3}, \eqref{eq:backpropagation_conc_2}, \eqref{eq:backpropagation_conc_1}, 和\eqref{eq:backpropagation_conc_4}，可得
+综合式~\eqref{eq:backpropagation_conc_3}, \eqref{eq:backpropagation_conc_2}, \eqref{eq:backpropagation_conc_1}, 和~\eqref{eq:backpropagation_conc_4}，可得
 \footnote{此推导结果与课程不同，主要区别是系数$\dfrac{1}{m}$的位置不同。课程中将$\dfrac{1}{m}$放在了所有的$\dfrac{\d J}{\d W}$和$\dfrac{\d J}{\d b}$处，但实际上应该位于$\dfrac{\d J}{\d A^{[L]}}$处并反向传播至各层。但是这不会影响最终的结果。}
 \begin{align}
     \frac{\d J}{\d Z^{[l]}} &= g^{[l]'}(Z^{[l]}) \odot \frac{\d J}{\d A^{[l]}} \\

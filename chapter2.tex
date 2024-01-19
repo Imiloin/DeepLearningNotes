@@ -15,20 +15,21 @@
         \toprule
                                     & \textbf{Notation}                                                                     & \textbf{Description} & \textbf{Meaning}                                                   \\ 
         \midrule
-        \multirow{1}{*}{Sizes}      & $\verb|batch_size| \in \mathbb{Z}^+$								                    & value                & 每个 \verb|mini_batch| 使用的样本数          \\
+        \multirow{1}{*}{Sizes}      & $\verb|batch_size| \in \mathbb{Z}^+$								                    & value                & 每个 \verb|mini_batch| 使用的样本数                                  \\
         \midrule
-        \multirow{5}{*}{Objects}    & $X^{\{t\}} \in \mathbb{R}^{n_x \times \mathtt{batch\_size}}$                          & matrix               & 第$t$个 \verb|mini_batch| 的输入矩阵                                                               \\
-                                    & $Y^{\{t\}} \in {\mathbb{R}^{n_y \times \mathtt{batch\_size}}}$                        & matrix               & 第$t$个 \verb|mini_batch| 的样本标签矩阵                                                           \\									
-                                    & $\hat{Y}^{\{t\}} / A^{[L]\{t\}} \in {\mathbb{R}^{n_y \times \mathtt{batch\_size}}}$   & matrix               & 第$t$个 \verb|mini_batch| 的标签预测值矩阵   						\\
-                                    & $v_{\d \mathrm{var}}$                                                                 & matrix               & 梯度 $\d \mathrm{var}$ 第一矩估计的移动平均值                                 \\
-                                    & $s_{\d \mathrm{var}}$                                                                 & matrix               & 梯度 $\d \mathrm{var}$ 第二矩估计的移动平均值                                 \\
+        \multirow{5}{*}{Objects}    & $X^{\{t\}} \in \mathbb{R}^{n_x \times \mathtt{batch\_size}}$                          & matrix               & 第$t$个 \verb|mini_batch| 的输入矩阵                                 \\
+                                    & $Y^{\{t\}} \in {\mathbb{R}^{n_y \times \mathtt{batch\_size}}}$                        & matrix               & 第$t$个 \verb|mini_batch| 的样本标签矩阵                              \\									
+                                    & $\hat{Y}^{\{t\}} / A^{[L]\{t\}} \in {\mathbb{R}^{n_y \times \mathtt{batch\_size}}}$   & matrix               & 第$t$个 \verb|mini_batch| 的标签预测值矩阵   						   \\
+                                    & $v_{\d \mathrm{var}}$                                                                 & matrix               & 梯度 $\d \mathrm{var}$ 第一矩估计的移动平均值                          \\
+                                    & $s_{\d \mathrm{var}}$                                                                 & matrix               & 梯度 $\d \mathrm{var}$ 第二矩估计的移动平均值                         \\
         \midrule
         \multirow{6}{*}{Other}      & $\lambda \in \mathbb{R}^+_0$                                                          & value                & 正则化参数                                                             \\  
-                                    & \verb|keep_prob| $\in [0,1]$                                                          & value                & Dropout算法的保留概率                                                      \\ 
-                                    & $J^{\{t\}}$                                                                           & function             & 第$t$个 \verb|mini_batch| 的代价函数                                                                        \\  
+                                    & \verb|keep_prob| $\in [0,1]$                                                          & value                & Dropout算法的保留概率                                                   \\ 
+                                    & $J^{\{t\}}$                                                                           & function             & 第$t$个 \verb|mini_batch| 的代价函数                                   \\  
+                                    & \verb|epoch| $\in \mathbb{Z}^+$                                                       & value                & 训练过程中训练集被遍历的次数                                           \\
                                     & $\beta_1 \in [0,1]$                                                                   & value                & 第一矩估计的衰减率 \\ 
                                     & $\beta_2 \in [0,1]$                                                                   & value                & 第二矩估计的衰减率                                                    \\ 
-                                    & $\varepsilon \in \mathbb{R}^+$                                                        & value                & 第二矩估计中的数值稳定性参数                                                    \\
+                                    & $\varepsilon \in \mathbb{R}^+$                                                        & value                & 第二矩估计中的数值稳定性参数                                            \\
         \bottomrule
     \end{tabular}
     %
@@ -272,8 +273,77 @@ X /= np.std(X, axis=0)
 %%%%
 \subsection{Gradient Descent with Momentum}
 
-在讨论矩估计时，符号标记忽略了层数$l$便于书写，但在实际实现时，应当使用$l$来区分不同层的矩估计。
+\subsubsection{Exponentially Weighted Averages}
 
-动量可以平均梯度的方向，从而减少梯度下降的震荡。
+指数加权平均（Exponentially Weighted Averages）是一种常用的序列数据平滑方法，可以用于计算梯度的指数加权平均值。
+
+给定一个序列$\{a_1, a_2, \cdots, a_n\}$，其指数加权平均值的递推公式为
+\begin{equation}
+    v_t = \beta v_{t-1} + (1 - \beta)a_t
+    \label{eq:ewa}
+\end{equation}
+其中$v_0 = 0$，$\beta$为衰减率，$0 < \beta < 1$。
+将式~\eqref{eq:ewa} 展开，可得
+\begin{equation}
+    \begin{aligned}
+        v_t &= (1 - \beta)a_t + \beta v_{t-1} \\
+            &= (1 - \beta)a_t + (1 - \beta)\beta a_{t-1} + \beta^2 v_{t-2} \\
+            &= (1 - \beta)a_t + (1 - \beta)\beta a_{t-1} + (1 - \beta)\beta^2 a_{t-2} + \beta^3 v_{t-3} \\
+            &= \cdots \\
+            &= (1 - \beta)a_t + (1 - \beta)\beta a_{t-1} + (1 - \beta)\beta^2 a_{t-2} + \cdots + (1 - \beta)\beta^{t-1}a_1 + \beta^t v_0 \\
+            &= (1 - \beta)\sum_{i=1}^t\beta^{t-i}a_i
+    \end{aligned}
+    \label{eq:ewa_expand}
+\end{equation}
+可以看出，指数加权平均值$v_t$是序列$\{a_1, a_2, \cdots, a_t\}$的加权平均值，权重为$\beta$的指数函数。
+这类似于$v_t$“记住”了序列当前及过去的所有值，但是对于序列中较早的值，其权重会随着时间的推移而指数级衰减。
+对于式~\eqref{eq:ewa_expand} 中的 $a_i$，可以认为当其权重小于 $a_t/\mathrm{e}$ 时，其对 $v_t$ 的贡献可以忽略不计。
+通常 $\beta$ 是一个接近于1的值，由于
+\begin{equation}
+    \lim_{\beta \to 1}  \beta^{\frac{\scriptstyle 1}{\scriptstyle 1-\beta}} = \frac{1}{\mathrm{e}}
+\end{equation}
+可以发现，$v_t$近似于“记住”了从$a_t$开始向前的$1/(1-\beta)$个值。当$\beta=0.9$时，$v_t$可理解为包含了过去10个值的信息。
+
+指数加权平均值对序列$\{a_1, a_2, \cdots, a_t\}$进行了平滑处理，使得序列中的噪声对结果的影响减小。
+将指数加权平均应用于梯度的计算中，可以减少梯度的震荡，从而加快梯度下降的收敛速度。
+
+\subsubsection{Bias Correction in Exponentially Weighted Averages}
+
+在使用指数加权平均时，由于$v_0 = 0$，在初始阶段，$v_t$的值会比较小，导致$v_t$的值偏低。
+当序列$\{a_1, a_2, \cdots, a_t\}$为全1序列时，$v_t$的值为
+\begin{equation}
+    v_t = (1 - \beta)\sum_{i=1}^t\beta^{t-i} = (1 - \beta)\frac{1 - \beta^t}{1 - \beta} = 1 - \beta^t
+\end{equation}
+期望的$v_t^{\mathrm{corrected}}$的值为$1$，因此可以对$v_t$进行偏差修正（Bias Correction），即
+\begin{equation}
+    v_t^{\mathrm{corrected}} = \frac{v_t}{1 - \beta^t}
+\end{equation}
+在实际使用中，常常忽略掉偏差修正以避免额外的计算量，因为在训练的后期，$v_t$的值会趋于稳定，偏差修正的影响不大。
+
+\begin{figure}[h!bt]
+    \centering
+    \includegraphics[scale=0.65]{ewa.pdf}
+    \caption{Exponentially Weighted Averages}
+    \label{fig:ewa}
+\end{figure}
+
+\subsubsection{Gradient Descent with Momentum}
+
+动量梯度下降（Gradient Descent with Momentum）是一种基于指数加权平均的优化算法，可以加快梯度下降的收敛速度。
+动量梯度下降将梯度的指数加权平均值作为梯度的更新值，即
+\begin{equation}
+    \begin{aligned}
+        v_{\d \mathrm{var}} &= \beta_1 v_{\d \mathrm{var}} + (1 - \beta_1)\d \mathrm{var} \\
+        \d \mathrm{var} &= v_{\d \mathrm{var}}
+    \end{aligned}
+\end{equation}
+其中$\d \mathrm{var}$可以是$\d W^{[l]}$或$\d b^{[l]}$，$\beta_1$为衰减率，$0 < \beta_1 < 1$。
+整个梯度$\d \mathrm{var}$的序列由每轮迭代的梯度组成。
+$v_{\d \mathrm{var}}$是梯度的一阶矩（First Moment）估计，也称为动量（Momentum）。
+\footnote{在讨论矩估计时，有时符号标记忽略了层数$l$便于书写，但在实际实现时，应当使用$l$来区分不同层的矩估计。}
+动量可以平均梯度的方向，从而减少梯度下降的震荡，常常与 Mini-batch 梯度下降一起使用。
+
+%%%%
+\subsection{RMSprop}
 
 一般不删除系数 $1 - \beta$ 
