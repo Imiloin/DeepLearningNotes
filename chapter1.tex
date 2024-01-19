@@ -20,23 +20,23 @@ Algorithms是指算法, 例如Logistic Regression、SVM、Neural Networks等。
 %%%%
 \section{Neural Networks Basics}
 
-表 \ref{tab:notations} 是本章用到的符号说明。为方便起见，所有的向量符号不会加粗，用小写字母表示；同时也不对偏导数进行专门的区分，仍使用$\d $符号表示偏微分。
+表 \ref{tab:notations-chap1} 是本章用到的符号说明。为方便起见，所有的向量符号不会加粗，用小写字母表示；同时也不对偏导数进行专门的区分，仍使用$\d $符号表示偏微分。
 
 \begin{table}[htb!]
     \centering
     \begin{threeparttable}
     %%
-    \caption{Notations}
+    \caption{Notations in Chapter 1}
     %
     \begin{tabular}{clcc}
         \toprule
                                     & \textbf{Notation}                                     & \textbf{Description} & \textbf{Meaning}                                                   \\ 
         \midrule
-        \multirow{5}{*}{Sizes}      & $m$                                                   & value                & 样本容量                                                               \\
-                                    & $n_x$ / $n_h^{[0]}$                                   & value                & 单个样本的特征数（输入层节点数）                                         \\
-                                    & $n_y$ / $n_h^{[L]}$                                   & value                & 单个样本的标签数（输出层节点数）                                      \\
-                                    & $n_h^{[l]}$ / $n^{[l]}$                               & value                & 第$l$层的神经元个数（隐藏层节点数）                                   \\
-                                    & $L$                                                   & value                & 神经网络的层数                                                         \\ 
+        \multirow{5}{*}{Sizes}      & $m \in \mathbb{Z}^+$                                  & value                & 样本容量                                                               \\
+                                    & $n_x$ / $n_h^{[0]} \in \mathbb{Z}^+$                  & value                & 单个样本的特征数（输入层节点数）                                         \\
+                                    & $n_y$ / $n_h^{[L]} \in \mathbb{Z}^+$                  & value                & 单个样本的标签数（输出层节点数）                                      \\
+                                    & $n_h^{[l]}$ / $n^{[l]} \in \mathbb{Z}^+$              & value                & 第$l$层的神经元个数（隐藏层节点数）                                   \\
+                                    & $L \in \mathbb{Z}^+$                                  & value                & 神经网络的层数                                                         \\ 
         \midrule
         \multirow{11}{*}{Objects}   & $x^{(i)} \in \mathbb{R}^{n_x}$                        & vector               & 第$i$个样本数据                                                          \\
                                     & $X / A^{[0]} \in {\mathbb{R}^{n_x \times m}}$         & matrix               & 输入矩阵                                                               \\
@@ -50,17 +50,15 @@ Algorithms是指算法, 例如Logistic Regression、SVM、Neural Networks等。
                                     & $W^{[l]} \in \mathbb{R}^{n^{[l]} \times n^{[l-1]}}$   & matrix               & 第$l$层的权重矩阵                                                               \\
                                     & $b^{[l]} \in \mathbb{R}^{n^{[l]}}$                    & vector               & 第$l$层的标签偏置值向量                                                        \\
         \midrule
-        \multirow{7}{*}{Other}      & $g^{[l]}(z)$                                          & function             & 第$l$层的激活函数                                                         \\
-                                    & $L^{(i)}(\hat{y}^{(i)}, y^{(i)})$                     & function             & 第$i$个样本的代价函数                                                         \\
+        \multirow{5}{*}{Other}      & $g^{[l]}(z)$                                          & function             & 第$l$层的激活函数                                                         \\
+                                    & $L^{(i)}(\hat{y}^{(i)}, y^{(i)})$                     & function             & 第$i$个样本的损失函数                                                         \\
                                     & $J(X,W,b,Y)$ or $J(\hat{Y},Y)$                        & function             & 代价函数                                                                        \\
-                                    & $\alpha$								                & value                & 学习率                                                                        \\
+                                    & $\alpha \in \mathbb{R}^+$								& value                & 学习率                                                                        \\
                                     & $\d \mathrm{var}$                                     & differential         & 代价函数对变量$\mathrm{var}$的偏微分，即${\partial J}/{\partial \mathrm{var}}$ \\
-                                    & $\lambda$                                             & value                & 正则化参数                                                             \\  
-                                    & \verb|keep_prob|                                      & value                & Dropout算法的保留概率                                                      \\ 
         \bottomrule
     \end{tabular}
     %
-    \label{tab:notations} %
+    \label{tab:notations-chap1} %
     \begin{tablenotes}
         \item[*] 通常情况下$(i)$表示第$i$个样本，而$[l]$表示第$l$层。
     \end{tablenotes}
@@ -285,7 +283,7 @@ assert(A.shape == (1, 4))
 如果 \verb|A.shape| 不等于 \verb|(1, 4)|，则会报错。
 
 %%%
-\subsection{Explanation of logistic regression cost function}
+\subsection{Explanation of Logistic Regression Cost Function}
 
 对于二元分类模型，我们期望$\hat{y}$尽可能接近$y$，即${y}^{(i)}$等于$1$时，$\hat{y}^{(i)}$接近$1$，而${y}^{(i)}$等于$0$时，$\hat{y}^{(i)}$接近$0$。
 
@@ -325,6 +323,7 @@ assert(A.shape == (1, 4))
 
 %%%
 \subsection{Neural Networks Representation}
+\index{Neural Networks}
 
 神经网络是若干“层”（Layer）的组合，每一层都是若干“节点”（Node）的组合。第一层为“输入层”（Input Layer），最后一层为“输出层”（Output Layer），中间的层为“隐藏层”（Hidden Layer）。在计数时，通常将输入层记为第$0$层，隐藏层从第$1$层开始计数。
 
@@ -465,7 +464,7 @@ assert(A.shape == (1, 4))
 在神经网络中，梯度下降用到了\textbf{反向传播/后向传播算法（Backpropagation）}，该算法的基本思想是，先计算代价函数对输出层的梯度，然后再反向传播到每一层，计算每一层$W$和$b$的梯度。
 需要注意，在每一轮梯度下降中，\textbf{所有的$X$, $Y$, $Z$, $A$都是已知的常量，而$W$, $b$是需要更新的}。
 
-在推导过程中，需要补充一些矩阵导数运算的知识，参见附录 \ref{sec:matrix_derivative}。以下过程中使用的符号如表 \ref{tab:notations} 所示。
+在推导过程中，需要补充一些矩阵导数运算的知识，参见附录 \ref{sec:matrix_derivative}。以下过程中使用的符号如表 \ref{tab:notations-chap1} 所示。
 
 对于第$l$层，\colorbox{LemonChiffon}{已知$\dfrac{\d J}{\d A^{[l]}}$}和关系\footnote{为了避免一次转置运算，此处的$W$其实是“横放”的，从其行列数可以看出。在上一节中，$w$是作为一个列向量而不是行向量出现的。}
 \begin{equation}
@@ -649,7 +648,7 @@ assert(A.shape == (1, 4))
 \section{Deep Neural Network}
 
 %%%
-\subsection{Deep L-layer neural network}
+\subsection{Deep L-layer Neural Network}
 深层神经网络（Deep Neural Network）是指具有更多隐藏层的神经网络，如图 \ref{fig:deep_nn} 所示。在深层神经网络中，每一层的神经元数目不一定相同，但是输入层和输出层的神经元数目需要与问题相匹配。
 \begin{figure}[h!bt]
     \centering
@@ -685,6 +684,7 @@ assert(A.shape == (1, 4))
 
 %%%
 \subsection{Parameters vs Hyperparameters}
+\index{Hyperparameters}
 \textbf{参数（Parameters）}是指神经网络中的$W$和$b$，而\textbf{超参数（Hyperparameters）}是指学习率$\alpha$、迭代次数$T$、神经网络中的层数$L$、每层的神经元数目$n$、激活函数$g$等。
 
 之所以把层数、神经元数目、激活函数等称为超参数，是因为这些参数的值是相对于算法本身而言的，需要人为设定，而不能通过训练得到。在实际应用中，通常需要多次尝试不同的超参数，才能得到较好的结果。
