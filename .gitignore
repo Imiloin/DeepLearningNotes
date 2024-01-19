@@ -1,3 +1,5 @@
+*.jar
+.git.bfg-report/
 imgs_projs/
 .texpadtmp
 main.pdf
