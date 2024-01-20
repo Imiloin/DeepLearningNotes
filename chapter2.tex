@@ -24,11 +24,11 @@
                                     & $s_{\d \mathrm{var}}$                                                                 & matrix               & 梯度 $\d \mathrm{var}$ 第二矩估计的移动平均值                         \\
         \midrule
         \multirow{6}{*}{Other}      & $\lambda \in \mathbb{R}^+_0$                                                          & value                & 正则化参数                                                             \\  
-                                    & \verb|keep_prob| $\in [0,1]$                                                          & value                & Dropout算法的保留概率                                                   \\ 
+                                    & \verb|keep_prob| $\in (0,1]$                                                          & value                & Dropout算法的保留概率                                                   \\ 
                                     & $J^{\{t\}}$                                                                           & function             & 第$t$个 \verb|mini_batch| 的代价函数                                   \\  
                                     & \verb|epoch| $\in \mathbb{Z}^+$                                                       & value                & 训练过程中训练集被遍历的次数                                           \\
-                                    & $\beta_1 \in [0,1]$                                                                   & value                & 第一矩估计的衰减率 \\ 
-                                    & $\beta_2 \in [0,1]$                                                                   & value                & 第二矩估计的衰减率                                                    \\ 
+                                    & $\beta_1 \in [0,1)$                                                                   & value                & 第一矩估计的衰减率 \\ 
+                                    & $\beta_2 \in [0,1)$                                                                   & value                & 第二矩估计的衰减率                                                    \\ 
                                     & $\varepsilon \in \mathbb{R}^+$                                                        & value                & 第二矩估计中的数值稳定性参数                                            \\
         \bottomrule
     \end{tabular}
@@ -101,7 +101,7 @@
 
 \subsubsection{$\mathsf{L_2}$ regularization}
 
-$L_2$正则化（$L_2$ regularization）也称为权重衰减（Weight Decay），是一种常用的正则化方法。
+\textbf{$\bm{L_2}$正则化（$\bm{L_2}$ regularization）}也称为权重衰减（Weight Decay），是一种常用的正则化方法。
 $L_2$正则化通过在代价函数中添加一个权重
 \footnote{一般不对偏置做$L_2$正则化，避免影响神经元的激活阈值。}
 的$L_2$范数
@@ -130,7 +130,7 @@ $L_2$范数的定义是，对于一个长度为$n$的向量$w$，其$L_2$范数�
 \subsubsection{Dropout}
 \index{Dropout}
 
-Dropout是一种常用的正则化方法，可以防止模型过拟合。Dropout的基本思想是，在每次迭代中，随机地关闭一些神经元，从而减小模型的复杂度，相当于只训练了完整模型的一个子集。
+\textbf{Dropout}是一种常用的正则化方法，可以防止模型过拟合。Dropout的基本思想是，在每次迭代中，随机地关闭一些神经元，从而减小模型的复杂度，相当于只训练了完整模型的一个子集。
 Dropout 是以层为单位来使用的，即在设定的某些 Dropout 层中，每次迭代时，以一定的概率关闭其中的神经元（每次迭代可以关闭不同的神经元）。
 
 需要注意，“关闭”神经元并不是将神经元中的权重和偏置清零，而只是将其输出置零。
@@ -194,7 +194,7 @@ Dropout 是以层为单位来使用的，即在设定的某些 Dropout 层中，
 \subsection{Normalizing Inputs}
 \index{Normalization}
 
-在训练神经网络时，我们通常会对输入数据进行归一化处理。
+在训练神经网络时，我们通常会对输入数据进行\textbf{归一化处理（Normalization）}。
 归一化可以确保数值在可接受的范围内，将所有特征重现在相同的尺度上，提高算法的数值稳定性。
 
 数据归一化通常包括两个步骤：减去平均值（使得归一化后的数据具有零均值）和除以标准差（使得归一化后的数据具有单位方差）。
@@ -275,7 +275,7 @@ X /= np.std(X, axis=0)
 
 \subsubsection{Exponentially Weighted Averages}
 
-指数加权平均（Exponentially Weighted Averages）是一种常用的序列数据平滑方法，可以用于计算梯度的指数加权平均值。
+\textbf{指数加权平均（Exponentially Weighted Averages）}是一种常用的序列数据平滑方法，可以用于计算梯度的指数加权平均值。
 
 给定一个序列$\{a_1, a_2, \cdots, a_n\}$，其指数加权平均值的递推公式为
 \begin{equation}
@@ -309,7 +309,7 @@ X /= np.std(X, axis=0)
 
 \subsubsection{Bias Correction in Exponentially Weighted Averages}
 
-在使用指数加权平均时，由于$v_0 = 0$，在初始阶段，$v_t$的值会比较小，导致$v_t$的值偏低。
+在使用指数加权平均时，由于$v_0 = 0$，在初始阶段，$v_t$的值会接近0，导致$v_t$的绝对值偏低。
 当序列$\{a_1, a_2, \cdots, a_t\}$为全1序列时，$v_t$的值为
 \begin{equation}
     v_t = (1 - \beta)\sum_{i=1}^t\beta^{t-i} = (1 - \beta)\frac{1 - \beta^t}{1 - \beta} = 1 - \beta^t
@@ -336,14 +336,113 @@ X /= np.std(X, axis=0)
         v_{\d \mathrm{var}} &= \beta_1 v_{\d \mathrm{var}} + (1 - \beta_1)\d \mathrm{var} \\
         \d \mathrm{var} &= v_{\d \mathrm{var}}
     \end{aligned}
+    \label{eq:momentum}
 \end{equation}
 其中$\d \mathrm{var}$可以是$\d W^{[l]}$或$\d b^{[l]}$，$\beta_1$为衰减率，$0 < \beta_1 < 1$。
 整个梯度$\d \mathrm{var}$的序列由每轮迭代的梯度组成。
 $v_{\d \mathrm{var}}$是梯度的一阶矩（First Moment）估计，也称为动量（Momentum）。
-\footnote{在讨论矩估计时，有时符号标记忽略了层数$l$便于书写，但在实际实现时，应当使用$l$来区分不同层的矩估计。}
+\footnote{式~\eqref{eq:momentum} 酷似动量守恒的表达式。}
 动量可以平均梯度的方向，从而减少梯度下降的震荡，常常与 Mini-batch 梯度下降一起使用。
+
+注意式~\eqref{eq:momentum} 是代码实现的方法，其是一个递推公式，初始值是0。这样做可以避免使用额外的变量，节省内存空间。
 
 %%%%
 \subsection{RMSprop}
 
-一般不删除系数 $1 - \beta$ 
+动量梯度下降是对梯度的一阶矩进行指数加权平均，而RMSprop是对梯度的二阶矩进行指数加权平均。
+其表达式为
+\begin{equation}
+    \begin{aligned}
+        s_{\d \mathrm{var}} &= \beta_2 s_{\d \mathrm{var}} + (1 - \beta_2)(\d \mathrm{var})^{\tikzmarknode[outer ysep=2pt]{sq}{2}} \\
+        \d \mathrm{var} &= \frac{\d \mathrm{var}}{\sqrt{s_{\d \mathrm{var}}} + \varepsilon}
+    \end{aligned}
+    \annotate[yshift=1em]{above}{sq}{element-wise square}
+    \label{eq:rmsprop}
+\end{equation}
+同样地，$\d \mathrm{var}$可以是$\d W^{[l]}$或$\d b^{[l]}$，$\beta_2$为衰减率，$0 < \beta_2 < 1$。
+而$\varepsilon$为数值稳定性参数，通常取$10^{-8}$，用于避免分母为0。
+式中的$\sqrt{s_{\d \mathrm{var}}}$是为了保证齐次性。
+
+由于
+\begin{equation}
+    s_t = (1 - \beta_2)\sum_{i=1}^t\beta_2^{t-i}a_i^2
+\end{equation}
+可以看出，$s_t$是序列$\{a_1^2, a_2^2, \cdots, a_t^2\}$的加权平均值，权重为$\beta_2$的指数函数。
+与一阶矩类似，也可以进行偏差修正，即
+\begin{equation}
+    s_t^{\mathrm{corrected}} = \frac{s_t}{1 - \beta_2^t}
+\end{equation}
+
+%%%%
+\subsection{Adam Optimization Algorithm}
+\index{Adam Algorithm}
+
+\textbf{Adam算法（Adam Optimization Algorithm）}是一种结合了动量梯度下降和RMSprop的优化算法。
+在每一轮迭代中，Adam算法首先计算梯度的一阶矩和二阶矩的估计值，然后使用偏差修正后的一阶矩和二阶矩的估计值来更新权重和偏置。
+\begin{equation}
+    \begin{aligned}
+        v_{\d \mathrm{var}} &= \beta_1 v_{\d \mathrm{var}} + (1 - \beta_1)\d \mathrm{var} \\
+        s_{\d \mathrm{var}} &= \beta_2 s_{\d \mathrm{var}} + (1 - \beta_2)(\d \mathrm{var})^2 \\
+        v_{\d \mathrm{var}}^{\mathrm{corrected}} &= \frac{v_{\d \mathrm{var}}}{1 - \beta_1^t} \\
+        s_{\d \mathrm{var}}^{\mathrm{corrected}} &= \frac{s_{\d \mathrm{var}}}{1 - \beta_2^t} \\
+        \d \mathrm{var} &= \frac{v_{\d \mathrm{var}}^{\mathrm{corrected}}}{\sqrt{s_{\d \mathrm{var}}^{\mathrm{corrected}}} + \varepsilon}
+    \end{aligned}
+\end{equation}
+通常取 $\beta_1 = 0.9$，$\beta_2 = 0.999$，$\varepsilon = 10^{-8}$。有时候也可以忽略偏差修正。
+
+\begin{figure}[h!bt]
+    \centering
+    \subfigure{
+        \begin{minipage}[t]{0.46\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{adam_1.pdf}
+        \end{minipage}
+    }%
+    \subfigure{
+        \begin{minipage}[t]{0.46\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{adam_2.pdf}
+        \end{minipage}
+    }%
+    \centering
+    \caption{Adam Optimization Algorithm}
+    \label{fig:adam}
+\end{figure}
+
+%%%%
+\subsection{Learning Rate Decay}
+
+\textbf{学习率衰减（Learning Rate Decay）}是另一种优化训练速率的方法，可以加快梯度下降的收敛速度。
+其基本思想是，随着训练的进行，学习率逐渐减小，这样可以在训练初期快速接近代价函数的最小值，然后在训练后期更加精细地搜索代价函数的最小值。
+
+一个常用的学习率衰减公式为
+\begin{equation}
+    \alpha = \frac{1}{1 + \mathtt{decay\_rate} \times \mathtt{epoch\_num}} \times \alpha_0
+\end{equation}
+
+此外，还有指数衰减学习率、开方衰减学习率、离散衰减学习率等方法，这里不再赘述。
+
+%%%%
+\subsection{The Problem of Local Optima}
+
+在训练神经网络时，通常会使用梯度下降算法来最小化代价函数，从而找到代价函数的最小值。
+但是，梯度下降法最终会收敛到梯度约为0的点，而这些点不一定是代价函数的全局最小值。
+
+一种常见的收敛点是\textbf{局部最小值（Local Minimum）}，即在某个点附近代价函数的值最小，但在其他点附近的代价函数的值可能更小。
+\begin{figure}[h!bt]
+    \centering
+    \includegraphics[scale=1]{local_minimum.pdf}
+    \caption{Local Minimum}
+    \label{fig:local_minimum}
+\end{figure}
+
+另一种常见的收敛点是\textbf{鞍点（Saddle Point）}，即在某个点附近代价函数的梯度为0，虽然其在某些维度上为极小值，但在其他维度上为极大值。
+\begin{figure}[h!bt]
+    \centering
+    \includegraphics[scale=0.6]{saddle_point.pdf}
+    \caption{Saddle Point}
+    \label{fig:saddle_point}
+\end{figure}
+
+此外，\textbf{Plateaus}（高原）也是梯度下降法的一个问题，即代价函数在某些区域的梯度很小，导致梯度下降法收敛缓慢。
+在这样的区域中，代价函数的变化在迭代中的变化很小，容易被误认为是收敛点。
