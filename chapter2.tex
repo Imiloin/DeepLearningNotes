@@ -242,7 +242,8 @@ X /= np.std(X, axis=0)
     这也是 Mini-batch 优化算法能实现的基础。
 \end{hint}
 
-在实现时，设定一个 \verb|mini_batch_size| （可简写为 \verb|batch_size|） ，将训练集打乱顺序，然后将其分成若干个大小为 \verb|batch_size| 的子集。
+在实现时，设定一个 \verb|mini_batch_size| （可简写为 \verb|batch_size|） ，将训练集打乱顺序（Shuffle）（打乱顺序时，$X$和$Y$需要对应），
+然后将其分成若干个大小为 \verb|batch_size| 的子集（Partition）。
 对于不同的 \verb|mini_batch| ，仍共享相同的权重和偏置，即训练的仍是同一个网络。
 
 前向传播的过程与之前的算法相同，相当于将第$t$个子集$X^{\{t\}}$作为输入矩阵，依次计算出各层的输出矩阵$A^{[l]}$。
@@ -250,8 +251,8 @@ X /= np.std(X, axis=0)
 \begin{equation}
     J^{\{t\}} = \frac{1}{\mathtt{batch\_size}}\sum_{i=1}^\mathtt{batch\_size} L(\hat{y}^{(i)}, y^{(i)}) + \frac{\lambda}{2\;\mathtt{batch\_size}}\sum_{l=1}^L||W^{[l]}||_{\mathrm{F}}^2
 \end{equation}
-不同的 \verb|mini_batch| 包含不同的样本，因此即使使用同样的权重和偏置，不同的 \verb|mini_batch| 也会得到不同的代价函数。
-在使用小批量梯度下降时，代价函数并不是像之前那样单调递减的，而是有一定的波动。
+不同的 \verb|mini_batch| 包含不同的样本，因此即便使用同样的权重和偏置，不同的 \verb|mini_batch| 也会得到不同的代价函数。
+在使用小批量梯度下降时，代价函数值并不是像之前那样单调递减的，而是有一定的波动。
 
 \begin{figure}[h!bt]
     \centering
@@ -261,6 +262,12 @@ X /= np.std(X, axis=0)
 \end{figure}
 
 反向传播的过程也与之前的算法相同，依次计算出各层的梯度矩阵$\d W^{[l]}$和$\d b^{[l]}$，然后更新权重和偏置。
+为了保证梯度值与批量梯度下降的比例不变，反向传播的输出层初始值也要做相应改变
+\begin{equation}
+    \frac{\d J^{\{t\}}}{\d A^{[L]\{t\}}} 
+    = \frac{1}{\mathtt{batch\_size}} \left(-\frac{Y^{\{t\}}}{A^{[L]\{t\}}} + \frac{1 - Y^{\{t\}}}{1 - A^{[L]\{t\}}}\right)
+\end{equation}
+如果不做这个改变，反向传播的输出层初始值将存在一个比例因子，相当于改变了学习率。
 
 当所有的 \verb|mini_batch| 都遍历完一遍训练集后，称为完成了一个 \texttt{\textbf{epoch}}。
 训练过程中使用的 \verb|epoch| 数也是一个超参数，表示了整个训练集被遍历的次数。在每个 \verb|epoch| 结束后，可以重新打乱训练集的顺序，然后再次分成若干个 \verb|mini_batch| 继续训练以增强随机性。
@@ -362,6 +369,7 @@ $v_{\d \mathrm{var}}$是梯度的一阶矩（First Moment）估计，也称为�
 同样地，$\d \mathrm{var}$可以是$\d W^{[l]}$或$\d b^{[l]}$，$\beta_2$为衰减率，$0 < \beta_2 < 1$。
 而$\varepsilon$为数值稳定性参数，通常取$10^{-8}$，用于避免分母为0。
 式中的$\sqrt{s_{\d \mathrm{var}}}$是为了保证齐次性。
+使用 \verb|np.square()| 可以实现逐元素的平方。
 
 由于
 \begin{equation}
@@ -429,20 +437,89 @@ $v_{\d \mathrm{var}}$是梯度的一阶矩（First Moment）估计，也称为�
 但是，梯度下降法最终会收敛到梯度约为0的点，而这些点不一定是代价函数的全局最小值。
 
 一种常见的收敛点是\textbf{局部最小值（Local Minimum）}，即在某个点附近代价函数的值最小，但在其他点附近的代价函数的值可能更小。
-\begin{figure}[h!bt]
-    \centering
-    \includegraphics[scale=1]{local_minimum.pdf}
-    \caption{Local Minimum}
-    \label{fig:local_minimum}
-\end{figure}
 
 另一种常见的收敛点是\textbf{鞍点（Saddle Point）}，即在某个点附近代价函数的梯度为0，虽然其在某些维度上为极小值，但在其他维度上为极大值。
 \begin{figure}[h!bt]
     \centering
-    \includegraphics[scale=0.6]{saddle_point.pdf}
-    \caption{Saddle Point}
-    \label{fig:saddle_point}
+    \begin{minipage}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=0.9\textwidth]{local_minimum.pdf}
+        \caption{Local Minimum}
+        \label{fig:local_minimum}
+    \end{minipage}
+    \begin{minipage}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=0.9\textwidth]{saddle_point.pdf}
+        \caption{Saddle Point}
+        \label{fig:saddle_point}
+    \end{minipage}
 \end{figure}
 
-此外，\textbf{Plateaus}（高原）也是梯度下降法的一个问题，即代价函数在某些区域的梯度很小，导致梯度下降法收敛缓慢。
-在这样的区域中，代价函数的变化在迭代中的变化很小，容易被误认为是收敛点。
+此外，\textbf{Plateaus}（停滞区）也是梯度下降法的一个问题，即代价函数在某些区域的梯度很小，导致梯度下降法收敛缓慢。
+在这样的区域中，代价函数的变化在多轮迭代中的变化很小，容易被误认为是收敛点。
+
+%%%
+\section{Hyperparameter Tuning}
+
+在调整超参数（Tuning Hyperparameters）时，通常应先确定各个超参数的范围，在一个超立方体中进行搜索（区域型搜索）。
+当找到一个较好的超参数组合时，可以缩小范围，在其附近进行更加精细的搜索，直到找到最优的超参数组合。
+
+相对于均匀搜索（Grid Search），随机搜索（Random Search）是一种更好的超参数搜索方法，可以减少重要性较低的超参数浪费的搜索次数。
+\begin{figure}[h!bt]
+    \centering
+    \begin{minipage}[t]{0.45\textwidth}
+        \centering
+        \includegraphics[width=0.8\textwidth]{tuning_grid.pdf}
+        \caption{Grid Search}
+    \end{minipage}
+    \begin{minipage}[t]{0.45\textwidth}
+        \centering
+        \includegraphics[width=0.8\textwidth]{tuning_random.pdf}
+        \caption{Random Search}
+    \end{minipage}
+\end{figure}
+
+在调整超参数时，还要选取合适的比例尺（Scale）。
+对于某些参数，相对于在某个范围内均匀搜索，更好的方法是在对数尺度上均匀搜索（在指数上均匀选取随机数），例如
+\begin{align}
+    \alpha &= \mathtt{\textcolor{green}{10} *\!* \ np.random.uniform\textcolor{yellow}{(}low=\textcolor{green}{-4}, high=\textcolor{green}{0}\textcolor{yellow}{)}} \\
+    \beta_2 &= \mathtt{\textcolor{green}{1} - \textcolor{green}{10} *\!* \ np.random.uniform\textcolor{yellow}{(}low=\textcolor{green}{-3}, high=\textcolor{green}{-1}\textcolor{yellow}{)}}
+\end{align}
+
+对于一个项目，超参数的调整通常可根据算力情况分为两种方案，
+一种是手工调整单个模型，即在训练过程中，人工观察代价函数的变化，根据代价函数的变化调整超参数。
+另一种则是同时训练多个使用不同超参数的模型，然后选择其中表现最好的模型。
+
+%%%
+\section{Batch Normalization}
+
+%%%%
+\subsection{Normalization Activation Values}
+
+在之前的章节中，我们介绍了如何对输入数据进行归一化处理。
+在神经网络中，每一层的输出都会变成下一层的输入，因此也可以对每一层的输出进行归一化处理，来避免梯度消失和梯度爆炸的问题。
+这就是\textbf{批量归一化（Batch Normalization）}。
+
+在实际使用中，通常对线性函数的输出（激活函数的输入）而不是激活函数的输出进行归一化处理，避免激活函数的效果被削弱。
+\begin{equation}
+    \begin{aligned}
+        \mu &= \frac{1}{m}\sum_{i=1}^m Z^{[l](i)} \\
+        \sigma^2 &= \frac{1}{m}\sum_{i=1}^m (Z^{[l](i)} - \mu)^2 \\
+        Z^{[l]}_{\mathrm{norm}} &= \frac{Z^{[l]} - \mu}{\sqrt{\sigma^2 + \varepsilon}}
+    \end{aligned}
+    \label{eq:batch_norm}
+\end{equation}
+注意归一化是在各个样本这个维度上进行的，即对每个样本的同一层的输出进行归一化处理。
+上式中的$\varepsilon$是数值稳定性参数，通常取$10^{-8}$。
+
+使用式~\eqref{eq:batch_norm} 对$Z^{[l]}$进行归一化处理后，$Z^{[l]}_{\mathrm{norm}}$具有零均值和单位方差，但是这不一定适合于后续的激活函数。
+为了使$Z^{[l]}_{\mathrm{norm}}$具有任意均值和方差，还需要对其进行缩放和平移，即
+\vspace{1.5em}
+\begin{equation}
+    \eqnmark{z1}{\tilde{Z}^{[l]}} = \tikzmarknode{gamma}{\gamma^{[l]}} \eqnmark{z2}{Z^{[l]}_{\mathrm{norm}}} + \tikzmarknode{beta}{\beta^{[l]}}
+    \annotatetwo[yshift=1em]{above,label above}{z1}{z2}{$n^{[l]}\times m$}
+    \annotatetwo[yshift=-1em]{below,label below}{gamma}{beta}{$n^{[l]}\times 1$}
+    \vspace{1em}
+\end{equation}
+这样处理后，$\tilde{Z}^{[l]}$的均值为$\beta^{[l]}$，标准差为$\gamma^{[l]}$。
+$\gamma^{[l]}$和$\beta^{[l]}$是可以训练的参数，可以通过反向传播来更新。

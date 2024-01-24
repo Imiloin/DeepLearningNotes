@@ -68,7 +68,7 @@ Algorithms是指算法, 例如Logistic Regression、SVM、Neural Networks等。
 
 %%%
 \subsection{Binary Classification}
-\textbf{二元分类模型}的输入是一个样本$x^{(i)} \in \mathbb{R}^{n_x}$，输出是一个标签$y^{(i)} \in \{0, 1\}$，即$y^{(i)}$只能取0或1且$n_y=1$，对每一个样本得出是或否的结论。
+\textbf{二元分类（Binary Classification）模型}的输入是一个样本$x^{(i)} \in \mathbb{R}^{n_x}$，输出是一个标签$y^{(i)} \in \{0, 1\}$，即$y^{(i)}$只能取0或1且$n_y=1$，对每一个样本得出是或否的结论。
 
 %%%
 \subsection{Logistic Regression}
@@ -109,27 +109,33 @@ Algorithms是指算法, 例如Logistic Regression、SVM、Neural Networks等。
 \begin{equation}
     \sigma(z) = \frac{1}{1 + \mathrm{e}^{-z}} \label{eq:sigmoid}
 \end{equation}
-该函数可以把实数域$\mathbb{R}$映射到区间$(0, 1)$，可作为激活函数使用，如图 \ref{fig:sigmoid} 所示。而$z = w^\mathrm{T} x + b$为线性函数，$w$为权重（weight），$b$为偏置（bias）。
-\begin{figure}[h!b]
-    \centering
-    \includegraphics[width=8cm]{sigmoid.pdf}
-    \caption{Sigmoid 函数，关于点(0, 0.5)对称}
-    \label{fig:sigmoid}
-\end{figure}
+该函数可以把实数域$\mathbb{R}$映射到区间$(0, 1)$，且关于点(0, 0.5)对称，可作为激活函数使用，如图 \ref{fig:sigmoid} 所示。
+而$z = w^\mathrm{T} x + b$为线性函数，$w$为权重（weight），$b$为偏置（bias）。
 
-对某一个样本而言，交叉熵形式的 Loss function（误差函数）定义为：\index{Loss Function}
+对某一个样本而言，交叉熵形式的\textbf{Loss function（误差函数）}定义为：
+\index{Loss Function}
 \begin{equation}
     L(\hat{y}^{(i)}, y^{(i)}) = -\left[y^{(i)} \log \hat{y}^{(i)} + (1 - y^{(i)}) \log (1 - \hat{y}^{(i)})\right] \label{eq:loss}
 \end{equation}
 该函数与方差类似，当样本的误差越大，Loss function的值越大，如图 \ref{fig:loss} 所示。
-\begin{figure}[h!b]
+\begin{figure}[h!bt]
     \centering
-    \includegraphics[width=8cm]{LossFunction.pdf}
-    \caption{Loss Function 误差函数}
-    \label{fig:loss}
+    \begin{minipage}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=0.93\textwidth]{sigmoid.pdf}
+        \caption{Sigmoid Function}
+        \label{fig:sigmoid}
+    \end{minipage}
+    \begin{minipage}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=0.95\textwidth]{LossFunction.pdf}
+        \caption{Loss Function}
+        \label{fig:loss}
+    \end{minipage}
 \end{figure}
 
-对整个模型而言，Cost function（代价函数/损失函数）定义为：\index{Cost Function}
+对整个模型而言，\textbf{Cost function（代价函数/损失函数）}定义为：
+\index{Cost Function}
 \begin{equation}
     \begin{aligned}
         J(w, b) &\triangleq  \frac{1}{m} \sum_{i=1}^{m} L(\hat{y}^{(i)}, y^{(i)}) \\
@@ -376,14 +382,14 @@ assert(A.shape == (1, 4))
         \draw [decorate,decoration={calligraphic brace,amplitude=4pt,mirror}] (5.15,\labely) -- (5.85,\labely) node [red,midway,yshift=-0.5cm] {预测值};
     
     \end{tikzpicture}
-    \caption{Shallow Neural Network 浅层神经网络}
+    \caption{Shallow Neural Network}
     \label{fig:shallow_nn}
 \end{figure}
 
 \begin{figure}[h!bt]
     \centering
     \includegraphics[width=4cm]{node.pdf}
-    \caption{单个节点的结构}
+    \caption{Structure of a Single Neuron}
     \label{fig:node}
 \end{figure}
 
@@ -422,7 +428,7 @@ assert(A.shape == (1, 4))
         \end{minipage}
     }%
     \centering
-    \caption{Activation Functions 激活函数}
+    \caption{Activation Functions}
     \label{fig:activation}
 \end{figure*}
 
