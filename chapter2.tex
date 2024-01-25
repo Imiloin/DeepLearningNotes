@@ -1,45 +1,7 @@
 \chapter[Improving Deep Neural Networks]{Improving Deep Neural Networks\setcounter{footnote}{0}\footnote{Hyperparameter Tuning, Regularization and Optimization}}
 
 %%%
-\section{Setting up and Regularizing neural network}
-
-在本章中会引入一些新的符号，如表~\ref{tab:notations-chap2} 所示。
-
-\begin{table}[htb!]
-    \centering
-    \begin{threeparttable}
-    %%
-    \caption{Appended Notations in Chapter 2}
-    %
-    \begin{tabular}{clcc}
-        \toprule
-                                    & \textbf{Notation}                                                                     & \textbf{Description} & \textbf{Meaning}                                                   \\ 
-        \midrule
-        \multirow{1}{*}{Sizes}      & $\verb|batch_size| \in \mathbb{Z}^+$								                    & value                & 每个 \verb|mini_batch| 使用的样本数                                  \\
-        \midrule
-        \multirow{5}{*}{Objects}    & $X^{\{t\}} \in \mathbb{R}^{n_x \times \mathtt{batch\_size}}$                          & matrix               & 第$t$个 \verb|mini_batch| 的输入矩阵                                 \\
-                                    & $Y^{\{t\}} \in {\mathbb{R}^{n_y \times \mathtt{batch\_size}}}$                        & matrix               & 第$t$个 \verb|mini_batch| 的样本标签矩阵                              \\									
-                                    & $\hat{Y}^{\{t\}} / A^{[L]\{t\}} \in {\mathbb{R}^{n_y \times \mathtt{batch\_size}}}$   & matrix               & 第$t$个 \verb|mini_batch| 的标签预测值矩阵   						   \\
-                                    & $v_{\d \mathrm{var}}$                                                                 & matrix               & 梯度 $\d \mathrm{var}$ 第一矩估计的移动平均值                          \\
-                                    & $s_{\d \mathrm{var}}$                                                                 & matrix               & 梯度 $\d \mathrm{var}$ 第二矩估计的移动平均值                         \\
-        \midrule
-        \multirow{6}{*}{Other}      & $\lambda \in \mathbb{R}^+_0$                                                          & value                & 正则化参数                                                             \\  
-                                    & \verb|keep_prob| $\in (0,1]$                                                          & value                & Dropout算法的保留概率                                                   \\ 
-                                    & $J^{\{t\}}$                                                                           & function             & 第$t$个 \verb|mini_batch| 的代价函数                                   \\  
-                                    & \verb|epoch| $\in \mathbb{Z}^+$                                                       & value                & 训练过程中训练集被遍历的次数                                           \\
-                                    & $\beta_1 \in [0,1)$                                                                   & value                & 第一矩估计的衰减率 \\ 
-                                    & $\beta_2 \in [0,1)$                                                                   & value                & 第二矩估计的衰减率                                                    \\ 
-                                    & $\varepsilon \in \mathbb{R}^+$                                                        & value                & 第二矩估计中的数值稳定性参数                                            \\
-        \bottomrule
-    \end{tabular}
-    %
-    \label{tab:notations-chap2} %
-    \begin{tablenotes}
-        \item[*] 通常情况下${\{t\}}$表示第$t$个batch。
-    \end{tablenotes}
-    %%
-    \end{threeparttable}
-\end{table}
+\section{Setting up Your Machine Learning Application}
 
 %%%%
 \subsection{Train/Dev/Test sets}
@@ -55,7 +17,6 @@
 \subsection{Bias and Variance}
 \textbf{偏差（Bias）}描述了模型的预测值与真实值之间的差距。Bias越大，说明模型越不准确。
 而\textbf{方差（Variance）}描述了模型的预测值与真实值之间的差距的方差。Variance越大，说明模型越不稳定。
-
 \begin{figure}[h!bt]
     \centering
     \subfigure[High Bias]{
@@ -87,6 +48,55 @@
 
 当我们发现模型的偏差很大时，可以尝试使用更大的网络、训练更长的时间、使用更好的优化算法等来提高模型的复杂度，从而减小偏差。
 而当我们发现模型的方差很大时，可以尝试使用更多的数据、使用正则化、使用dropout等来减小模型的复杂度，从而减小方差。
+
+%%%
+\section{Regularizing Your Neural Network}
+
+在本章中会引入一些新的符号，如表~\ref{tab:notations-chap2} 所示。
+
+\begin{table}[h!tbp]
+    \centering
+    \begin{threeparttable}
+    %%
+    \caption{Appended Notations in Chapter 2}
+    %
+    \begin{tabular}{clcc}
+        \toprule
+                                        & \textbf{Notation}                                                                     & \textbf{Description} & \textbf{Meaning}                                                   \\ 
+        \midrule
+        \multirow{1}{*}{Sizes}          & $\verb|batch_size| \in \mathbb{Z}^+$								                    & value                & 每个 \verb|mini_batch| 使用的样本数                                  \\
+        \midrule
+        \multirow{9}{*}{Objects}        & $X^{\{t\}} \in \mathbb{R}^{n_x \times \mathtt{batch\_size}}$                          & matrix               & 第$t$个 \verb|mini_batch| 的输入矩阵                                 \\
+                                        & $Y^{\{t\}} \in {\mathbb{R}^{n_y \times \mathtt{batch\_size}}}$                        & matrix               & 第$t$个 \verb|mini_batch| 的样本标签矩阵                              \\									
+                                        & $\hat{Y}^{\{t\}} / A^{[L]\{t\}} \in {\mathbb{R}^{n_y \times \mathtt{batch\_size}}}$   & matrix               & 第$t$个 \verb|mini_batch| 的标签预测值矩阵   						   \\
+                                        & $v_{\d \mathrm{var}} \in \mathbb{R}^{\mathtt{size}(\d \mathrm{var})}$                 & matrix               & 梯度 $\d \mathrm{var}$ 第一矩估计的移动平均值                          \\
+                                        & $s_{\d \mathrm{var}} \in \mathbb{R}^{\mathtt{size}(\d \mathrm{var})}$                 & matrix               & 梯度 $\d \mathrm{var}$ 第二矩估计的移动平均值                         \\
+                                        & $Z^{[l]}_{\mathrm{norm}} \in \mathbb{R}^{n^{[l]} \times {m}}$                         & matrix               & 第$l$层的归一化后的线性输出矩阵                                       \\
+                                        & $\tilde{Z}^{[l]} \in \mathbb{R}^{n^{[l]} \times {m}}$                                 & matrix               & 第$l$层的缩放归一化线性输出矩阵                                       \\
+                                        & $\gamma^{[l]} \in \mathbb{R}^{n^{[l]} \times 1}$                                      & vector               & 第$l$层的缩放因子向量                                                 \\
+                                        & $\beta^{[l]} \in \mathbb{R}^{n^{[l]} \times 1}$                                       & vector               & 第$l$层的平移因子向量                                                 \\
+        \midrule
+        \multirow{5}{*}{HP\,\tnote{a}}  & $\lambda \in \mathbb{R}^+_0$                                                          & value                & 正则化参数                                                             \\  
+                                        & \verb|keep_prob| $\in (0,1]$                                                          & value                & Dropout算法的保留概率                                                   \\ 
+                                        & \verb|epoch| $\in \mathbb{Z}^+$                                                       & value                & 训练过程中训练集被遍历的次数                                           \\
+                                        & $\beta_1 \in [0,1)$                                                                   & value                & 第一矩估计的衰减率                                                    \\ 
+                                        & $\beta_2 \in [0,1)$                                                                   & value                & 第二矩估计的衰减率                                                     \\
+        \midrule
+        \multirow{4}{*}{Other}          & $J^{\{t\}}$                                                                           & function             & 第$t$个 \verb|mini_batch| 的代价函数                                   \\ 
+                                        & $\varepsilon \in \mathbb{R}^+$                                                        & value                & 数值稳定性参数                                                        \\
+                                        & $\mu^{[l]} \in \mathbb{R}^{n^{[l]} \times 1}$                                         & vector               & 第$l$层的均值向量                                                       \\
+                                        & $\sigma^{[l]} \in \mathbb{R}^{n^{[l]} \times 1}$                                      & vector               & 第$l$层的标准差向量                                                     \\
+        \bottomrule
+    \end{tabular}
+    %
+    \label{tab:notations-chap2} %
+    \begin{tablenotes}
+        \item[*] 通常情况下${\{t\}}$表示第$t$个batch。
+        \item[a] Hyperparameters.
+    \end{tablenotes}
+    %%
+    \end{threeparttable}
+\end{table}
 
 %%%%
 \subsection{Regularization}
@@ -256,7 +266,7 @@ X /= np.std(X, axis=0)
 
 \begin{figure}[h!bt]
     \centering
-    \includegraphics[scale=0.65]{mini-batch_cost.pdf}
+    \includegraphics[scale=0.6]{mini-batch_cost.pdf}
     \caption{Cost Function in Mini-batch Gradient Descent}
     \label{fig:mini-batch_cost}
 \end{figure}
@@ -329,7 +339,7 @@ X /= np.std(X, axis=0)
 
 \begin{figure}[h!bt]
     \centering
-    \includegraphics[scale=0.65]{ewa.pdf}
+    \includegraphics[scale=0.6]{ewa.pdf}
     \caption{Exponentially Weighted Averages}
     \label{fig:ewa}
 \end{figure}
@@ -492,6 +502,7 @@ $v_{\d \mathrm{var}}$是梯度的一阶矩（First Moment）估计，也称为�
 
 %%%
 \section{Batch Normalization}
+\index{Batch Normalization}
 
 %%%%
 \subsection{Normalization Activation Values}
@@ -503,8 +514,8 @@ $v_{\d \mathrm{var}}$是梯度的一阶矩（First Moment）估计，也称为�
 在实际使用中，通常对线性函数的输出（激活函数的输入）而不是激活函数的输出进行归一化处理，避免激活函数的效果被削弱。
 \begin{equation}
     \begin{aligned}
-        \mu &= \frac{1}{m}\sum_{i=1}^m Z^{[l](i)} \\
-        \sigma^2 &= \frac{1}{m}\sum_{i=1}^m (Z^{[l](i)} - \mu)^2 \\
+        \mu^{[l]} &= \frac{1}{m}\sum_{i=1}^m z^{[l](i)} \\
+        \sigma^{2[l]} &= \frac{1}{m}\sum_{i=1}^m (z^{[l](i)} - \mu)^2 \\
         Z^{[l]}_{\mathrm{norm}} &= \frac{Z^{[l]} - \mu}{\sqrt{\sigma^2 + \varepsilon}}
     \end{aligned}
     \label{eq:batch_norm}
@@ -512,14 +523,143 @@ $v_{\d \mathrm{var}}$是梯度的一阶矩（First Moment）估计，也称为�
 注意归一化是在各个样本这个维度上进行的，即对每个样本的同一层的输出进行归一化处理。
 上式中的$\varepsilon$是数值稳定性参数，通常取$10^{-8}$。
 
-使用式~\eqref{eq:batch_norm} 对$Z^{[l]}$进行归一化处理后，$Z^{[l]}_{\mathrm{norm}}$具有零均值和单位方差，但是这不一定适合于后续的激活函数。
+使用式~\eqref{eq:batch_norm} 对$Z^{[l]}$进行归一化处理后，$Z^{[l]}_{\mathrm{norm}}$具有零均值和单位方差，但是这不一定适合于后续的激活函数（例如 Sigmoid 函数，0.5的均值可能更适合）。
 为了使$Z^{[l]}_{\mathrm{norm}}$具有任意均值和方差，还需要对其进行缩放和平移，即
-\vspace{1.5em}
 \begin{equation}
-    \eqnmark{z1}{\tilde{Z}^{[l]}} = \tikzmarknode{gamma}{\gamma^{[l]}} \eqnmark{z2}{Z^{[l]}_{\mathrm{norm}}} + \tikzmarknode{beta}{\beta^{[l]}}
-    \annotatetwo[yshift=1em]{above,label above}{z1}{z2}{$n^{[l]}\times m$}
+    \forall i \in \{1, \ldots, m\}, \quad \tilde{z}^{[l](i)} = \tikzmarknode{gamma}{\gamma^{[l]}} \odot z^{[l](i)}_{\mathrm{norm}} + \tikzmarknode{beta}{\beta^{[l]}}
     \annotatetwo[yshift=-1em]{below,label below}{gamma}{beta}{$n^{[l]}\times 1$}
-    \vspace{1em}
+    \vspace{1.5em}
 \end{equation}
-这样处理后，$\tilde{Z}^{[l]}$的均值为$\beta^{[l]}$，标准差为$\gamma^{[l]}$。
-$\gamma^{[l]}$和$\beta^{[l]}$是可以训练的参数，可以通过反向传播来更新。
+这样处理后，$\tilde{Z}^{[l]}$在行方向上的均值为$\beta^{[l]}$，标准差为$\gamma^{[l]}$。
+$\gamma^{[l]}$和$\beta^{[l]}$\footnote{这里的$\beta^{[l]}$与矩估计中的衰减率是完全不同的两个量，只是使用了相同的符号。}
+是可以训练的参数，可以通过反向传播来更新。
+
+%%%%
+\subsection{Fitting Batch Norm into a Neural Network}
+
+要将批量归一化应用于神经网络，需要对每一层的输出进行归一化处理，即在前向传播中用$\tilde{Z}^{[l]}$替代原来的$Z^{[l]}$，然后再进行激活函数的计算。
+\begin{align}
+    Z^{[l]} &= W^{[l]}A^{[l-1]} \textcolor{lightgray}{\vphantom{1}+ \bigl[ \leftarrow \vphantom{1}} \cancel{\textcolor{lightgray}{b^{[l]}}} \textcolor{lightgray}{\vphantom{1} \rightarrow \bigr]} 
+    \label{eq:batch_norm_zl} \\
+    \mu^{[l]} &= \frac{1}{m}\sum_{i=1}^m Z^{[l](i)} 
+    \label{eq:batch_norm_mu} \\
+    \sigma^{2[l]} &= \frac{1}{m}\sum_{i=1}^m (Z^{[l](i)} - \mu)^2 
+    \label{eq:batch_norm_sigma} \\
+    Z^{[l]}_{\mathrm{norm}} &= \frac{Z^{[l]} - \mu}{\sqrt{\sigma^2 + \varepsilon}}
+    \label{eq:batch_norm_znorm}
+\end{align}
+\begin{align}
+    \vcenter{\hbox{$\tilde{Z}^{[l]}$}} &\vcenter{\hbox{$\vphantom{1}=\vphantom{1}$}} \begin{bmatrix} \gamma^{[l]} & \gamma^{[l]} & \cdots & \gamma^{[l]}\end{bmatrix}_{\substack{\scriptstyle n^{[l]}\times m}} \vcenter{\hbox{$\vphantom{1}\odot Z^{[l]}_{\mathrm{norm}} +\vphantom{1}$}} \begin{bmatrix} \beta^{[l]} & \beta^{[l]} & \cdots & \beta^{[l]} \end{bmatrix}_{\substack{\scriptstyle n^{[l]}\times m}} 
+    \label{eq:batch_norm_ztilde} \\
+    A^{[l]} &= g^{[l]}(\tilde{Z}^{[l]})
+    \label{eq:batch_norm_al}
+\end{align}
+注意此时省略了偏置$b^{[l]}$，因为在归一化处理后，偏置的作用被消除了。
+在代码实现中，可以将偏置$b^{[l]}$和梯度$\d b^{[l]}$直接设置为全0。
+
+要实现应用批量归一化的反向传播，应明确目标，对于第$l$层，已知$\dfrac{\d J}{\d A^{[l]}}$，需要计算$\dfrac{\partial J}{\partial W^{[l]}}$、$\dfrac{\d J}{\d A^{[l-1]}}$、$\dfrac{\partial J}{\partial \gamma^{[l]}}$和$\dfrac{\partial J}{\partial \beta^{[l]}}$。
+
+首先，类似于式~\eqref{eq:backpropagation_m_derivative_conc}，下面的关系成立
+\begin{align}
+    \dfrac{\partial L^{(i)}}{\partial z^{[l](i)}} = m \dfrac{\partial J}{\partial z^{[l](i)}} 
+    \label{eq:batch_norm_zl_m} \\
+    \dfrac{\partial L^{(i)}}{\partial \tilde{z}^{[l](i)}} = m \dfrac{\partial J}{\partial \tilde{z}^{[l](i)}}
+    \label{eq:batch_norm_ztilde_m}
+\end{align}
+
+先求取$\dfrac{\partial J}{\partial \gamma^{[l]}}$和$\dfrac{\partial J}{\partial \beta^{[l]}}$。
+式~\eqref{eq:batch_norm_al} 表明
+\begin{equation}
+    \dfrac{\d J}{\d \tilde{Z}^{[l]}} = g^{[l]\prime}(\tilde{Z}^{[l]}) \odot \dfrac{\d J}{\d A^{[l]}}
+\end{equation}
+对第$i$个样本，式~\eqref{eq:batch_norm_ztilde} 可以表示为
+\begin{equation}
+    \tilde{z}^{[l](i)} = \gamma^{[l]} \odot z^{[l](i)}_{\mathrm{norm}} + \beta^{[l]}
+    \label{eq:batch_norm_ztilde_i}
+\end{equation}
+进而
+\begin{align}
+    \dfrac{\partial L^{(i)}}{\partial \gamma^{[l]}} &= \dfrac{\partial \tilde{z}^{[l](i)}}{\partial \gamma^{[l]}} \dfrac{\partial L^{(i)}}{\partial \tilde{z}^{[l](i)}} = z^{[l](i)}_{\mathrm{norm}} \odot \dfrac{\partial L^{(i)}}{\partial \tilde{z}^{[l](i)}} \\
+    \dfrac{\partial L^{(i)}}{\partial \beta^{[l]}} &= \dfrac{\partial \tilde{z}^{[l](i)}}{\partial \beta^{[l]}} \dfrac{\partial L^{(i)}}{\partial \tilde{z}^{[l](i)}} = \dfrac{\partial L^{(i)}}{\partial \tilde{z}^{[l](i)}}
+\end{align}
+考虑式~\eqref{eq:batch_norm_ztilde_m} 的关系，
+\begin{equation}
+    \begin{aligned}
+        \dfrac{\partial J}{\partial \gamma^{[l]}} 
+        &= \dfrac{1}{m} \sum_{i=1}^m \dfrac{\partial L^{(i)}}{\partial \gamma^{[l]}} \\
+        &= \dfrac{1}{m} \sum_{i=1}^m z^{[l](i)}_{\mathrm{norm}} \odot \dfrac{\partial L^{(i)}}{\partial \tilde{z}^{[l](i)}} \\
+        &= \dfrac{1}{m} \sum_{i=1}^m z^{[l](i)}_{\mathrm{norm}} \odot m \dfrac{\partial J}{\partial \tilde{z}^{[l](i)}} \\
+        &= \tikzmarknode{dgamma}{\sum_{i=1}^m z^{[l](i)}_{\mathrm{norm}} \odot \dfrac{\partial J}{\partial \tilde{z}^{[l](i)}}}
+    \end{aligned}
+    \renewcommand{\eqnannotationstrut}{\rule[-0.7\baselineskip]{0pt}{1.5\baselineskip}} % 延展注释框
+    \annotate[yshift=0em]{below}{dgamma}{相当于$Z^{[l]}_{\mathrm{norm}}\odot\dfrac{\d J}{\d \tilde{Z}^{[l]}}$沿水平方向求和}
+    \renewcommand{\eqnannotationstrut}{\strut} % package default
+    \vspace{2em}
+\end{equation}
+\begin{equation}
+    \begin{aligned}
+        \dfrac{\partial J}{\partial \beta^{[l]}} 
+        &= \dfrac{1}{m} \sum_{i=1}^m \dfrac{\partial L^{(i)}}{\partial \beta^{[l]}} \\
+        &= \dfrac{1}{m} \sum_{i=1}^m \dfrac{\partial L^{(i)}}{\partial \tilde{z}^{[l](i)}} \\
+        &= \dfrac{1}{m} \sum_{i=1}^m m \dfrac{\partial J}{\partial \tilde{z}^{[l](i)}} \\
+        &= \tikzmarknode{dbeta}{\sum_{i=1}^m \dfrac{\partial J}{\partial \tilde{z}^{[l](i)}}}
+    \end{aligned}
+    \renewcommand{\eqnannotationstrut}{\rule[-0.7\baselineskip]{0pt}{1.5\baselineskip}} % 延展注释框
+    \annotate[yshift=0em]{below}{dbeta}{相当于$\dfrac{\d J}{\d \tilde{Z}^{[l]}}$沿水平方向求和}
+    \renewcommand{\eqnannotationstrut}{\strut} % package default
+    \vspace{2em}
+\end{equation}
+
+接下来求取$\dfrac{\partial J}{\partial W^{[l]}}$和$\dfrac{\d J}{\d A^{[l-1]}}$。
+再次考虑式~\eqref{eq:batch_norm_ztilde_i} 以及式~\eqref{eq:batch_norm_ztilde_m} 的关系，
+\begin{equation}
+    \dfrac{\partial L^{(i)}}{\partial z^{[l](i)}_{\mathrm{norm}}} 
+    = \gamma^{[l]} \odot \dfrac{\partial L^{(i)}}{\partial \tilde{z}^{[l](i)}}
+    = m \cdot \gamma^{[l]} \odot \dfrac{\partial J}{\partial \tilde{z}^{[l](i)}}
+\end{equation}
+对第$i$个样本，式~\eqref{eq:batch_norm_znorm} 可以表示为
+\begin{equation}
+    z^{[l](i)}_{\mathrm{norm}} = \dfrac{z^{[l](i)} - \mu}{\sqrt{\sigma^2 + \varepsilon}}
+    \label{eq:batch_norm_znorm_i}
+\end{equation}
+从中可得到
+\begin{equation}
+    \dfrac{\partial L^{(i)}}{\partial \sigma^{2[l]}} 
+    = \dfrac{\partial z^{[l](i)}_{\mathrm{norm}}}{\partial \sigma^{2[l]}} \odot \dfrac{\partial L^{(i)}}{\partial z^{[l](i)}_{\mathrm{norm}}} 
+    = -\dfrac{1}{2} \dfrac{z^{[l](i)} - \mu}{(\sigma^{2[l]} + \varepsilon)^{\frac{\scriptstyle 3}{\scriptstyle 2}}} \odot \dfrac{\partial L^{(i)}}{\partial z^{[l](i)}_{\mathrm{norm}}}
+\end{equation}
+考虑式~\eqref{eq:batch_norm_znorm_i} 和式~\eqref{eq:batch_norm_sigma}，可得
+\begin{equation}
+    \begin{aligned}
+        \dfrac{\partial L^{(i)}}{\partial \mu^{[l]}} 
+        &= \dfrac{\partial z^{[l](i)}_{\mathrm{norm}}}{\partial \mu^{[l]}} \odot \dfrac{\partial L^{(i)}}{\partial z^{[l](i)}_{\mathrm{norm}}} + \dfrac{\partial \sigma^{2[l]}}{\partial \mu^{[l]}} \odot \dfrac{\partial L^{(i)}}{\partial \sigma^{2[l]}} \\
+        &= -\dfrac{1}{\sqrt{\sigma^{2[l]} + \varepsilon}} \odot \dfrac{\partial L^{(i)}}{\partial z^{[l](i)}_{\mathrm{norm}}} - \dfrac{2}{m} \sum_{i=1}^m (z^{[l](i)} - \mu^{[l]}) \odot \dfrac{\partial L^{(i)}}{\partial \sigma^{2[l]}}
+    \end{aligned}
+\end{equation}
+运用链式法则，
+\begin{equation}
+    \begin{aligned}
+        \dfrac{\partial L^{(i)}}{\partial z^{[l](i)}} 
+        &= \dfrac{\partial z^{[l](i)}_{\mathrm{norm}}}{\partial z^{[l](i)}} \odot \dfrac{\partial L^{(i)}}{\partial z^{[l](i)}_{\mathrm{norm}}} + \dfrac{\partial \sigma^{2[l]}}{\partial z^{[l](i)}} \odot \dfrac{\partial L^{(i)}}{\partial \sigma^{2[l]}} + \dfrac{\partial \mu^{[l]}}{\partial z^{[l](i)}} \odot \dfrac{\partial L^{(i)}}{\partial \mu^{[l]}} \\
+        &= \dfrac{1}{\sqrt{\sigma^{2[l]} + \varepsilon}} \odot \dfrac{\partial L^{(i)}}{\partial z^{[l](i)}_{\mathrm{norm}}} + \dfrac{2}{m} (z^{[l](i)} - \mu^{[l]}) \odot \dfrac{\partial L^{(i)}}{\partial \sigma^{2[l]}} + \dfrac{1}{m} \dfrac{\partial L^{(i)}}{\partial \mu^{[l]}}
+    \end{aligned}
+\end{equation}
+进而可合并得到
+\begin{equation}
+    \dfrac{\partial J}{\partial Z^{[l]}} 
+    = \left[ \dfrac{\partial J}{\partial z^{[l](1)}}, \dfrac{\partial J}{\partial z^{[l](2)}}, \cdots, \dfrac{\partial J}{\partial z^{[l](m)}} \right]
+    = \dfrac{1}{m} \left[ \dfrac{\partial L^{(i)}}{\partial z^{[l](1)}}, \dfrac{\partial L^{(i)}}{\partial z^{[l](2)}}, \cdots, \dfrac{\partial L^{(i)}}{\partial z^{[l](m)}} \right]
+\end{equation}
+而根据式~\eqref{eq:batch_norm_zl}，可以直接得到
+\begin{align}
+    \dfrac{\partial J}{\partial W^{[l]}} &= \dfrac{\d J}{\d Z^{[l]}} A^{[l-1] \mathrm{T}} \\
+    \dfrac{\d J}{\d A^{[l-1]}} &= W^{[l] \mathrm{T}} \dfrac{\d J}{\d Z^{[l]}}
+\end{align}
+代入$\dfrac{\partial J}{\partial Z^{[l]}}$，即可得出所求的$\dfrac{\partial J}{\partial W^{[l]}}$和$\dfrac{\d J}{\d A^{[l-1]}}$。
+具体的代码实现在此不再赘述。
+
+在实际应用中，Batch Normalization一般会和mini-batch梯度下降一起使用。
+这时，批量归一化会具有一定正则化的效果，这是因为在第$t$个 \verb|mini_batch| 中，$Z^{[l]\{t\}}$ 的均值和方差是基于这个 \verb|mini_batch| 计算的，而不是基于整个训练集。这会增加一些噪声，使网络不依赖于特定的神经元。
+
+在测试样本很少时（例如只有1个），进行归一化（计算均值和标准差）几乎没有意义。
+可使用训练时各 \verb|mini_batch| 上的指数加权平均值$\hat{\mu}$和$\hat{\sigma}$来替代（需要在训练时保存这两个值）。
