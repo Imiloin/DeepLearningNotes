@@ -558,6 +558,16 @@ $\gamma^{[l]}$和$\beta^{[l]}$\footnote{这里的$\beta^{[l]}$与矩估计中的
 在代码实现中，可以将偏置$b^{[l]}$和梯度$\d b^{[l]}$直接设置为全0。
 
 要实现应用批量归一化的反向传播，应明确目标，对于第$l$层，已知$\dfrac{\d J}{\d A^{[l]}}$，需要计算$\dfrac{\partial J}{\partial W^{[l]}}$、$\dfrac{\d J}{\d A^{[l-1]}}$、$\dfrac{\partial J}{\partial \gamma^{[l]}}$和$\dfrac{\partial J}{\partial \beta^{[l]}}$。
+如果对偏导的链式法则感到困惑，可查看图~\ref{fig:batch_norm_backprop}。
+
+下面的过程区分了微分算符和偏导算符，以便于理解。
+
+\begin{figure}[h!pbt]
+    \centering
+    \includegraphics[scale=0.6]{BN_graph.pdf}
+    \caption{Backpropagation with Batch Normalization}
+    \label{fig:batch_norm_backprop}
+\end{figure}
 
 首先，类似于式~\eqref{eq:backpropagation_m_derivative_conc}，下面的关系成立
 \begin{align}
@@ -619,7 +629,7 @@ $\gamma^{[l]}$和$\beta^{[l]}$\footnote{这里的$\beta^{[l]}$与矩估计中的
 \end{equation}
 对第$i$个样本，式~\eqref{eq:batch_norm_znorm} 可以表示为
 \begin{equation}
-    z^{[l](i)}_{\mathrm{norm}} = \dfrac{z^{[l](i)} - \mu}{\sqrt{\sigma^2 + \varepsilon}}
+    z^{[l](i)}_{\mathrm{norm}} = \dfrac{z^{[l](i)} - \mu^{[l]}}{\sqrt{\sigma^{2[l]} + \varepsilon}}
     \label{eq:batch_norm_znorm_i}
 \end{equation}
 从中可得到
@@ -663,3 +673,47 @@ $\gamma^{[l]}$和$\beta^{[l]}$\footnote{这里的$\beta^{[l]}$与矩估计中的
 
 在测试样本很少时（例如只有1个），进行归一化（计算均值和标准差）几乎没有意义。
 可使用训练时各 \verb|mini_batch| 上的指数加权平均值$\hat{\mu}$和$\hat{\sigma}$来替代（需要在训练时保存这两个值）。
+
+%%%
+\section{Softmax Regression}
+\index{Softmax Regression}
+
+在进行多分类任务时，逻辑回归已不再适用，需要使用\textbf{Softmax回归（Softmax Regression）}。
+Softmax回归是逻辑回归在多分类任务上的推广，其输出层的激活函数为Softmax函数。
+
+相比于直接的 one-hot 编码，Softmax回归可以更好地表示各个类别之间的关系，输出不同类别的概率而不是单纯的0或1。
+\begin{figure}[h!bt]
+    \centering
+    \includegraphics[scale=0.6]{softmax.pdf}
+    \caption{One-hot Encoding vs. Softmax Regression}
+\end{figure}
+
+与一般的激活函数不同，Softmax函数不是逐元素计算的函数，其输入和输出都是一个向量，且输出向量的各个元素之和为1。
+当输入为一个长度为$n$的向量$\bm{z}$时，Softmax函数的表达式为
+\begin{equation}
+    \mathrm{softmax}(\bm{z}) = \frac{{\mathrm{e}}^{\bm{z}}}{\sum_{i=1}^n {\mathrm{e}}^{z_i}}
+\end{equation}
+若将Softmax函数作为输出层的激活函数，则可用输出向量$a^{[L](i)}$的各个元素来表示第$i$个样本为各个类别的概率，此时Softmax函数作用在$Z^{[L]}$的每一列上。
+
+反向传播时，$\dfrac{\d J}{\d A^{[L]}}$的表达式不变，即
+\begin{equation}
+    \frac{\d J}{\d A^{[L]}} 
+    = \frac{1}{m} \left(-\frac{Y}{A^{[L]}} + \frac{1 - Y}{1 - A^{[L]}}\right)
+\end{equation}
+而此时
+\begin{equation}
+     A^{[L]} = \mathrm{softmax}\left( Z^{[L]} \right)
+\end{equation}
+对第$i$个样本的第$j$个输出，有
+\begin{equation}
+    a_j^{[L](i)} = \frac{{\mathrm{e}}^{z_j^{[L](i)}}}{\displaystyle \sum_{k=1}^n {\mathrm{e}}^{z_k^{[L](i)}}}
+\end{equation}
+从而
+\begin{equation}
+    \begin{aligned}
+        \dfrac{\d J}{\d z_j^{[L](i)}}
+        &= \dfrac{\d J}{\d a_j^{[L](i)}} \dfrac{\d a_j^{[L](i)}}{\d {\mathrm{e}}^{z_j^{[L](i)}}} \dfrac{\d {\mathrm{e}}^{z_j^{[L](i)}}}{\d z_j^{[L](i)}} \\
+        &= \dfrac{\displaystyle \sum_{k=1}^{n_y} (1 - \delta_{jk}) {\mathrm{e}}^{z_j^{[L](i)}}}{\left( {\displaystyle \sum_{k=1}^n {\mathrm{e}}^{z_k^{[L](i)}}} \right)^2} {\mathrm{e}}^{z_j^{[L](i)}} \dfrac{\d J}{\d a_j^{[L](i)}} \\
+    \end{aligned}
+\end{equation}
+将该式向量化即可得到$\dfrac{\d J}{\d Z^{[L]}}$与$\dfrac{\d J}{\d A^{[L]}}$的关系。
